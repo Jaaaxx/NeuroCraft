@@ -46,7 +46,7 @@ public class AuditoryHallucinations {
 
     private static void spawnAuditoryHallucinations(TickEvent.ServerTickEvent event) {
         for (ServerPlayer p : event.getServer().getPlayerList().getPlayers()) {
-            boolean spawnHallucination = (new Random().nextInt(1000) < getPlayerSanity(p));
+            boolean spawnHallucination = (new Random().nextInt(500) < getPlayerSanity(p));
 
             if (spawnHallucination) {
                 var pool = new net.minecraft.sounds.SoundEvent[]{
@@ -55,7 +55,6 @@ public class AuditoryHallucinations {
                         SoundEvents.CREEPER_PRIMED,
                         SoundEvents.WARDEN_ANGRY,
                         SoundEvents.GHAST_SCREAM};
-                // pick random out of pool
                 SoundEvent soundEvent = pool[new Random().nextInt(pool.length)];
                 PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(soundEvent), p);
             }

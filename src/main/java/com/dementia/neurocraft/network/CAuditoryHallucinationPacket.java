@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.network.CustomPayloadEvent;
+import org.joml.Random;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class CAuditoryHallucinationPacket {
         if (context.isClientSide()) {
             var player = Minecraft.getInstance().player;
             assert player != null;
-            player.playSound(sound, 2, 1);
+            player.playSound(sound, (float) (Math.random() * 2.9 + 0.1), (float) (Math.random() * 4.5 + 0.5));
         } else {
             context.setPacketHandled(false);
         }

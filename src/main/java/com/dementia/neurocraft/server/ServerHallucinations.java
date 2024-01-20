@@ -46,19 +46,25 @@ public class ServerHallucinations {
 
     private static void runHallucinationSpawns(TickEvent.ServerTickEvent event) {
         for (Player p : event.getServer().getPlayerList().getPlayers()) {
-            boolean spawnHallucination = (new Random().nextInt(2000) < getPlayerSanity(p));
+            boolean spawnHallucination = (new Random().nextInt(1000) < getPlayerSanity(p));
 
             Direction direction = p.getDirection();
             Vec3 pos = p.getPosition(0);
-            Vec3 spawnPos = pos.relative(direction.getOpposite(), new Random().nextInt(3, 10));
+            Vec3 spawnPos = pos.relative(direction.getOpposite(), new Random().nextInt(1, 5));
 
             if (spawnHallucination) {
-                EntityType<?> entityType = EntityType.SKELETON;
+                var pool = new EntityType[]{EntityType.SKELETON
+                        , EntityType.CREEPER, EntityType.ZOMBIE,
+                        EntityType.ENDERMAN, EntityType.WARDEN};
+                EntityType<?> entityType = pool[new Random().nextInt(pool.length)];
                 Entity entity = entityType.create(p.level());
 
+
                 if (entity != null) {
-                    ItemStack bow = new ItemStack(Items.BOW);
-                    entity.setItemSlot(EquipmentSlot.MAINHAND, bow);
+                    if (entityType == EntityType.SKELETON) {
+                        ItemStack bow = new ItemStack(Items.BOW);
+                        entity.setItemSlot(EquipmentSlot.MAINHAND, bow);
+                    }
                     ((Monster) entity).setTarget(p);
 
                     entity.setPos(spawnPos);
