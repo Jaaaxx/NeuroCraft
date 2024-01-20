@@ -66,8 +66,9 @@ public class ClientHallucinations {
                 if (isInPlayerFOV && !getHallucinationViewed(entity)) {
                     setHallucinationViewed(entity, true);
                     System.out.println("Hallucination viewed!");
-                } else if (!isInPlayerFOV && getHallucinationViewed(entity)) {
+                } else if (!isInPlayerFOV && getHallucinationViewed(entity) && !entity.isRemoved()) {
                     PacketHandler.sendToServer(new SRemoveHallucinationPacket(entity.getId()));
+                    entity.remove(Entity.RemovalReason.DISCARDED);
                     System.out.println("Hallucination removed!");
                 }
             }
@@ -79,6 +80,10 @@ public class ClientHallucinations {
 
         if (player == null) {
             return true;
+        }
+
+        if (entity.distanceTo(player) >= 7) {
+            return false;
         }
 
         Vec3 visionVec = player.getLookAngle().normalize();

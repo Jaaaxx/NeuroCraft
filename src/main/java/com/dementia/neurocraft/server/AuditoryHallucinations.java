@@ -26,7 +26,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 
@@ -35,10 +37,21 @@ public class AuditoryHallucinations {
     static int c = 0;
     static Map<Player, List<Entity>> playerEntityMap = new HashMap<>();
 
+    static List<SoundEvent> randomSoundEffects = Arrays.stream(SoundEvents.class.getFields())
+            .filter(field -> field.getType() == SoundEvent.class)
+            .map((e) -> {
+                try {
+                    return (SoundEvent) e.get(null);
+                } catch (IllegalAccessException ex) {
+                    return null;
+                }
+            })
+            .collect(Collectors.toList());
+
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            if (c++ % (20 * 5) == 0) {
+            if (c++ % (12 * 7) == 0) {
                 spawnAuditoryHallucinations(event);
             }
         }
@@ -46,17 +59,26 @@ public class AuditoryHallucinations {
 
     private static void spawnAuditoryHallucinations(TickEvent.ServerTickEvent event) {
         for (ServerPlayer p : event.getServer().getPlayerList().getPlayers()) {
-            boolean spawnHallucination = (new Random().nextInt(500) < getPlayerSanity(p));
+            var playerSanity = getPlayerSanity(p);
+            boolean spawnHallucination = (new Random().nextInt((int) (PEAK_SANITY / 1.5)) < playerSanity);
 
+            var pool = randomSoundEffects;
             if (spawnHallucination) {
-                var pool = new net.minecraft.sounds.SoundEvent[]{
-                        SoundEvents.ZOMBIE_AMBIENT,
-                        SoundEvents.SKELETON_AMBIENT,
-                        SoundEvents.CREEPER_PRIMED,
-                        SoundEvents.WARDEN_ANGRY,
-                        SoundEvents.GHAST_SCREAM};
-                SoundEvent soundEvent = pool[new Random().nextInt(pool.length)];
-                PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(soundEvent), p);
+                if (playerSanity >= PEAK_SANITY / 2) {
+                    if (new Random().nextInt(2) == 1) {
+                        pool = List.of(new SoundEvent[]{
+                                SoundEvents.ZOMBIE_AMBIENT,
+                                SoundEvents.SKELETON_AMBIENT,
+                                SoundEvents.CREEPER_PRIMED,
+                                SoundEvents.WARDEN_ANGRY,
+                                SoundEvents.GHAST_SHOOT,
+                                SoundEvents.SPIDER_AMBIENT
+                        });
+                    }
+                }
+                SoundEvent randomSound = pool.get(new Random().nextInt(pool.size()));
+                PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(randomSound), p);
+
             }
         }
     }
