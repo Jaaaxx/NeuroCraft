@@ -38,15 +38,26 @@ public class OreHallucinations {
         if (state.getBlock().getName().toString().contains("ore")) {
             var playerSanity = getPlayerSanity(player);
             boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
+            var shadowBlocks = new Random().nextBoolean();
+            replaceBlock = true;
             if (replaceBlock) {
                 event.setCanceled(true);
                 var veinBlocks = getAllBlocksInVein(state, event.getPos(), event.getLevel());
-                for (var blockPos : veinBlocks) {
-                    System.out.println(blockPos);
-                    if (state.getBlock().getName().toString().contains("deepslate")) {
-                        event.getLevel().setBlock(blockPos, Blocks.DEEPSLATE.defaultBlockState(), 2);
-                    } else {
-                        event.getLevel().setBlock(blockPos, Blocks.STONE.defaultBlockState(), 2);
+                if (shadowBlocks) {
+                    for (var blockPos : veinBlocks) {
+                        if (state.getBlock().getName().toString().contains("deepslate")) {
+                            event.getLevel().setBlock(blockPos, Blocks.DEEPSLATE.defaultBlockState(), 1);
+                        } else {
+                            event.getLevel().setBlock(blockPos, Blocks.STONE.defaultBlockState(), 1);
+                        }
+                    }
+                } else {
+                    for (var blockPos : veinBlocks) {
+                        if (state.getBlock().getName().toString().contains("deepslate")) {
+                            event.getLevel().setBlock(blockPos, Blocks.DEEPSLATE.defaultBlockState(), 2);
+                        } else {
+                            event.getLevel().setBlock(blockPos, Blocks.STONE.defaultBlockState(), 2);
+                        }
                     }
                 }
                 player.setPos(player.getPosition(0));

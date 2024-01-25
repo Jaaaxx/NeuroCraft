@@ -1,6 +1,7 @@
 package com.dementia.neurocraft.network;
 
 import com.dementia.neurocraft.NeuroCraft;
+import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.*;
