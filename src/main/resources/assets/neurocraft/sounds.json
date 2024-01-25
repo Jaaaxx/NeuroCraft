@@ -1,0 +1,9 @@
+{
+  "confused": {
+    "category": "sound",
+    "subtitle": "neurocraft.confused",
+    "sounds": [
+      "neurocraft:confused"
+    ]
+  }
+}

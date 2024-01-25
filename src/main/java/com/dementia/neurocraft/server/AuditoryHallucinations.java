@@ -28,6 +28,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.dementia.neurocraft.common.Common.HallucinationOccured;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
@@ -79,6 +80,17 @@ public class AuditoryHallucinations {
                 SoundEvent randomSound = pool.get(new Random().nextInt(pool.size()));
                 PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(randomSound), p);
 
+                // 50% chance to run hallucination occured 3 seconds later
+                if (new Random().nextBoolean()) {
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        HallucinationOccured(p);
+                    }).start();
+                }
             }
         }
     }

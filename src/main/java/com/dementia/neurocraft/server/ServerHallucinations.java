@@ -3,6 +3,7 @@ package com.dementia.neurocraft.server;
 import com.dementia.neurocraft.NeuroCraft;
 import com.dementia.neurocraft.network.CHallucinationListUpdatePacket;
 import com.dementia.neurocraft.network.PacketHandler;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.*;
@@ -22,6 +23,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import java.util.*;
 import java.util.function.Predicate;
 
+import static com.dementia.neurocraft.common.Common.HallucinationOccured;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
@@ -79,16 +81,20 @@ public class ServerHallucinations {
 
         if (playerMap.contains(entity)) {
             var pos = entity.getPosition(0);
+            var oldPos = player.getPosition(0);
             entity.remove(Entity.RemovalReason.KILLED);
             ServerPlayer sp = player.getServer().getPlayerList().getPlayer(player.getUUID());
             if (sp != null) {
                 sendNewHallucinationListPacket(sp);
             }
 
+            // Randomly rotate player on destroying hallucination
             if (new Random().nextInt(25) == 1) {
                 player.setPos(pos);
+                player.lookAt(EntityAnchorArgument.Anchor.EYES, oldPos);
             }
             event.setCanceled(true);
+            HallucinationOccured(player);
         }
     }
 

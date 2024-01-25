@@ -30,10 +30,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.logging.Logger;
 
+import static com.dementia.neurocraft.common.Common.HallucinationOccured;
+import static com.dementia.neurocraft.common.Common.HallucinationOccuredClient;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 import static com.mojang.text2speech.Narrator.LOGGER;
 
-@Mod.EventBusSubscriber(modid = NeuroCraft.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientHallucinations {
     static int c = 1;
     public static List<Entity> playerEntities = new ArrayList<>();
@@ -43,7 +44,7 @@ public class ClientHallucinations {
         if (tick.phase == TickEvent.Phase.END) {
 
             c++;
-            if (c == 20) {
+            if (c == 5) {
                 if (Minecraft.getInstance().level != null) {
                     checkPlayerHallucinationViewings();
                 }
@@ -70,6 +71,8 @@ public class ClientHallucinations {
                     PacketHandler.sendToServer(new SRemoveHallucinationPacket(entity.getId()));
                     entity.remove(Entity.RemovalReason.DISCARDED);
                     System.out.println("Hallucination removed!");
+                    HallucinationOccuredClient();
+
                 }
             }
         }
