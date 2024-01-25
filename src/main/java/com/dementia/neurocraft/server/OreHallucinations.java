@@ -25,17 +25,17 @@ import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 @Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
 public class OreHallucinations {
 
-    private static final List<Block> ores = new ArrayList<>(List.of(
-            Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE,
-            Blocks.DIAMOND_ORE, Blocks.DEEPSLATE_DIAMOND_ORE,
-            Blocks.COAL_ORE, Blocks.DEEPSLATE_COAL_ORE));
+//    private static final List<Block> ores = new ArrayList<>(List.of(
+//            Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE,
+//            Blocks.DIAMOND_ORE, Blocks.DEEPSLATE_DIAMOND_ORE,
+//            Blocks.COAL_ORE, Blocks.DEEPSLATE_COAL_ORE));
 
     @SubscribeEvent
     public static void onBlockBreakEvent(BlockEvent.BreakEvent event) {
         var state = event.getState();
         var player = event.getPlayer();
         event.getPos();
-        if (ores.contains(state.getBlock())) {
+        if (state.getBlock().getName().toString().contains("ore")) {
             var playerSanity = getPlayerSanity(player);
             boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
             if (replaceBlock) {

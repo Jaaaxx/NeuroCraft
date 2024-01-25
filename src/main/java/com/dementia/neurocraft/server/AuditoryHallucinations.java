@@ -81,7 +81,7 @@ public class AuditoryHallucinations {
                 PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(randomSound), p);
 
                 // 50% chance to run hallucination occured 3 seconds later
-                if (new Random().nextBoolean()) {
+                if (new Random().nextInt(100) == 1) {
                     new Thread(() -> {
                         try {
                             Thread.sleep(3000);
