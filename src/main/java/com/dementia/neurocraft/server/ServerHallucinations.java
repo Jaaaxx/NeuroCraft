@@ -140,7 +140,8 @@ public class ServerHallucinations {
             if (captureDrops != null)
                 captureDrops.clear();
 
-            ((Monster) entity).setTarget(p);
+            if (entity instanceof Monster)
+                ((Monster) entity).setTarget(p);
             entity.setPos(spawnPos);
             p.level().addFreshEntity(entity);
             playerEntityMap.putIfAbsent(p, new ArrayList<>());
