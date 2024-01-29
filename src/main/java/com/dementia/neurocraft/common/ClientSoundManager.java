@@ -1,12 +1,18 @@
 package com.dementia.neurocraft.common;
 
-import com.dementia.neurocraft.util.ModTimingHandler;
+import com.dementia.neurocraft.util.ServerTimingHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvent;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class ClientSoundManager {
     public static boolean soundPlaying = false;
+    public static Timer timer = new Timer();
 
+    // THE PROBLEM:
+    // if two things simultaneously call this, it will break
     public static boolean playSound(SoundEvent soundEvent) {
         if (soundPlaying)
             return false;
@@ -15,11 +21,13 @@ public class ClientSoundManager {
         if (player == null)
             return false;
 
-        System.out.println("Playing sound!");
-
-        player.playSound(soundEvent, (float) (Math.random() * 2.9 + 0.1), (float) (Math.random() * 4.5 + 0.5));
         soundPlaying = true;
-        ModTimingHandler.scheduleEvent("SetSoundNotPlaying", 10, () -> soundPlaying = false, true);
+        player.playSound(soundEvent, (float) (Math.random() * 2.9 + 0.1), (float) (Math.random() * 4.5 + 0.5));
+        timer.schedule(new TimerTask() {
+            public void run() {
+                soundPlaying = false;
+            }
+        }, 100);
         return true;
     }
 }

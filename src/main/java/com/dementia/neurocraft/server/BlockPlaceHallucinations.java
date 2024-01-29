@@ -34,7 +34,7 @@ public class BlockPlaceHallucinations {
             var bp = event.getPos();
             ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, event.getPlacedBlock());
             event.getLevel().setBlock(bp, Blocks.AIR.defaultBlockState(), 1);
-            PacketHandler.sendVanillaPacket(packet, player, 5);
+            PacketHandler.sendVanillaPacket(packet, player, 2);
             PacketHandler.sendToPlayer(new CHallBlockListUpdatePacket(new int[]{bp.getX(), bp.getY(), bp.getZ()}), player);
         }
     }

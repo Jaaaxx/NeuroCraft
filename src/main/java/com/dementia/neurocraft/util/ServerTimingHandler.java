@@ -2,16 +2,14 @@ package com.dementia.neurocraft.util;
 
 import com.dementia.neurocraft.NeuroCraft;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
-public class ModTimingHandler {
+public class ServerTimingHandler {
     private static final int maxTicks = 2000;
     private static int tickCount = 0;
     private static final Map<Map.Entry<Map.Entry<String, Integer>, Map.Entry<Runnable, Boolean>>,Integer> _scheduledEvents = new HashMap<>();

@@ -1,12 +1,9 @@
 package com.dementia.neurocraft.network;
 
 import com.dementia.neurocraft.common.ClientSoundManager;
-import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-
-import static com.dementia.neurocraft.NeuroCraft.ClientModEvents.clientSoundManager;
 
 public class CAuditoryHallucinationPacket {
     private final SoundEvent sound;

@@ -2,27 +2,13 @@ package com.dementia.neurocraft.server;
 
 import com.dementia.neurocraft.NeuroCraft;
 import com.dementia.neurocraft.network.CAuditoryHallucinationPacket;
-import com.dementia.neurocraft.network.CHallucinationListUpdatePacket;
 import com.dementia.neurocraft.network.PacketHandler;
-import com.dementia.neurocraft.util.ModTimingHandler;
-import net.minecraft.client.resources.sounds.Sound;
-import net.minecraft.core.Direction;
-import net.minecraft.network.protocol.Packet;
+import com.dementia.neurocraft.util.ServerTimingHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -84,7 +70,7 @@ public class AuditoryHallucinations {
 
 
                 if (new Random().nextInt(100) == 1) {
-                    ModTimingHandler.scheduleEvent("AuditoryHallucination", 60,
+                    ServerTimingHandler.scheduleEvent("AuditoryHallucination", 60,
                             () -> HallucinationOccured(p), true);
                 }
             }

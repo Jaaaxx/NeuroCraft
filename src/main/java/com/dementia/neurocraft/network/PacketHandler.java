@@ -1,16 +1,11 @@
 package com.dementia.neurocraft.network;
 
 import com.dementia.neurocraft.NeuroCraft;
-import com.dementia.neurocraft.util.ModTimingHandler;
+import com.dementia.neurocraft.util.ServerTimingHandler;
 import net.minecraft.network.PacketSendListener;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
-import net.minecraft.network.protocol.game.ClientboundBossEventPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.BossEvent;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.*;
 
 public class PacketHandler {
@@ -101,7 +96,7 @@ public class PacketHandler {
                 }
             };
 
-            ModTimingHandler.scheduleEvent("PacketEvent", delay,
+            ServerTimingHandler.scheduleEvent("PacketEvent", delay,
                     () -> connection.send((Packet<?>) msg, listener), true);
         }
     }
