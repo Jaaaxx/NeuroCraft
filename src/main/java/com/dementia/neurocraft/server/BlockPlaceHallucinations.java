@@ -28,8 +28,7 @@ public class BlockPlaceHallucinations {
         if (player == null)
             return;
         var playerSanity = getPlayerSanity(player);
-//        boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
-        boolean replaceBlock = true;
+        boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
         if (replaceBlock) {
             var bp = event.getPos();
             ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, event.getPlacedBlock());
