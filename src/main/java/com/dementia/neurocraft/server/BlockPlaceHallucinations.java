@@ -28,13 +28,14 @@ public class BlockPlaceHallucinations {
         if (player == null)
             return;
         var playerSanity = getPlayerSanity(player);
-        boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
+//        boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
+        boolean replaceBlock = true;
         if (replaceBlock) {
             var bp = event.getPos();
             ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, event.getPlacedBlock());
             event.getLevel().setBlock(bp, Blocks.AIR.defaultBlockState(), 1);
-            PacketHandler.sendVanillaPacket(packet, player, 30);
-            PacketHandler.sendToPlayer(new CHallBlockListUpdatePacket(new int[]{bp.getX(), bp.getY(), bp.getZ()}, player.getUUID()), player);
+            PacketHandler.sendVanillaPacket(packet, player, 5);
+            PacketHandler.sendToPlayer(new CHallBlockListUpdatePacket(new int[]{bp.getX(), bp.getY(), bp.getZ()}), player);
         }
     }
 }

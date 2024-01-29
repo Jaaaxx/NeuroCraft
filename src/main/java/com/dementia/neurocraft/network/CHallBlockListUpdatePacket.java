@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
@@ -16,32 +17,26 @@ import static com.dementia.neurocraft.client.ClientHallucinations.playerEntities
 
 public class CHallBlockListUpdatePacket {
     private final int[] blockPosList;
-    private final UUID playerID;
 
-    public CHallBlockListUpdatePacket(int[] blockPosList, UUID playerID) {
+    public CHallBlockListUpdatePacket(int[] blockPosList) {
         this.blockPosList = blockPosList;
-        this.playerID = playerID;
     }
 
     public CHallBlockListUpdatePacket(FriendlyByteBuf buffer) {
-        this(buffer.readVarIntArray(), buffer.readUUID());
+        this(buffer.readVarIntArray());
     }
 
     public void encode(FriendlyByteBuf buffer) {
         buffer.writeVarIntArray(blockPosList);
-        buffer.writeUUID(playerID);
     }
 
     public void handle(CustomPayloadEvent.Context context) {
         if (context.isClientSide()) {
             hallucinationBlocks.addAll(decode(blockPosList));
             if (hallucinationBlocks.size() >= 5) {
-                var server = Objects.requireNonNull(context.getSender()).getServer();
-                if (server == null)
-                    return;
-
-                var player = server.getPlayerList().getPlayer(playerID);
+                var player = Minecraft.getInstance().player;
                 var blockPos = hallucinationBlocks.get(0);
+
                 if (player == null)
                     return;
 

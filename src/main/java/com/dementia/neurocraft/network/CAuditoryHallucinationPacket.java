@@ -1,25 +1,12 @@
 package com.dementia.neurocraft.network;
 
-import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.Sound;
-import net.minecraft.core.registries.Registries;
+import com.dementia.neurocraft.common.ClientSoundManager;
+import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import org.joml.Random;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import static com.dementia.neurocraft.client.ClientHallucinations.playerEntities;
+import static com.dementia.neurocraft.NeuroCraft.ClientModEvents.clientSoundManager;
 
 public class CAuditoryHallucinationPacket {
     private final SoundEvent sound;
@@ -38,9 +25,7 @@ public class CAuditoryHallucinationPacket {
 
     public void handle(CustomPayloadEvent.Context context) {
         if (context.isClientSide()) {
-            var player = Minecraft.getInstance().player;
-            assert player != null;
-            player.playSound(sound, (float) (Math.random() * 2.9 + 0.1), (float) (Math.random() * 4.5 + 0.5));
+            ClientSoundManager.playSound(sound);
         } else {
             context.setPacketHandled(false);
         }

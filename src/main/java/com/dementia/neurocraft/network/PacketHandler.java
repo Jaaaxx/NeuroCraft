@@ -1,6 +1,7 @@
 package com.dementia.neurocraft.network;
 
 import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.util.ModTimingHandler;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -71,12 +72,10 @@ public class PacketHandler {
                 @Override
                 public void onSuccess() {
                     PacketSendListener.super.onSuccess();
-                    System.out.println("Success packet sent");
                 }
 
                 @Override
                 public Packet<?> onFailure() {
-                    System.out.println("Failed packet sent");
                     return PacketSendListener.super.onFailure();
                 }
             };
@@ -94,23 +93,16 @@ public class PacketHandler {
                 @Override
                 public void onSuccess() {
                     PacketSendListener.super.onSuccess();
-                    System.out.println("Success packet sent");
                 }
 
                 @Override
                 public Packet<?> onFailure() {
-                    System.out.println("Failed packet sent");
                     return PacketSendListener.super.onFailure();
                 }
             };
-            new Thread(() -> {
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException exception) {
-                    throw new RuntimeException(exception);
-                }
-                connection.send((Packet<?>) msg, listener);
-            }).start();
+
+            ModTimingHandler.scheduleEvent("PacketEvent", delay,
+                    () -> connection.send((Packet<?>) msg, listener), true);
         }
     }
 }

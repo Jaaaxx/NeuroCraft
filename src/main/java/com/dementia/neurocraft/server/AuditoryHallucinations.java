@@ -4,8 +4,10 @@ import com.dementia.neurocraft.NeuroCraft;
 import com.dementia.neurocraft.network.CAuditoryHallucinationPacket;
 import com.dementia.neurocraft.network.CHallucinationListUpdatePacket;
 import com.dementia.neurocraft.network.PacketHandler;
+import com.dementia.neurocraft.util.ModTimingHandler;
 import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -80,16 +82,10 @@ public class AuditoryHallucinations {
                 SoundEvent randomSound = pool.get(new Random().nextInt(pool.size()));
                 PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(randomSound), p);
 
-                // 50% chance to run hallucination occured 3 seconds later
+
                 if (new Random().nextInt(100) == 1) {
-                    new Thread(() -> {
-                        try {
-                            Thread.sleep(3000);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                        HallucinationOccured(p);
-                    }).start();
+                    ModTimingHandler.scheduleEvent("AuditoryHallucination", 60,
+                            () -> HallucinationOccured(p), true);
                 }
             }
         }

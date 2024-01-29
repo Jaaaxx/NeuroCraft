@@ -1,6 +1,7 @@
 package com.dementia.neurocraft;
 
-import com.dementia.neurocraft.util.ModSoundEvents;
+import com.dementia.neurocraft.common.ClientSoundManager;
+import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -32,6 +33,7 @@ public class NeuroCraft {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
+
     public NeuroCraft() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -42,7 +44,7 @@ public class NeuroCraft {
         CREATIVE_MODE_TABS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
-        ModSoundEvents.register(modEventBus);
+        ModSoundEventsRegistry.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
@@ -70,6 +72,7 @@ public class NeuroCraft {
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         static int c = 1;
+        public static ClientSoundManager clientSoundManager;
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             // Some client setup code

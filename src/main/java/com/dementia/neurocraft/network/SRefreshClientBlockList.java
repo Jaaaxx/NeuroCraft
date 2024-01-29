@@ -6,7 +6,10 @@ import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
@@ -16,17 +19,20 @@ import static com.dementia.neurocraft.server.ServerHallucinations.getPlayerEntit
 
 public class SRefreshClientBlockList {
     private final int[] blockPos;
+    private final int itemID;
 
-    public SRefreshClientBlockList(int[] blockPos) {
+    public SRefreshClientBlockList(int[] blockPos, int itemID) {
         this.blockPos = blockPos;
+        this.itemID = itemID;
     }
 
     public SRefreshClientBlockList(FriendlyByteBuf buffer) {
-        this(buffer.readVarIntArray());
+        this(buffer.readVarIntArray(), buffer.readInt());
     }
 
     public void encode(FriendlyByteBuf buffer) {
         buffer.writeVarIntArray(blockPos);
+        buffer.writeInt(itemID);
     }
 
     public void handle(CustomPayloadEvent.Context context) {
@@ -36,8 +42,12 @@ public class SRefreshClientBlockList {
             if (player == null)
                 return;
             Level level = player.level();
-            ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, level.getBlockState(bp));
+            BlockState bs = level.getBlockState(bp);
+
+            ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, bs);
             PacketHandler.sendVanillaPacket(packet, player);
+
+            player.addItem(new ItemStack(Item.byId(itemID), 1));
         } else {
             context.setPacketHandled(false);
         }
