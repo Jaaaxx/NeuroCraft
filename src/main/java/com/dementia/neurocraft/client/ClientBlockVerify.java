@@ -3,6 +3,10 @@ package com.dementia.neurocraft.client;
 import com.dementia.neurocraft.network.PacketHandler;
 import com.dementia.neurocraft.network.SRefreshClientBlockList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,6 +22,7 @@ import static com.dementia.neurocraft.network.SRefreshClientBlockList.toIntArray
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class ClientBlockVerify {
+    public static Level hallucinationBlockLevel;
     public static List<BlockPos> hallucinationBlocks = new ArrayList<>();
     private static int tickC = 1;
 
@@ -27,14 +32,15 @@ public class ClientBlockVerify {
             System.out.println(hallucinationBlocks);
             var pos = event.getPos();
             if (hallucinationBlocks.contains(pos)) {
-                removeHallucinationBlocks(pos);
+                removeHallucinationBlocks(pos, event.getEntity());
             }
         }
     }
 
-    public static void removeHallucinationBlocks(BlockPos pos) {
+    public static void removeHallucinationBlocks(BlockPos pos, Player player) {
         hallucinationBlocks.remove(pos);
         PacketHandler.sendToServer(new SRefreshClientBlockList(toIntArray(pos)));
+        player.addItem(new ItemStack(player.level().getBlockState(pos).getBlock().asItem(), 1));
         HallucinationOccuredClient();
     }
 
@@ -48,7 +54,7 @@ public class ClientBlockVerify {
         if (tickC++ == 5) {
             var onPos = player.getOnPos();
             if (hallucinationBlocks.contains(onPos)) {
-                removeHallucinationBlocks(onPos);
+                removeHallucinationBlocks(onPos, player);
             }
             tickC = 0;
         }

@@ -30,7 +30,7 @@ public class PlayerScaling {
 
     public static void incrementPlayerSanity(final Player player) {
         long currentSanity = getPlayerSanity(player);
-        if (currentSanity >= 499)
+        if (currentSanity >= PEAK_SANITY)
             return;
         player.getPersistentData().putLong("Sanity", currentSanity + 1);
     }

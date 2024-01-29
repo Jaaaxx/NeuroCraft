@@ -119,7 +119,7 @@ public class ServerHallucinations {
                         EntityType.IRON_GOLEM,
                         EntityType.WITHER
                 };
-                EntityType<?> entityType = pool[(int) Math.floor(new Random().nextFloat((float) playerSanity / ((float) PEAK_SANITY / pool.length - 1)))];
+                EntityType<?> entityType = pool[Math.min(pool.length-1, (int) Math.floor(new Random().nextFloat((float) playerSanity / ((float) PEAK_SANITY / pool.length - 1))))];
                 spawnEntityHallucination(entityType, p, playerSanity, spawnPos);
             }
 

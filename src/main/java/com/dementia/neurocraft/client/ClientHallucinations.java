@@ -72,7 +72,6 @@ public class ClientHallucinations {
                     entity.remove(Entity.RemovalReason.DISCARDED);
                     System.out.println("Hallucination removed!");
                     HallucinationOccuredClient();
-
                 }
             }
         }
