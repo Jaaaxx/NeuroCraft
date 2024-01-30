@@ -18,6 +18,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -27,8 +28,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.dementia.neurocraft.NeuroCraft.ITEMS;
-import static com.dementia.neurocraft.NeuroCraft.MODID;
+import static com.dementia.neurocraft.NeuroCraft.*;
 import static com.dementia.neurocraft.common.Common.HallucinationOccuredClient;
 import static com.dementia.neurocraft.network.SRefreshClientBlockList.toIntArray;
 

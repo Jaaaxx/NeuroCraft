@@ -116,7 +116,7 @@ public class ServerHallucinations {
                         EntityType.ENDERMAN,
                         EntityType.CAVE_SPIDER,
                         EntityType.WARDEN,
-                        EntityType.IRON_GOLEM,
+                        EntityType.RAVAGER,
                         EntityType.WITHER
                 };
                 EntityType<?> entityType = pool[Math.min(pool.length-1, (int) Math.floor(new Random().nextFloat((float) playerSanity / ((float) PEAK_SANITY / pool.length - 1))))];

@@ -53,8 +53,6 @@ public class ClientInventoryTroubles {
                 }
             }
             if (c == 60 && new Random().nextInt(PEAK_SANITY) < playerSanity) {
-
-                // get item in random non-empty slot
                 int slotIndex = getRandomNonEmptySlotIndex(inventory);
                 ItemStack itemStack = inventory.getItem(slotIndex);
 
