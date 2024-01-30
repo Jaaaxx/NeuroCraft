@@ -98,7 +98,7 @@ public class ClientBlockVerify {
                     int dy = Math.abs(onPos.getY() - block.getY());
                     int dz = Math.abs(onPos.getZ() - block.getZ());
 
-                    if (dx <= 1 && dy <= 1 && dz <= 1) {
+                    if (dx <= 1 && dy <= 3 && dz <= 1) {
                         removeHallucinationBlocks(block, player, iterator);
                     }
 
