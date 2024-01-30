@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -23,6 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.dementia.neurocraft.NeuroCraft.ITEMS;
@@ -72,6 +74,14 @@ public class ClientBlockVerify {
         HallucinationOccuredClient();
     }
 
+
+    public static void removeHallucinationBlocks(BlockPos pos, Player player, Iterator<BlockPos> ite) {
+        var item = player.level().getBlockState(pos).getBlock().asItem();
+        ite.remove();
+        PacketHandler.sendToServer(new SRefreshClientBlockList(toIntArray(pos), Item.getId(item)));
+        HallucinationOccuredClient();
+    }
+
     @SubscribeEvent
     public static void onClientTickEvent(TickEvent.PlayerTickEvent event) {
         if (event.side != LogicalSide.CLIENT)
@@ -81,8 +91,22 @@ public class ClientBlockVerify {
 
         if (tickC++ == 5) {
             var onPos = player.getOnPos();
-            if (hallucinationBlocks.contains(onPos)) {
-                removeHallucinationBlocks(onPos, player);
+            for (Iterator<BlockPos> iterator = hallucinationBlocks.iterator(); iterator.hasNext();) {
+                var block = iterator.next();
+                if (player.level().getBlockState(block).getBlock() == Blocks.AIR) {
+                    int dx = Math.abs(onPos.getX() - block.getX());
+                    int dy = Math.abs(onPos.getY() - block.getY());
+                    int dz = Math.abs(onPos.getZ() - block.getZ());
+
+                    if (dx <= 1 && dy <= 1 && dz <= 1) {
+                        removeHallucinationBlocks(block, player, iterator);
+                    }
+
+                } else {
+                    if (block == onPos) {
+                        removeHallucinationBlocks(block, player, iterator);
+                    }
+                }
             }
             tickC = 0;
         }
