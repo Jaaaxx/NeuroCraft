@@ -55,15 +55,16 @@ public class ServerHallucinations {
 
     @SubscribeEvent
     public static void onMobSpawnEvent(MobSpawnEvent.FinalizeSpawn event) {
-        if (event.getSpawnType() == MobSpawnType.NATURAL || event.getSpawnType() == MobSpawnType.STRUCTURE) {
+        if (event.getSpawnType() != MobSpawnType.CHUNK_GENERATION &&
+            event.getSpawnType() != MobSpawnType.COMMAND &&
+            event.getSpawnType() != MobSpawnType.SPAWN_EGG) {
             var entity = event.getEntity();
             Player np = event.getLevel().getNearestPlayer(entity, 50);
             if (np != null) {
                 playerEntityMap.putIfAbsent(np, new ArrayList<>());
 
                 // Create hallucination
-                if (new Random().nextInt(PEAK_SANITY * 2) < getPlayerSanity(np)) {
-                    System.out.println("Hallucination Spawned!");
+                if (new Random().nextInt(PEAK_SANITY) < getPlayerSanity(np)) {
                     playerEntityMap.get(np).add(entity);
                 }
             }

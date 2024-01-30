@@ -65,17 +65,16 @@ public class ClientControlChanges {
         if (player == null)
             return;
 
-        // TODO FIX THIS
         if (originalKeys != null) {
             for (var km : instance.options.keyMappings) {
                 for (var ok : originalKeys) {
                     if (ok.getName().equals(km.getName())) {
                         km.setKeyModifierAndCode((KeyModifier) null, ok.getKey());
                         instance.options.setKey(km, ok.getKey());
+                        instance.options.save();
                     }
                 }
             }
-            instance.options.save();
             originalKeys = null;
         }
     }
@@ -113,7 +112,6 @@ public class ClientControlChanges {
         while (true) {
             try {
                 Field randomField = keyFields.get(new Random().nextInt(keyFields.size()));
-                System.out.println(randomField);
 
                 var keyMapping = randomField.get(options);
                 if (excludeKey.isPresent() && keyMapping instanceof KeyMapping && excludeKey.get() == keyMapping)

@@ -66,11 +66,9 @@ public class ClientHallucinations {
                 boolean isInPlayerFOV = inPlayerFOV(p, entity);
                 if (isInPlayerFOV && !getHallucinationViewed(entity)) {
                     setHallucinationViewed(entity, true);
-                    System.out.println("Hallucination viewed!");
                 } else if (!isInPlayerFOV && getHallucinationViewed(entity) && !entity.isRemoved()) {
                     PacketHandler.sendToServer(new SRemoveHallucinationPacket(entity.getId()));
                     entity.remove(Entity.RemovalReason.DISCARDED);
-                    System.out.println("Hallucination removed!");
                     HallucinationOccuredClient();
                 }
             }
@@ -98,7 +96,6 @@ public class ClientHallucinations {
 
         boolean inFOV = dotProduct > 0.1 && player.hasLineOfSight(entity);
 
-//        System.out.println("dotProduct result in isSeenByTarget: "+dotProduct+"; inFOV: "+inFOV);
         //https://forums.minecraftforge.net/topic/124315-how-to-get-the-entity-the-player-is-looking-at-1193/
         return inFOV;
     }
