@@ -62,7 +62,7 @@ public class ServerHallucinations {
                 playerEntityMap.putIfAbsent(np, new ArrayList<>());
 
                 // Create hallucination
-                if (new Random().nextInt(PEAK_SANITY * 4) < getPlayerSanity(np)) {
+                if (new Random().nextInt(PEAK_SANITY * 2) < getPlayerSanity(np)) {
                     System.out.println("Hallucination Spawned!");
                     playerEntityMap.get(np).add(entity);
                 }

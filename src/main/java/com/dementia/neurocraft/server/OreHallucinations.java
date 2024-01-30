@@ -39,7 +39,6 @@ public class OreHallucinations {
             var playerSanity = getPlayerSanity(player);
             boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
             var shadowBlocks = new Random().nextBoolean();
-            replaceBlock = true;
             if (replaceBlock) {
                 event.setCanceled(true);
                 var veinBlocks = getAllBlocksInVein(state, event.getPos(), event.getLevel());
