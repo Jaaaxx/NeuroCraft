@@ -7,6 +7,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -29,12 +30,20 @@ import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 public class BlockPlaceHallucinations {
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
-        var player = (ServerPlayer) event.getEntity();
-        if (player == null)
+        if (!(event.getEntity() instanceof ServerPlayer player))
             return;
-
         // AFFECTS SELF
-        var playerSanity = getPlayerSanity(player);
+        ConfuseBlocks(event, player);
+
+        // AFFECTS NEAREST PLAYER
+        ServerPlayer nearestPlayer = (ServerPlayer) event.getLevel().getNearestPlayer(TargetingConditions.DEFAULT.selector((e) -> e !=  player), player);
+        if (nearestPlayer == null)
+            return;
+        ConfuseBlocks(event, nearestPlayer);
+    }
+
+    private static void ConfuseBlocks(BlockEvent.EntityPlaceEvent event, ServerPlayer player) {
+        long playerSanity = getPlayerSanity(player);
         boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
         if (replaceBlock) {
             var bp = event.getPos();
@@ -42,20 +51,14 @@ public class BlockPlaceHallucinations {
             event.getLevel().setBlock(bp, Blocks.AIR.defaultBlockState(), 1);
             PacketHandler.sendVanillaPacket(packet, player, 2);
             PacketHandler.sendToPlayer(new CHallBlockListUpdatePacket(new int[]{bp.getX(), bp.getY(), bp.getZ()}), player);
-        }
-
-
-        // AFFECTS NEARBY PLAYER
-        ServerPlayer nearestPlayer = (ServerPlayer) event.getLevel().getNearestPlayer(player, 10);
-        if (nearestPlayer == null)
-            return;
-
-        replaceBlock = (new Random().nextInt(PEAK_SANITY) < getPlayerSanity(nearestPlayer));
-        if (replaceBlock) {
-            var bp = event.getPos();
-            ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, getRandomBlock());
-            PacketHandler.sendVanillaPacket(packet, nearestPlayer, 2);
-            PacketHandler.sendToPlayer(new CHallBlockListUpdatePacket(new int[]{bp.getX(), bp.getY(), bp.getZ()}), nearestPlayer);
+        } else {
+            replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
+            if (replaceBlock) {
+                var bp = event.getPos();
+                ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, getRandomBlock());
+                PacketHandler.sendVanillaPacket(packet, player, 2);
+                PacketHandler.sendToPlayer(new CHallBlockListUpdatePacket(new int[]{bp.getX(), bp.getY(), bp.getZ()}), player);
+            }
         }
     }
 

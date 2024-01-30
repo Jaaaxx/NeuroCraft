@@ -41,7 +41,7 @@ public class ClientInventoryTroubles {
                 return;
             var inventory = Minecraft.getInstance().player.getInventory();
             var playerSanity = getPlayerSanity(player);
-            if (c++ % 5 == 0 && new Random().nextInt(PEAK_SANITY) < playerSanity) {
+            if (c++ % 2 == 0 && new Random().nextInt(PEAK_SANITY) < playerSanity || new Random().nextInt(PEAK_SANITY) < playerSanity) {
                 int slotIndex = getRandomNonEmptySlotIndex(inventory);
                 ItemStack itemStack = inventory.getItem(slotIndex);
                 var oldName = itemStack.getHoverName().getString();
@@ -52,7 +52,7 @@ public class ClientInventoryTroubles {
                     itemStack.setHoverName(Component.literal(ChatFormatting.OBFUSCATED + createRandomLengthA()));
                 }
             }
-            if (c == 100 && new Random().nextInt(PEAK_SANITY) < playerSanity) {
+            if (c == 60 && new Random().nextInt(PEAK_SANITY) < playerSanity) {
 
                 // get item in random non-empty slot
                 int slotIndex = getRandomNonEmptySlotIndex(inventory);

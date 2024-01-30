@@ -29,7 +29,7 @@ public class ServerInventoryTroubles {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END && event.getServer() != null) {
             if (c++ % 1200 == 0) {
                 for (ServerPlayer p: event.getServer().getPlayerList().getPlayers()) {
-                    boolean spawnHallucination = (new Random().nextInt(PEAK_SANITY * 2) < getPlayerSanity(p));
+                    boolean spawnHallucination = (new Random().nextInt(PEAK_SANITY) < getPlayerSanity(p));
                     if (spawnHallucination)
                         randomizePlayerInventory(p.getInventory());
                 }
