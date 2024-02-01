@@ -1,21 +1,20 @@
 package com.dementia.neurocraft.client;
 
+import com.dementia.neurocraft.common.ClientSoundManager;
+import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.minecraftforge.resource.ResourcePackLoader;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -28,6 +27,7 @@ import static com.dementia.neurocraft.common.Common.HallucinationOccuredClient;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 import static net.minecraft.world.effect.MobEffects.BLINDNESS;
+import static com.dementia.neurocraft.util.ModSoundEventsRegistry.schitzoMusicOptions;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class ClientOptionsChanges {
@@ -37,6 +37,9 @@ public class ClientOptionsChanges {
     private static int originalFramerate = -1;
     private static int originalRD = -1;
     private static int c = 1;
+    private static SoundEvent currentSchitzoMusic = null;
+
+
 
     @SubscribeEvent
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent tick) {
@@ -95,6 +98,7 @@ public class ClientOptionsChanges {
                 var playerSanity = getPlayerSanity(player);
 
                 boolean switchFramerate = new Random().nextInt(PEAK_SANITY) < playerSanity;
+                switchFramerate = true;
                 int framerate = instance.options.framerateLimit().get();
                 if (originalFramerate == -1) {
                     originalFramerate = framerate;
@@ -103,11 +107,14 @@ public class ClientOptionsChanges {
                     if (framerate == originalFramerate) {
                         instance.options.framerateLimit().set(10);
                         player.addEffect(new MobEffectInstance(BLINDNESS, MobEffectInstance.INFINITE_DURATION, 3, false, false, false));
-                        HallucinationOccuredClient();
+                        currentSchitzoMusic = schitzoMusicOptions.get(new Random().nextInt(schitzoMusicOptions.size())).get();
+                        ClientSoundManager.playSound(currentSchitzoMusic, 1, 1);
                     } else {
                         instance.options.framerateLimit().set(originalFramerate);
                         player.removeEffectNoUpdate(BLINDNESS);
                         player.removeEffect(BLINDNESS);
+                        if (currentSchitzoMusic != null)
+                            ClientSoundManager.stopSound(currentSchitzoMusic);
                     }
                     instance.options.save();
                 }

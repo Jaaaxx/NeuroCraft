@@ -77,6 +77,7 @@ public class NeuroCraft {
         public static ClientSoundManager clientSoundManager;
         @SubscribeEvent
         public static void onClientSetup(FMLConstructModEvent event) {
+            // Loads resources to ensure special title screen gets rendered
             event.enqueueWork(() -> {
                 var instance = Minecraft.getInstance();
                 if (instance.options.resourcePacks.contains("mod_resources")) {

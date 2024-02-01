@@ -5,5 +5,33 @@
     "sounds": [
       "neurocraft:confused"
     ]
+  },
+  "uncanny1": {
+    "category": "sound",
+    "subtitle": "neurocraft.uncanny1",
+    "sounds": [
+      "neurocraft:uncanny1"
+    ]
+  },
+  "uncanny2": {
+    "category": "sound",
+    "subtitle": "neurocraft.uncanny2",
+    "sounds": [
+      "neurocraft:uncanny2"
+    ]
+  },
+  "uncanny3": {
+    "category": "sound",
+    "subtitle": "neurocraft.uncanny3",
+    "sounds": [
+      "neurocraft:uncanny3"
+    ]
+  },
+  "uncanny4": {
+    "category": "sound",
+    "subtitle": "neurocraft.uncanny4",
+    "sounds": [
+      "neurocraft:uncanny4"
+    ]
   }
 }

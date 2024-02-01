@@ -22,7 +22,7 @@ public class CAuditoryHallucinationPacket {
 
     public void handle(CustomPayloadEvent.Context context) {
         if (context.isClientSide()) {
-            ClientSoundManager.playSound(sound);
+            ClientSoundManager.playSoundRandomPitchVolume(sound);
         } else {
             context.setPacketHandled(false);
         }
