@@ -24,9 +24,10 @@ import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 public class FoodConfusion {
     @SubscribeEvent
     public static void LivingEntityUseItemEvent(LivingEntityUseItemEvent.Finish event) {
-        var player = (Player) event.getEntity();
-        if (!(player instanceof ServerPlayer))
+        if (!(event.getEntity() instanceof ServerPlayer))
             return;
+        var player = (Player) event.getEntity();
+
         var playerSanity = getPlayerSanity(player);
         boolean spawnHallucination = (new Random().nextInt(PEAK_SANITY) < playerSanity);
         if (spawnHallucination) {

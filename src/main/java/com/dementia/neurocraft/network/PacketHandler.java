@@ -44,6 +44,11 @@ public class PacketHandler {
                 .decoder(CHallBlockListUpdatePacket::new)
                 .consumerMainThread(CHallBlockListUpdatePacket::handle)
                 .add();
+        INSTANCE.messageBuilder(SForceBlockUpdatePacket.class, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SForceBlockUpdatePacket::encode)
+                .decoder(SForceBlockUpdatePacket::new)
+                .consumerMainThread(SForceBlockUpdatePacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object msg) {

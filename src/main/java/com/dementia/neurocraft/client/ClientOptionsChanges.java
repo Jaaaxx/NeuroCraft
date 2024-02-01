@@ -36,7 +36,8 @@ public class ClientOptionsChanges {
     private static double originalBrightness = -1;
     private static int originalFramerate = -1;
     private static int originalRD = -1;
-    private static int c = 1;
+//    private static int c = 1;
+    private static int c = 500;
     private static SoundEvent currentSchitzoMusic = null;
 
 
@@ -89,6 +90,33 @@ public class ClientOptionsChanges {
                 }
             }
 
+            // Random Changes
+            if (c % 550 == 0) {
+                var instance = Minecraft.getInstance();
+                var player = instance.player;
+                if (player == null)
+                    return;
+                var playerSanity = getPlayerSanity(player);
+
+                boolean schitzoMode = new Random().nextInt(PEAK_SANITY) < playerSanity;
+                schitzoMode = true;
+                if (schitzoMode) {
+                    if (!RandomizeTextures.crazyRenderingActive) {
+                        player.addEffect(new MobEffectInstance(BLINDNESS, MobEffectInstance.INFINITE_DURATION, 3, false, false, false));
+                        currentSchitzoMusic = schitzoMusicOptions.get(new Random().nextInt(schitzoMusicOptions.size())).get();
+                        ClientSoundManager.playSound(currentSchitzoMusic, 1, 1);
+                        RandomizeTextures.crazyRenderingActive = true;
+                    } else {
+                        player.removeEffectNoUpdate(BLINDNESS);
+                        player.removeEffect(BLINDNESS);
+                        if (currentSchitzoMusic != null)
+                            ClientSoundManager.stopSound(currentSchitzoMusic);
+                        RandomizeTextures.crazyRenderingActive = false;
+                        HallucinationOccuredClient();
+                    }
+                }
+            }
+
             // Framerate Changes
             if (c % 600 == 0) {
                 var instance = Minecraft.getInstance();
@@ -98,7 +126,7 @@ public class ClientOptionsChanges {
                 var playerSanity = getPlayerSanity(player);
 
                 boolean switchFramerate = new Random().nextInt(PEAK_SANITY) < playerSanity;
-                switchFramerate = true;
+//                switchFramerate = true;
                 int framerate = instance.options.framerateLimit().get();
                 if (originalFramerate == -1) {
                     originalFramerate = framerate;
@@ -106,15 +134,9 @@ public class ClientOptionsChanges {
                 if (switchFramerate || framerate != originalFramerate) {
                     if (framerate == originalFramerate) {
                         instance.options.framerateLimit().set(10);
-                        player.addEffect(new MobEffectInstance(BLINDNESS, MobEffectInstance.INFINITE_DURATION, 3, false, false, false));
-                        currentSchitzoMusic = schitzoMusicOptions.get(new Random().nextInt(schitzoMusicOptions.size())).get();
-                        ClientSoundManager.playSound(currentSchitzoMusic, 1, 1);
+                        HallucinationOccuredClient();
                     } else {
                         instance.options.framerateLimit().set(originalFramerate);
-                        player.removeEffectNoUpdate(BLINDNESS);
-                        player.removeEffect(BLINDNESS);
-                        if (currentSchitzoMusic != null)
-                            ClientSoundManager.stopSound(currentSchitzoMusic);
                     }
                     instance.options.save();
                 }

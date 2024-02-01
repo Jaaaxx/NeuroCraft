@@ -6,6 +6,7 @@ import com.dementia.neurocraft.network.PacketHandler;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.lang.reflect.Field;
+import java.util.BitSet;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -32,6 +34,7 @@ public class BlockPlaceHallucinations {
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player))
             return;
+
         // AFFECTS SELF
         ConfuseBlocks(event, player);
 
@@ -40,6 +43,7 @@ public class BlockPlaceHallucinations {
         if (nearestPlayer == null)
             return;
         ConfuseBlocks(event, nearestPlayer);
+
     }
 
     private static void ConfuseBlocks(BlockEvent.EntityPlaceEvent event, ServerPlayer player) {
