@@ -13,6 +13,9 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.resource.ResourcePackLoader;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -99,7 +102,7 @@ public class ClientOptionsChanges {
                 if (switchFramerate || framerate != originalFramerate) {
                     if (framerate == originalFramerate) {
                         instance.options.framerateLimit().set(10);
-                       player.addEffect(new MobEffectInstance(BLINDNESS, MobEffectInstance.INFINITE_DURATION, 3, false, false, false));
+                        player.addEffect(new MobEffectInstance(BLINDNESS, MobEffectInstance.INFINITE_DURATION, 3, false, false, false));
                         HallucinationOccuredClient();
                     } else {
                         instance.options.framerateLimit().set(originalFramerate);
@@ -117,7 +120,6 @@ public class ClientOptionsChanges {
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanity(player);
-
                 boolean switchKeys = new Random().nextInt(PEAK_SANITY) < playerSanity;
                 if (switchKeys) {
                     if (originalKeys == null) {

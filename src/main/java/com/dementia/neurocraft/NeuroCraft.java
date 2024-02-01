@@ -5,6 +5,7 @@ import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -74,7 +76,15 @@ public class NeuroCraft {
         static int c = 1;
         public static ClientSoundManager clientSoundManager;
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
+        public static void onClientSetup(FMLConstructModEvent event) {
+            event.enqueueWork(() -> {
+                var instance = Minecraft.getInstance();
+                if (instance.options.resourcePacks.contains("mod_resources")) {
+                    instance.options.resourcePacks.remove("mod_resources");
+                    instance.options.resourcePacks.add("mod_resources");
+                    instance.options.save();
+                }
+            });
         }
     }
 }
