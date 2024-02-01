@@ -6,6 +6,13 @@
       "neurocraft:confused"
     ]
   },
+  "staticswitch": {
+    "category": "sound",
+    "subtitle": "neurocraft.staticswitch",
+    "sounds": [
+      "neurocraft:staticswitch"
+    ]
+  },
   "uncanny1": {
     "category": "sound",
     "subtitle": "neurocraft.uncanny1",

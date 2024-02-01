@@ -1,6 +1,7 @@
 package com.dementia.neurocraft;
 
 import com.dementia.neurocraft.common.ClientSoundManager;
+import com.dementia.neurocraft.util.ModBlocksRegistry;
 import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -47,6 +48,7 @@ public class NeuroCraft {
 
         MinecraftForge.EVENT_BUS.register(this);
         ModSoundEventsRegistry.register(modEventBus);
+        ModBlocksRegistry.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }

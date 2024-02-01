@@ -15,6 +15,7 @@ public class ModSoundEventsRegistry {
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, NeuroCraft.MODID);
 
     public static final RegistryObject<SoundEvent> CONFUSED = registerSoundEvent("confused");
+    public static final RegistryObject<SoundEvent> STATICSWITCH = registerSoundEvent("staticswitch");
     public static final RegistryObject<SoundEvent> UNCANNY1 = registerSoundEvent("uncanny1");
     public static final RegistryObject<SoundEvent> UNCANNY2 = registerSoundEvent("uncanny2");
     public static final RegistryObject<SoundEvent> UNCANNY3 = registerSoundEvent("uncanny3");

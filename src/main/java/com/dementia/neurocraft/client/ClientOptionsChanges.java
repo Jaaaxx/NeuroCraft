@@ -126,7 +126,6 @@ public class ClientOptionsChanges {
                 var playerSanity = getPlayerSanity(player);
 
                 boolean switchFramerate = new Random().nextInt(PEAK_SANITY) < playerSanity;
-//                switchFramerate = true;
                 int framerate = instance.options.framerateLimit().get();
                 if (originalFramerate == -1) {
                     originalFramerate = framerate;
