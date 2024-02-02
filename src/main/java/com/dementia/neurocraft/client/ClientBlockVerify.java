@@ -50,8 +50,7 @@ public class ClientBlockVerify {
 
     @SubscribeEvent
     public static void onClientPlaceBlockEvent(BlockEvent.EntityPlaceEvent event) {
-        Player player = (Player) event.getEntity();
-        if (player == null)
+        if (!(event.getEntity() instanceof Player player))
             return;
         var pos = getPlayerPOVHitResult((Level) event.getLevel(), player, net.minecraft.world.level.ClipContext.Fluid.NONE).getBlockPos();
         if (hallucinationBlocks.contains(pos)) {
