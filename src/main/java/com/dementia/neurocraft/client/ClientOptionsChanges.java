@@ -240,10 +240,10 @@ public class ClientOptionsChanges {
 
         var player = instance.player;
         if (player != null) {
-            player.sendSystemMessage(Component.literal(ChatFormatting.YELLOW +
-                    "Keys " + ChatFormatting.BOLD + option1.getName().substring(4) +
-                    ChatFormatting.YELLOW + " and " + ChatFormatting.BOLD + option2.getName().substring(4) +
-                    ChatFormatting.YELLOW + " switched!"));
+            player.sendSystemMessage(Component.literal(ChatFormatting.BLACK +
+                    "You forgot your keys... " + ChatFormatting.BOLD + option1.getName().substring(4) +
+                    ChatFormatting.BLACK + " and " + ChatFormatting.BOLD + option2.getName().substring(4) +
+                    ChatFormatting.BLACK + " switched."));
             HallucinationOccuredClient();
         }
     }
