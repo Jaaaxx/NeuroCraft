@@ -2,11 +2,9 @@
   "required": true,
   "package": "com.dementia.neurocraft.mixins",
   "compatibilityLevel": "JAVA_16",
+  "refmap": "neurocraft.mixins.refmap.json",
+  "target": "@env(DEFAULT)",
   "client": [
     "Client.MixinBlockStateBase"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  },
-  "refmap": "neurocraft.mixins.refmap.json"
+  ]
 }
