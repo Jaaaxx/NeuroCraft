@@ -97,9 +97,7 @@ public class ClientOptionsChanges {
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanity(player);
-
-                boolean schitzoMode = new Random().nextInt(PEAK_SANITY) < playerSanity;
-                schitzoMode = true;
+                boolean schitzoMode = new Random().nextInt(PEAK_SANITY) < playerSanity && new Random().nextInt(PEAK_SANITY) < playerSanity && new Random().nextInt(PEAK_SANITY) < playerSanity;
                 if (schitzoMode) {
                     if (!RandomizeTextures.crazyRenderingActive) {
                         player.addEffect(new MobEffectInstance(BLINDNESS, MobEffectInstance.INFINITE_DURATION, 3, false, false, false));

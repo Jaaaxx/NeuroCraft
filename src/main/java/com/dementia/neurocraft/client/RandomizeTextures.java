@@ -9,14 +9,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import static com.dementia.neurocraft.NeuroCraft.MODID;
@@ -29,7 +32,8 @@ public class RandomizeTextures {
     private static boolean prevCRA = false;
     private static boolean typeWASNORENDER = false;
     private static int c = 0;
-    private static final ArrayList<BlockPos> changedBlocks = new ArrayList<>();
+    public static final HashSet<BlockPos> changedBlocks = new HashSet<>();
+    public static final HashSet<BlockPos> changedLiquids = new HashSet<>();
 
     @SubscribeEvent
     public static void onClientRenderEvent(RenderLevelStageEvent event) {
@@ -43,7 +47,6 @@ public class RandomizeTextures {
             var level = player.level();
             if (crazyRenderingActive) {
                 var nearbyBlocks = getBlocksInRadius(level, player.getOnPos(), 5);
-                var copytypeWASNORENDER = typeWASNORENDER;
                 if (new Random().nextBoolean()) {
                     // removes all block textures
                     nearbyBlocks.forEach((pos, state) -> {
@@ -51,7 +54,11 @@ public class RandomizeTextures {
                         if (block != Blocks.AIR && block != Blocks.CAVE_AIR && block != Blocks.VOID_AIR) {
                             var v1 = ModBlocksRegistry.SMOOTH_BLOCK.get();
                             player.clientLevel.setBlock(pos, v1.defaultBlockState(), 1);
-                            changedBlocks.add(pos);
+                            if (block instanceof LiquidBlock || block instanceof IFluidBlock) {
+                                changedLiquids.add(pos);
+                            } else {
+                                changedBlocks.add(pos);
+                            }
                         }
                     });
                     if (!typeWASNORENDER) {
@@ -65,21 +72,32 @@ public class RandomizeTextures {
                         if (block != Blocks.AIR && block != Blocks.CAVE_AIR && block != Blocks.VOID_AIR) {
                             var v1 = BlockPlaceHallucinations.getRandomBlock();
                             player.clientLevel.setBlock(pos, v1, 1);
-                            changedBlocks.add(pos);
+                            if (block instanceof LiquidBlock || block instanceof IFluidBlock) {
+                                changedLiquids.add(pos);
+                            } else {
+                                changedBlocks.add(pos);
+                            }
                         }
                     });
                     if (typeWASNORENDER) {
-                        ClientSoundManager.playSound(STATICSWITCH.get(), 1, 1);
+                        ClientSoundManager.playSound(STATICSWITCH.get(), 0.25f, 1);
                     }
                     typeWASNORENDER = false;
                 }
             }
-
-            if (!crazyRenderingActive && !changedBlocks.isEmpty()) {
-                for (var pos : changedBlocks) {
-                    PacketHandler.sendToServer(new SForceBlockUpdatePacket(toIntArray(pos)));
+            if (!crazyRenderingActive) {
+                if (!changedBlocks.isEmpty()) {
+                    for (var pos : changedBlocks) {
+                        PacketHandler.sendToServer(new SForceBlockUpdatePacket(toIntArray(pos)));
+                    }
+                    changedBlocks.clear();
                 }
-                changedBlocks.clear();
+                if (!changedLiquids.isEmpty()) {
+                    for (var pos : changedLiquids) {
+                        PacketHandler.sendToServer(new SForceBlockUpdatePacket(toIntArray(pos)));
+                    }
+                    changedBlocks.clear();
+                }
             }
 
             c = 1;
