@@ -15,9 +15,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -30,9 +32,11 @@ import java.util.List;
 
 import static com.dementia.neurocraft.NeuroCraft.*;
 import static com.dementia.neurocraft.common.Common.HallucinationOccuredClient;
+import static com.dementia.neurocraft.network.CHallBlockListUpdatePacket.decode;
 import static com.dementia.neurocraft.network.SRefreshClientBlockList.toIntArray;
+import static net.minecraft.client.Minecraft.getInstance;
 
-@Mod.EventBusSubscriber(modid = MODID)
+@Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ClientBlockVerify {
     public static Level hallucinationBlockLevel;
     public static List<BlockPos> hallucinationBlocks = new ArrayList<>();
@@ -125,6 +129,21 @@ public class ClientBlockVerify {
         double d0 = player.getBlockReach();
         Vec3 vec31 = vec3.add((double) f6 * d0, (double) f5 * d0, (double) f7 * d0);
         return level.clip(new ClipContext(vec3, vec31, net.minecraft.world.level.ClipContext.Block.OUTLINE, context, player));
+    }
+
+
+
+    public static void handleClientSide(int[] positions) {
+        hallucinationBlocks.addAll(decode(positions));
+        if (hallucinationBlocks.size() >= 5) {
+            var player = Minecraft.getInstance().player;
+            var blockPos = hallucinationBlocks.get(0);
+
+            if (player == null)
+                return;
+
+            removeHallucinationBlocks(blockPos, player);
+        }
     }
 
 

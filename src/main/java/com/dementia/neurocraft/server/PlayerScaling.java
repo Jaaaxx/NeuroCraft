@@ -18,7 +18,7 @@ public class PlayerScaling {
     static private int c = 0;
 
     // 800 Takes about 2 hours to reach
-    static public final int PEAK_SANITY = 50;
+    static public final int PEAK_SANITY = 10;
 
     public static void giveInitialSanity(final Player player) {
         player.getPersistentData().putLong("Sanity", 0);

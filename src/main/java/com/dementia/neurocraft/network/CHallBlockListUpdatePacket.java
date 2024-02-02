@@ -4,16 +4,14 @@ import com.dementia.neurocraft.client.ClientBlockVerify;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.fml.DistExecutor;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import static com.dementia.neurocraft.client.ClientBlockVerify.hallucinationBlocks;
 import static com.dementia.neurocraft.client.ClientBlockVerify.removeHallucinationBlocks;
-import static com.dementia.neurocraft.client.ClientHallucinations.playerEntities;
 
 public class CHallBlockListUpdatePacket {
     private final int[] blockPosList;
@@ -32,22 +30,14 @@ public class CHallBlockListUpdatePacket {
 
     public void handle(CustomPayloadEvent.Context context) {
         if (context.isClientSide()) {
-            hallucinationBlocks.addAll(decode(blockPosList));
-            if (hallucinationBlocks.size() >= 5) {
-                var player = Minecraft.getInstance().player;
-                var blockPos = hallucinationBlocks.get(0);
-
-                if (player == null)
-                    return;
-
-                removeHallucinationBlocks(blockPos, player);
-            }
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientBlockVerify.handleClientSide(blockPosList));
         } else {
             context.setPacketHandled(false);
         }
     }
 
-    public ArrayList<BlockPos> decode(int[] positions) {
+
+    public static ArrayList<BlockPos> decode(int[] positions) {
         ArrayList<BlockPos> blockList = new ArrayList<>();
         int x = 0, y = 0, z;
         int c = 1;

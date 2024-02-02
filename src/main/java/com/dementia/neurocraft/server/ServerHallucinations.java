@@ -132,6 +132,7 @@ public class ServerHallucinations {
 
 
         if (entity != null) {
+            // TODO SET DROPS TO NULL & MAKE ENTITIES DISSAPEAR OUTSIDE OF RADIUS / PICKUP FURNACE NICK ITEMS
             if (entityType == EntityType.SKELETON) {
                 ItemStack bow = new ItemStack(Items.BOW);
                 entity.setItemSlot(EquipmentSlot.MAINHAND, bow);

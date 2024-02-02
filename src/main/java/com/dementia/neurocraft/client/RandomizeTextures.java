@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -26,7 +27,7 @@ import static com.dementia.neurocraft.NeuroCraft.MODID;
 import static com.dementia.neurocraft.network.SRefreshClientBlockList.toIntArray;
 import static com.dementia.neurocraft.util.ModSoundEventsRegistry.STATICSWITCH;
 
-@Mod.EventBusSubscriber(modid = MODID)
+@Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class RandomizeTextures {
     public static boolean crazyRenderingActive = false;
     private static boolean prevCRA = false;

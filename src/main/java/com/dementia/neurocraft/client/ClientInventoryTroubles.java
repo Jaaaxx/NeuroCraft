@@ -12,6 +12,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,11 +26,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import static com.dementia.neurocraft.NeuroCraft.MODID;
 import static com.dementia.neurocraft.client.ClientHallucinations.checkPlayerHallucinationViewings;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
-@Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
+@Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ClientInventoryTroubles {
     private static int c = 1;
 
@@ -41,7 +43,7 @@ public class ClientInventoryTroubles {
                 return;
             var inventory = Minecraft.getInstance().player.getInventory();
             var playerSanity = getPlayerSanity(player);
-            if (c++ % 2 == 0 && new Random().nextInt(PEAK_SANITY) < playerSanity || new Random().nextInt(PEAK_SANITY) < playerSanity) {
+            if (c++ % 2 == 0 && new Random().nextInt(PEAK_SANITY) / 3 < playerSanity) {
                 int slotIndex = getRandomNonEmptySlotIndex(inventory);
                 ItemStack itemStack = inventory.getItem(slotIndex);
                 var oldName = itemStack.getHoverName().getString();
