@@ -13,7 +13,7 @@ public class EnabledFeatures {
     public final static boolean OPTION_BRIGHTNESS_CHANGES = true;
     public final static boolean OPTION_FRAMERATE_CHANGES = true;
     public final static boolean OPTION_CONTROL_SWAPS = true;
-    public final static boolean OPTION_RENDER_DISTANCE_CHANGES = true;
+    public final static boolean OPTION_RENDER_DISTANCE_CHANGES = false;
     public final static boolean OPTION_SCHITZOWORLD = true;
     public final static boolean AUDITORY_HALLUCINATIONS = true;
     public final static boolean FOOD_HALLUCINATIONS = true;
