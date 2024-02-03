@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import java.lang.reflect.Field;
 import java.util.Random;
 
+import static com.dementia.neurocraft.EnabledFeatures.FOOD_HALLUCINATIONS;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
@@ -24,6 +25,8 @@ import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 public class FoodConfusion {
     @SubscribeEvent
     public static void LivingEntityUseItemEvent(LivingEntityUseItemEvent.Finish event) {
+        if (!FOOD_HALLUCINATIONS)
+            return;
         if (!(event.getEntity() instanceof ServerPlayer))
             return;
         var player = (Player) event.getEntity();

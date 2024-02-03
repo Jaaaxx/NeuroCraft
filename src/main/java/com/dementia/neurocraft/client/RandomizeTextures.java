@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.Mod;
@@ -104,6 +105,21 @@ public class RandomizeTextures {
             c = 1;
         }
     }
+
+
+    @SubscribeEvent
+    public static void onClientRenderEvent(LivingDeathEvent event) {
+        if (crazyRenderingActive) {
+            var instance = Minecraft.getInstance();
+            var player = instance.player;
+            if (player == null)
+                return;
+            if (event.getEntity() == player) {
+                crazyRenderingActive = false;
+            }
+        }
+    }
+
 
     // You are telling the compiler the two parameters use the same T
     private static <T extends Comparable<T>> BlockState copyProperty(BlockState from, BlockState to, Property<T> property) {

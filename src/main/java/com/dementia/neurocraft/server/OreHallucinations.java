@@ -18,6 +18,7 @@ import org.spongepowered.asm.util.Constants;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.dementia.neurocraft.EnabledFeatures.ORE_HALLUCINATIONS;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
@@ -32,6 +33,8 @@ public class OreHallucinations {
 
     @SubscribeEvent
     public static void onBlockBreakEvent(BlockEvent.BreakEvent event) {
+        if (!ORE_HALLUCINATIONS)
+            return;
         var state = event.getState();
         var player = event.getPlayer();
         event.getPos();

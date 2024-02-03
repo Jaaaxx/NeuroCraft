@@ -2,25 +2,18 @@ package com.dementia.neurocraft.client;
 
 import com.dementia.neurocraft.network.PacketHandler;
 import com.dementia.neurocraft.network.SRefreshClientBlockList;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -30,26 +23,38 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.dementia.neurocraft.NeuroCraft.*;
+import static com.dementia.neurocraft.NeuroCraft.MODID;
 import static com.dementia.neurocraft.common.Common.HallucinationOccuredClient;
 import static com.dementia.neurocraft.network.CHallBlockListUpdatePacket.decode;
 import static com.dementia.neurocraft.network.SRefreshClientBlockList.toIntArray;
-import static net.minecraft.client.Minecraft.getInstance;
 
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ClientBlockVerify {
     public static Level hallucinationBlockLevel;
-    public static List<BlockPos> hallucinationBlocks = new ArrayList<>();
+    public static final List<BlockPos> hallucinationBlocks = new ArrayList<>();
     private static int tickC = 1;
+    // TODO FIX
 
     @SubscribeEvent
     public static void onClientBreakBlockEvent(PlayerInteractEvent.LeftClickBlock event) {
         if (event.getAction() == PlayerInteractEvent.LeftClickBlock.Action.STOP) {
             var pos = event.getPos();
-            if (hallucinationBlocks.contains(pos)) {
-                removeHallucinationBlocks(pos, event.getEntity());
+            if (arrayContainsBlockPos(pos)) {
+                removeHallucinationBlocks(pos);
             }
         }
+    }
+
+    public static void addToHallucinationBlocks(List<BlockPos> blocks) {
+        hallucinationBlocks.addAll(blocks);
+    }
+
+    public static int getHallucinationBlockSize(int[] blocks) {
+        return hallucinationBlocks.size();
+    }
+
+    public static List<BlockPos> getHallucinationBlocks() {
+        return hallucinationBlocks;
     }
 
     @SubscribeEvent
@@ -57,8 +62,8 @@ public class ClientBlockVerify {
         if (!(event.getEntity() instanceof Player player))
             return;
         var pos = getPlayerPOVHitResult((Level) event.getLevel(), player, net.minecraft.world.level.ClipContext.Fluid.NONE).getBlockPos();
-        if (hallucinationBlocks.contains(pos)) {
-            removeHallucinationBlocks(pos, (Player) event.getEntity());
+        if (arrayContainsBlockPos(pos)) {
+            removeHallucinationBlocks(pos);
             event.setCanceled(true);
         }
     }
@@ -70,18 +75,17 @@ public class ClientBlockVerify {
         return level.clip(new ClipContext(player.getEyePosition(), player.getEyePosition().add(vecX * clipDistance, vecY * clipDistance, vecZ * clipDistance), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player)).getLocation();
     }
 
-    public static void removeHallucinationBlocks(BlockPos pos, Player player) {
-        var item = player.level().getBlockState(pos).getBlock().asItem();
+    public static void removeHallucinationBlocks(BlockPos pos) {
         hallucinationBlocks.remove(pos);
-        PacketHandler.sendToServer(new SRefreshClientBlockList(toIntArray(pos), Item.getId(item)));
+        PacketHandler.sendToServer(new SRefreshClientBlockList(toIntArray(pos)));
         HallucinationOccuredClient();
     }
 
 
-    public static void removeHallucinationBlocks(BlockPos pos, Player player, Iterator<BlockPos> ite) {
-        var item = player.level().getBlockState(pos).getBlock().asItem();
+    public static void removeHallucinationBlocks(BlockPos pos, Iterator<BlockPos> ite) {
         ite.remove();
-        PacketHandler.sendToServer(new SRefreshClientBlockList(toIntArray(pos), Item.getId(item)));
+        hallucinationBlocks.remove(pos);
+        PacketHandler.sendToServer(new SRefreshClientBlockList(toIntArray(pos)));
         HallucinationOccuredClient();
     }
 
@@ -102,12 +106,12 @@ public class ClientBlockVerify {
                     int dz = Math.abs(onPos.getZ() - block.getZ());
 
                     if (dx <= 1 && dy <= 3 && dz <= 1) {
-                        removeHallucinationBlocks(block, player, iterator);
+                        removeHallucinationBlocks(block, iterator);
                     }
 
                 } else {
-                    if (block == onPos) {
-                        removeHallucinationBlocks(block, player, iterator);
+                    if (block.getX() == onPos.getX() && block.getY() == onPos.getY() && block.getZ() == onPos.getZ() ) {
+                        removeHallucinationBlocks(block, iterator);
                     }
                 }
             }
@@ -131,21 +135,14 @@ public class ClientBlockVerify {
         return level.clip(new ClipContext(vec3, vec31, net.minecraft.world.level.ClipContext.Block.OUTLINE, context, player));
     }
 
-
-
-    public static void handleClientSide(int[] positions) {
-        hallucinationBlocks.addAll(decode(positions));
-        if (hallucinationBlocks.size() >= 5) {
-            var player = Minecraft.getInstance().player;
-            var blockPos = hallucinationBlocks.get(0);
-
-            if (player == null)
-                return;
-
-            removeHallucinationBlocks(blockPos, player);
+    private static boolean arrayContainsBlockPos(BlockPos blockPos) {
+        for (BlockPos block : hallucinationBlocks) {
+            if (block.getX() == blockPos.getX() && block.getY() == blockPos.getY() && block.getZ() == blockPos.getZ()) {
+                return true;
+            }
         }
+        return false;
     }
-
 
 //
 //    @SubscribeEvent

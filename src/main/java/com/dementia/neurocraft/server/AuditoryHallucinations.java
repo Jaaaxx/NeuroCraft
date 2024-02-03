@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.dementia.neurocraft.EnabledFeatures.AUDITORY_HALLUCINATIONS;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
@@ -47,6 +48,8 @@ public class AuditoryHallucinations {
     }
 
     private static void spawnAuditoryHallucinations(TickEvent.ServerTickEvent event) {
+        if (!AUDITORY_HALLUCINATIONS)
+            return;
         for (ServerPlayer p : event.getServer().getPlayerList().getPlayers()) {
             var playerSanity = getPlayerSanity(p);
             boolean spawnHallucination = (new Random().nextInt((int) (PEAK_SANITY / 1.5)) < playerSanity);

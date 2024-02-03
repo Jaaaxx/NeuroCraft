@@ -49,6 +49,16 @@ public class PacketHandler {
                 .decoder(SForceBlockUpdatePacket::new)
                 .consumerMainThread(SForceBlockUpdatePacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CUpdatePlayerSanityPacket.class, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CUpdatePlayerSanityPacket::encode)
+                .decoder(CUpdatePlayerSanityPacket::new)
+                .consumerMainThread(CUpdatePlayerSanityPacket::handle)
+                .add();
+        INSTANCE.messageBuilder(SUpdatePlayerSanityPacket.class, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SUpdatePlayerSanityPacket::encode)
+                .decoder(SUpdatePlayerSanityPacket::new)
+                .consumerMainThread(SUpdatePlayerSanityPacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object msg) {

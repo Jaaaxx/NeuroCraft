@@ -25,6 +25,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.dementia.neurocraft.EnabledFeatures.FAKE_PLACE_BLOCKS;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
@@ -32,6 +33,9 @@ import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 public class BlockPlaceHallucinations {
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
+        if (!FAKE_PLACE_BLOCKS)
+            return;
+
         if (!(event.getEntity() instanceof ServerPlayer player))
             return;
 
@@ -48,6 +52,7 @@ public class BlockPlaceHallucinations {
 
     private static void ConfuseBlocks(BlockEvent.EntityPlaceEvent event, ServerPlayer player) {
         long playerSanity = getPlayerSanity(player);
+        System.out.println(playerSanity);
         boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
         if (replaceBlock) {
             var bp = event.getPos();

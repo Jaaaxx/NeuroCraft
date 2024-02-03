@@ -26,8 +26,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import static com.dementia.neurocraft.EnabledFeatures.ITEMS_LOSE_LETTERS;
+import static com.dementia.neurocraft.EnabledFeatures.REPLACE_ITEMS_IN_INVENTORY;
 import static com.dementia.neurocraft.NeuroCraft.MODID;
 import static com.dementia.neurocraft.client.ClientHallucinations.checkPlayerHallucinationViewings;
+import static com.dementia.neurocraft.client.PlayerSanityClientHandler.getPlayerSanityClient;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
@@ -42,9 +45,14 @@ public class ClientInventoryTroubles {
             if (player == null)
                 return;
             var inventory = Minecraft.getInstance().player.getInventory();
-            var playerSanity = getPlayerSanity(player);
+            var playerSanity = getPlayerSanityClient();
             if (c++ % 2 == 0 && new Random().nextInt(PEAK_SANITY) / 3 < playerSanity) {
+                if (!ITEMS_LOSE_LETTERS)
+                    return;
+
                 int slotIndex = getRandomNonEmptySlotIndex(inventory);
+                if (slotIndex == -1)
+                    return;
                 ItemStack itemStack = inventory.getItem(slotIndex);
                 var oldName = itemStack.getHoverName().getString();
                 var newName = removeRandomChar(oldName);
@@ -54,8 +62,13 @@ public class ClientInventoryTroubles {
                     itemStack.setHoverName(Component.literal(ChatFormatting.OBFUSCATED + createRandomLengthA()));
                 }
             }
-            if (c == 60 && new Random().nextInt(PEAK_SANITY) < playerSanity) {
+            if (c % 30 == 0 && new Random().nextInt(PEAK_SANITY) < playerSanity) {
+                if (!REPLACE_ITEMS_IN_INVENTORY)
+                    return;
+
                 int slotIndex = getRandomNonEmptySlotIndex(inventory);
+                if (slotIndex == -1)
+                    return;
                 ItemStack itemStack = inventory.getItem(slotIndex);
 
                 inventory.setItem(slotIndex, new ItemStack(getRandomItem(), itemStack.getCount()));
@@ -74,7 +87,7 @@ public class ClientInventoryTroubles {
             }
         }
         // select a random index from the non-empty slots
-        return nonEmptySlots.get(new Random().nextInt(nonEmptySlots.size()));
+        return nonEmptySlots.isEmpty() ? -1:  nonEmptySlots.get(new Random().nextInt(nonEmptySlots.size()));
     }
 
 

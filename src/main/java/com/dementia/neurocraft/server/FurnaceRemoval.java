@@ -1,33 +1,33 @@
 package com.dementia.neurocraft.server;
 
 import com.dementia.neurocraft.NeuroCraft;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.FurnaceMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
+import static com.dementia.neurocraft.EnabledFeatures.FURNACE_UNCOOKING;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 @Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
 public class FurnaceRemoval {
+    // TODO Remove item picked up from furnace AFTER inventory closed for bonus laughs
     @SubscribeEvent
     public static void onPlayerOpenFurnaceEvent(PlayerContainerEvent.Open event) {
+        if (!FURNACE_UNCOOKING)
+            return;
         var pool = List.of(new MenuType[]{
                 MenuType.FURNACE, MenuType.SMOKER
         });

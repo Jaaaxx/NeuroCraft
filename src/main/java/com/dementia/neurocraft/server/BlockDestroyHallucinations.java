@@ -22,6 +22,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.dementia.neurocraft.EnabledFeatures.FAKE_BREAK_BLOCKS;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
@@ -29,6 +30,9 @@ import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 public class BlockDestroyHallucinations {
     @SubscribeEvent
     public static void onBlockDestroyEvent(BlockEvent.BreakEvent event) {
+        if (!FAKE_BREAK_BLOCKS)
+            return;
+
         var player = (ServerPlayer) event.getPlayer();
         if (player == null)
             return;

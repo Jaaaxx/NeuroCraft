@@ -1,20 +1,11 @@
 package com.dementia.neurocraft.network;
 
-import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import static com.dementia.neurocraft.client.ClientHallucinations.playerEntities;
 

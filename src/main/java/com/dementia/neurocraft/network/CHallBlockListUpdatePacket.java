@@ -1,6 +1,5 @@
 package com.dementia.neurocraft.network;
 
-import com.dementia.neurocraft.client.ClientBlockVerify;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -10,12 +9,11 @@ import net.minecraftforge.fml.DistExecutor;
 
 import java.util.ArrayList;
 
-import static com.dementia.neurocraft.client.ClientBlockVerify.hallucinationBlocks;
-import static com.dementia.neurocraft.client.ClientBlockVerify.removeHallucinationBlocks;
+import static com.dementia.neurocraft.client.ClientBlockVerify.*;
 
 public class CHallBlockListUpdatePacket {
     private final int[] blockPosList;
-
+    // TODO FIX
     public CHallBlockListUpdatePacket(int[] blockPosList) {
         this.blockPosList = blockPosList;
     }
@@ -30,12 +28,20 @@ public class CHallBlockListUpdatePacket {
 
     public void handle(CustomPayloadEvent.Context context) {
         if (context.isClientSide()) {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientBlockVerify.handleClientSide(blockPosList));
+            var player = Minecraft.getInstance().player;
+            if (player == null)
+                return;
+            addToHallucinationBlocks(decode(blockPosList));
+            var hallBlocks = getHallucinationBlocks();
+            if (hallBlocks.size() >= 5) {
+                var blockPos = hallBlocks.get(0);
+                removeHallucinationBlocks(blockPos);
+            }
+            context.setPacketHandled(true);
         } else {
             context.setPacketHandled(false);
         }
     }
-
 
     public static ArrayList<BlockPos> decode(int[] positions) {
         ArrayList<BlockPos> blockList = new ArrayList<>();

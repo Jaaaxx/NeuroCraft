@@ -1,5 +1,6 @@
 package com.dementia.neurocraft.server;
 
+import com.dementia.neurocraft.EnabledFeatures;
 import com.dementia.neurocraft.NeuroCraft;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.entity.player.Player;
@@ -13,18 +14,26 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Random;
+
 @EventBusSubscriber(modid = NeuroCraft.MODID)
 public class PlayerScaling {
     static private int c = 0;
+    static public final int PEAK_SANITY = 800;
+    static public final long INITIAL_SANITY = 1;
+    static public final int SCALING_INTERVAL = 30; // seconds
 
-    // 800 Takes about 2 hours to reach
-    static public final int PEAK_SANITY = 10;
+    private static boolean sanityGiven = false;
 
     public static void giveInitialSanity(final Player player) {
-        player.getPersistentData().putLong("Sanity", 0);
+        player.getPersistentData().putLong("Sanity", INITIAL_SANITY);
     }
 
     public static long getPlayerSanity(final Player player) {
+        if (!sanityGiven) {
+            sanityGiven = true;
+            giveInitialSanity(player);
+        }
         return player.getPersistentData().getLong("Sanity");
     }
 
@@ -32,13 +41,15 @@ public class PlayerScaling {
         long currentSanity = getPlayerSanity(player);
         if (currentSanity >= PEAK_SANITY)
             return;
-        player.getPersistentData().putLong("Sanity", currentSanity + 1);
+        if (EnabledFeatures.PLAYER_SCALING) {
+            player.getPersistentData().putLong("Sanity", currentSanity + 1);
+        }
     }
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.type == TickEvent.Type.PLAYER && event.side == LogicalSide.SERVER) {
-            if (c++ == 20 * 30) {
+            if (c++ == 20 * SCALING_INTERVAL) {
                 incrementPlayerSanity(event.player);
                 LogUtils.getLogger().info("" + getPlayerSanity(event.player));
                 c = 0;

@@ -15,35 +15,26 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.util.List;
 
+import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 import static com.dementia.neurocraft.server.ServerHallucinations.getPlayerEntities;
 
-public class SRefreshClientBlockList {
-    private final int[] blockPos;
-
-
-    public SRefreshClientBlockList(int[] blockPos) {
-        this.blockPos = blockPos;
+public class SUpdatePlayerSanityPacket {
+    public SUpdatePlayerSanityPacket() {
     }
 
-    public SRefreshClientBlockList(FriendlyByteBuf buffer) {
-        this(buffer.readVarIntArray());
+    public SUpdatePlayerSanityPacket(FriendlyByteBuf buffer) {
     }
 
     public void encode(FriendlyByteBuf buffer) {
-        buffer.writeVarIntArray(blockPos);
     }
 
     public void handle(CustomPayloadEvent.Context context) {
         if (context.isServerSide()) {
-            BlockPos bp = new BlockPos(blockPos[0], blockPos[1], blockPos[2]);
             ServerPlayer player = context.getSender();
             if (player == null)
                 return;
-            Level level = player.level();
-            BlockState bs = level.getBlockState(bp);
-
-            ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, bs);
-            PacketHandler.sendVanillaPacket(packet, player);
+            PacketHandler.sendToPlayer(new CUpdatePlayerSanityPacket(getPlayerSanity(player)), player);
+            context.setPacketHandled(true);
         } else {
             context.setPacketHandled(false);
         }

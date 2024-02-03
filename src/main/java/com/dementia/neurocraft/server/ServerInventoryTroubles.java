@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static com.dementia.neurocraft.EnabledFeatures.ITEMS_SWAP_POSITIONS_IN_INVENTORY;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
@@ -26,6 +27,9 @@ public class ServerInventoryTroubles {
 
     @SubscribeEvent
     public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
+        if (!ITEMS_SWAP_POSITIONS_IN_INVENTORY)
+            return;
+
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END && event.getServer() != null) {
             if (c++ % 1200 == 0) {
                 for (ServerPlayer p: event.getServer().getPlayerList().getPlayers()) {

@@ -15,6 +15,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,6 +24,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import java.util.*;
 import java.util.function.Predicate;
 
+import static com.dementia.neurocraft.EnabledFeatures.ENEMY_HALLUCINATIONS;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
 import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
@@ -36,7 +38,7 @@ public class ServerHallucinations {
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            if (c++ % (20 * 2) == 0) {
+            if (c++ % (20 * 8) == 0) {
                 runHallucinationSpawns(event);
                 for (ServerPlayer p : event.getServer().getPlayerList().getPlayers()) {
                     sendNewHallucinationListPacket(p);
@@ -55,6 +57,9 @@ public class ServerHallucinations {
 
     @SubscribeEvent
     public static void onMobSpawnEvent(MobSpawnEvent.FinalizeSpawn event) {
+        if (!ENEMY_HALLUCINATIONS)
+            return;
+
         if (event.getSpawnType() != MobSpawnType.CHUNK_GENERATION &&
             event.getSpawnType() != MobSpawnType.COMMAND &&
             event.getSpawnType() != MobSpawnType.SPAWN_EGG) {
@@ -99,7 +104,18 @@ public class ServerHallucinations {
         }
     }
 
+    @SubscribeEvent
+    public static void onLivingDropsEvent(LivingDropsEvent event) {
+        for (List<Entity> entities: playerEntityMap.values()) {
+            if (entities.contains(event.getEntity()))
+                event.setCanceled(true);
+        }
+    }
+
     private static void runHallucinationSpawns(TickEvent.ServerTickEvent event) {
+        if (!ENEMY_HALLUCINATIONS)
+            return;
+
         for (Player p : event.getServer().getPlayerList().getPlayers()) {
             var playerSanity = getPlayerSanity(p);
             boolean spawnHallucination = (new Random().nextInt((int) (PEAK_SANITY*1.5)) < playerSanity);
@@ -132,7 +148,6 @@ public class ServerHallucinations {
 
 
         if (entity != null) {
-            // TODO SET DROPS TO NULL & MAKE ENTITIES DISSAPEAR OUTSIDE OF RADIUS / PICKUP FURNACE NICK ITEMS
             if (entityType == EntityType.SKELETON) {
                 ItemStack bow = new ItemStack(Items.BOW);
                 entity.setItemSlot(EquipmentSlot.MAINHAND, bow);
