@@ -51,7 +51,6 @@ public class PlayerScaling {
         if (event.phase == TickEvent.Phase.END && event.type == TickEvent.Type.PLAYER && event.side == LogicalSide.SERVER) {
             if (c++ == 20 * SCALING_INTERVAL) {
                 incrementPlayerSanity(event.player);
-                LogUtils.getLogger().info("" + getPlayerSanity(event.player));
                 c = 0;
             }
         }
