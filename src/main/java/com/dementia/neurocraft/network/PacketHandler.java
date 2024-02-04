@@ -59,6 +59,16 @@ public class PacketHandler {
                 .decoder(SUpdatePlayerSanityPacket::new)
                 .consumerMainThread(SUpdatePlayerSanityPacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CResetBarsPacket.class, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CResetBarsPacket::encode)
+                .decoder(CResetBarsPacket::new)
+                .consumerMainThread(CResetBarsPacket::handle)
+                .add();
+        INSTANCE.messageBuilder(SResetBarsPacket.class, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SResetBarsPacket::encode)
+                .decoder(SResetBarsPacket::new)
+                .consumerMainThread(SResetBarsPacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object msg) {
