@@ -41,7 +41,7 @@ public class AuditoryHallucinations {
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            if (c++ % (12 * 7) == 0) {
+            if (c++ % (20) == 0) {
                 spawnAuditoryHallucinations(event);
             }
         }
