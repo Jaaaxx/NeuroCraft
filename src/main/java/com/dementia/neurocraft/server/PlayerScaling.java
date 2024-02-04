@@ -20,7 +20,7 @@ import java.util.Random;
 public class PlayerScaling {
     static private int c = 0;
     static public final int PEAK_SANITY = 800;
-    static public final long INITIAL_SANITY = 800;
+    static public final long INITIAL_SANITY = 1;
     static public final int SCALING_INTERVAL = 30; // seconds
 
     private static boolean sanityGiven = false;
