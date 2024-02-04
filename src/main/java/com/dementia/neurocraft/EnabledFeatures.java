@@ -19,5 +19,6 @@ public class EnabledFeatures {
     public final static boolean FOOD_HALLUCINATIONS = false;
     public final static boolean FURNACE_UNCOOKING = false;
     public final static boolean ORE_HALLUCINATIONS = false;
-    public final static boolean RANDOM_TELEPORTING = true;
+    public final static boolean RANDOM_TELEPORTING = false;
+    public final static boolean RANDOMIZE_BARS = true;
 }

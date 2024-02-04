@@ -46,7 +46,7 @@ public class ClientInventoryTroubles {
                 return;
             var inventory = Minecraft.getInstance().player.getInventory();
             var playerSanity = getPlayerSanityClient();
-            if (c++ % 2 == 0 && new Random().nextInt(PEAK_SANITY) / 3 < playerSanity) {
+            if (c++ % 2 == 0 && new Random().nextInt(PEAK_SANITY) < playerSanity) {
                 if (!ITEMS_LOSE_LETTERS)
                     return;
 
