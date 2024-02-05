@@ -3,6 +3,7 @@ package com.dementia.neurocraft;
 public class EnabledFeatures {
     public final static boolean PLAYER_SCALING = true;
     public final static boolean HALLUCINATION_SFX = true;
+    public final static boolean SANITY_GUI = true;
     public final static boolean FAKE_PLACE_BLOCKS = true;
     public final static boolean FAKE_BREAK_BLOCKS = true;
     public final static boolean ENEMY_HALLUCINATIONS = true;
