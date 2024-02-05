@@ -42,6 +42,7 @@ public class RandomizeHealthBars {
                         p.setHealth(new Random().nextInt(1, (int) p.getMaxHealth()));
                         p.getFoodData().setFoodLevel(new Random().nextInt(1, 20));
                         barsAreRandomized = true;
+                        HallucinationOccuredClient();
                     }
                 }
             }

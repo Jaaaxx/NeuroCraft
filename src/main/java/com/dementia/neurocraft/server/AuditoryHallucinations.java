@@ -70,12 +70,7 @@ public class AuditoryHallucinations {
                 }
                 SoundEvent randomSound = pool.get(new Random().nextInt(pool.size()));
                 PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(randomSound), p);
-
-
-                if (new Random().nextInt(100) == 1) {
-                    ServerTimingHandler.scheduleEvent("AuditoryHallucination", 60,
-                            () -> HallucinationOccured(p), true);
-                }
+                HallucinationOccured(p, false, false);
             }
         }
     }

@@ -22,16 +22,14 @@ public class PlayerScaling {
     static public final int PEAK_SANITY = 800;
     static public final long INITIAL_SANITY = 1;
     static public final int SCALING_INTERVAL = 30; // seconds
-
-    private static boolean sanityGiven = false;
+    static public final int SCALING_INCREMENT = 1;
 
     public static void giveInitialSanity(final Player player) {
         player.getPersistentData().putLong("Sanity", INITIAL_SANITY);
     }
 
     public static long getPlayerSanity(final Player player) {
-        if (!sanityGiven) {
-            sanityGiven = true;
+        if (!player.getPersistentData().contains("Sanity")) {
             giveInitialSanity(player);
         }
         return player.getPersistentData().getLong("Sanity");
@@ -42,7 +40,7 @@ public class PlayerScaling {
         if (currentSanity >= PEAK_SANITY)
             return;
         if (EnabledFeatures.PLAYER_SCALING) {
-            player.getPersistentData().putLong("Sanity", currentSanity + 1);
+            player.getPersistentData().putLong("Sanity", currentSanity + SCALING_INCREMENT);
         }
     }
 

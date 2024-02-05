@@ -55,7 +55,7 @@ public class ClientOptionsChanges {
                     return;
                 var playerSanity = getPlayerSanityClient();
 
-                boolean switchFOV = new Random().nextInt(PEAK_SANITY * 2) < playerSanity;
+                boolean switchFOV = new Random().nextInt(PEAK_SANITY) < playerSanity;
                 if (switchFOV) {
                     var fov = instance.options.fov().get();
                     if (originalFOV == -1) {
@@ -79,7 +79,7 @@ public class ClientOptionsChanges {
                     return;
                 var playerSanity = getPlayerSanityClient();
 
-                boolean switchBrightness = new Random().nextInt(PEAK_SANITY * 2) < playerSanity;
+                boolean switchBrightness = new Random().nextInt(PEAK_SANITY) < playerSanity;
                 if (switchBrightness) {
                     var brightness = instance.options.gamma().get();
                     if (originalBrightness == -1) {
@@ -124,7 +124,7 @@ public class ClientOptionsChanges {
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanityClient();
-                boolean switchKeys = new Random().nextInt(PEAK_SANITY * 2) < playerSanity;
+                boolean switchKeys = new Random().nextInt(PEAK_SANITY) < playerSanity;
                 if (switchKeys) {
                     if (originalKeys == null) {
                         originalKeys = instance.options.keyMappings;
@@ -143,7 +143,7 @@ public class ClientOptionsChanges {
                     return;
                 var playerSanity = getPlayerSanityClient();
 
-                boolean switchRD = new Random().nextInt(PEAK_SANITY * 2) < playerSanity;
+                boolean switchRD = new Random().nextInt(PEAK_SANITY) < playerSanity;
                 if (switchRD) {
                     var rd = instance.options.renderDistance().get();
                     if (originalRD == -1) {
@@ -166,12 +166,12 @@ public class ClientOptionsChanges {
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanityClient();
-                boolean schitzoMode = new Random().nextInt(PEAK_SANITY * 2) < playerSanity && new Random().nextInt(PEAK_SANITY) < playerSanity;
+                boolean schitzoMode = new Random().nextInt(PEAK_SANITY) < playerSanity && new Random().nextInt(PEAK_SANITY) < playerSanity;
                 if (schitzoMode || RandomizeTextures.crazyRenderingActive) {
                     if (!RandomizeTextures.crazyRenderingActive) {
                         player.addEffect(new MobEffectInstance(BLINDNESS, MobEffectInstance.INFINITE_DURATION, 3, false, false, false));
                         currentSchitzoMusic = schitzoMusicOptions.get(new Random().nextInt(schitzoMusicOptions.size())).get();
-                        ClientSoundManager.playSound(currentSchitzoMusic, 1, 1);
+                        ClientSoundManager.forcePlaySound(currentSchitzoMusic, 1, 1);
                         RandomizeTextures.crazyRenderingActive = true;
                     } else {
                         player.removeEffectNoUpdate(BLINDNESS);

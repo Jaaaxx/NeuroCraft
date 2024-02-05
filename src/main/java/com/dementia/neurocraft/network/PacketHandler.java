@@ -69,6 +69,11 @@ public class PacketHandler {
                 .decoder(SResetBarsPacket::new)
                 .consumerMainThread(SResetBarsPacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CSetClientBrainActive.class, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CSetClientBrainActive::encode)
+                .decoder(CSetClientBrainActive::new)
+                .consumerMainThread(CSetClientBrainActive::handle)
+                .add();
     }
 
     public static void sendToServer(Object msg) {
