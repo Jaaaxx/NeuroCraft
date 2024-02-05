@@ -34,7 +34,7 @@ public class SanityHudOverlayResources {
     public static final int TEX_HEIGHT = 25;
 
     public static ResourceLocation getGuiIconNormal(int sanity) {
-        double percentage = (double) sanity / PEAK_SANITY;
+        double percentage = (double) sanity / ((double) PEAK_SANITY / 2);
         int index = (int) (GUI_VS.length * percentage);
 
         index = Math.min(GUI_VS.length - 1, Math.max(0, index));
@@ -42,7 +42,7 @@ public class SanityHudOverlayResources {
         return GUI_VS[index];
     }
     public static ResourceLocation getGuiIconActive(int sanity) {
-        double percentage = (double) sanity / PEAK_SANITY;
+        double percentage = (double) sanity / ((double) PEAK_SANITY / 2);
         int index = (int) (GUI_HS.length * percentage);
 
         index = Math.min(GUI_HS.length - 1, Math.max(0, index));
