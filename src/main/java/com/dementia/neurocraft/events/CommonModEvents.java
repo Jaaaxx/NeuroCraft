@@ -1,7 +1,7 @@
 package com.dementia.neurocraft.events;
 
 import com.dementia.neurocraft.NeuroCraft;
-import com.dementia.neurocraft.gui.SanityHudOverlay;
+import com.dementia.neurocraft.gui.Overlays.SanityHudOverlay;
 import com.dementia.neurocraft.network.PacketHandler;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

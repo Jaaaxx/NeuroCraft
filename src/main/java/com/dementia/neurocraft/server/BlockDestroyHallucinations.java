@@ -4,33 +4,23 @@ import com.dementia.neurocraft.NeuroCraft;
 import com.dementia.neurocraft.network.CHallBlockListUpdatePacket;
 import com.dementia.neurocraft.network.PacketHandler;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
-import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static com.dementia.neurocraft.EnabledFeatures.FAKE_BREAK_BLOCKS;
-import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
+import static com.dementia.neurocraft.config.ServerConfigs.FAKE_BREAK_BLOCKS;
+import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 @Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
 public class BlockDestroyHallucinations {
     @SubscribeEvent
     public static void onBlockDestroyEvent(BlockEvent.BreakEvent event) {
-        if (!FAKE_BREAK_BLOCKS)
+        if (!FAKE_BREAK_BLOCKS.get())
             return;
 
         var player = (ServerPlayer) event.getPlayer();
@@ -38,7 +28,7 @@ public class BlockDestroyHallucinations {
             return;
 
         var playerSanity = getPlayerSanity(player);
-        boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
+        boolean replaceBlock = (new Random().nextInt(PEAK_SANITY.get()) < playerSanity);
         if (replaceBlock) {
             var bp = event.getPos();
             event.setCanceled(true);

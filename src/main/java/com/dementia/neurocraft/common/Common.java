@@ -7,29 +7,27 @@ import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
-import static com.dementia.neurocraft.EnabledFeatures.HALLUCINATION_SFX;
-import static com.dementia.neurocraft.gui.SanityHudOverlay.setGUIBrainActive;
+import static com.dementia.neurocraft.gui.Overlays.SanityHudOverlay.setGUIBrainActive;
 
 public class Common {
     public static void HallucinationOccured(Player player) {
-        if (HALLUCINATION_SFX)
-            PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(ModSoundEventsRegistry.CONFUSED.get()), (ServerPlayer) player);
+        PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(ModSoundEventsRegistry.CONFUSED.get()), (ServerPlayer) player);
         PacketHandler.sendToPlayer(new CSetClientBrainActive(), (ServerPlayer) player);
     }
     public static void HallucinationOccured(Player player, boolean playSound, boolean showGUI) {
-        if (HALLUCINATION_SFX && playSound)
+        if (playSound)
             PacketHandler.sendToPlayer(new CAuditoryHallucinationPacket(ModSoundEventsRegistry.CONFUSED.get()), (ServerPlayer) player);
         if (showGUI)
             PacketHandler.sendToPlayer(new CSetClientBrainActive(), (ServerPlayer) player);
     }
 
     public static void HallucinationOccuredClient() {
-        if (HALLUCINATION_SFX)
+        if (com.dementia.neurocraft.config.ClientConfigs.HALLUCINATION_SFX.get())
             ClientSoundManager.playSoundRandomPitchVolume(ModSoundEventsRegistry.CONFUSED.get());
         setGUIBrainActive();
     }
     public static void HallucinationOccuredClient(boolean playSound, boolean showGUI) {
-        if (HALLUCINATION_SFX && playSound)
+        if (com.dementia.neurocraft.config.ClientConfigs.HALLUCINATION_SFX.get() && playSound)
             ClientSoundManager.playSoundRandomPitchVolume(ModSoundEventsRegistry.CONFUSED.get());
         if (showGUI)
             setGUIBrainActive();

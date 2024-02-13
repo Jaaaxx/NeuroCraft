@@ -9,10 +9,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -22,11 +20,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import java.util.*;
-import java.util.function.Predicate;
 
-import static com.dementia.neurocraft.EnabledFeatures.ENEMY_HALLUCINATIONS;
+import static com.dementia.neurocraft.config.ServerConfigs.ENEMY_HALLUCINATIONS;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
-import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
+import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 
@@ -57,7 +54,7 @@ public class ServerHallucinations {
 
     @SubscribeEvent
     public static void onMobSpawnEvent(MobSpawnEvent.FinalizeSpawn event) {
-        if (!ENEMY_HALLUCINATIONS)
+        if (!ENEMY_HALLUCINATIONS.get())
             return;
 
         if (event.getSpawnType() != MobSpawnType.CHUNK_GENERATION &&
@@ -69,7 +66,7 @@ public class ServerHallucinations {
                 playerEntityMap.putIfAbsent(np, new ArrayList<>());
 
                 // Create hallucination
-                if (new Random().nextInt(PEAK_SANITY) < getPlayerSanity(np)) {
+                if (new Random().nextInt(PEAK_SANITY.get()) < getPlayerSanity(np)) {
                     playerEntityMap.get(np).add(entity);
                 }
             }
@@ -113,12 +110,12 @@ public class ServerHallucinations {
     }
 
     private static void runHallucinationSpawns(TickEvent.ServerTickEvent event) {
-        if (!ENEMY_HALLUCINATIONS)
+        if (!ENEMY_HALLUCINATIONS.get())
             return;
 
         for (Player p : event.getServer().getPlayerList().getPlayers()) {
             var playerSanity = getPlayerSanity(p);
-            boolean spawnHallucination = (new Random().nextInt((int) (PEAK_SANITY*1.5)) < playerSanity);
+            boolean spawnHallucination = (new Random().nextInt((int) (PEAK_SANITY.get()*1.5)) < playerSanity);
 
             Direction direction = p.getDirection();
             Vec3 pos = p.getPosition(0);
@@ -136,7 +133,7 @@ public class ServerHallucinations {
                         EntityType.RAVAGER,
                         EntityType.WITHER
                 };
-                EntityType<?> entityType = pool[Math.min(pool.length-1, (int) Math.floor(new Random().nextFloat((float) playerSanity / ((float) PEAK_SANITY / pool.length - 1))))];
+                EntityType<?> entityType = pool[Math.min(pool.length-1, (int) Math.floor(new Random().nextFloat((float) playerSanity / ((float) PEAK_SANITY.get() / pool.length - 1))))];
                 spawnEntityHallucination(entityType, p, playerSanity, spawnPos);
             }
 
@@ -164,7 +161,7 @@ public class ServerHallucinations {
             playerEntityMap.putIfAbsent(p, new ArrayList<>());
 
             // Create hallucination
-            if (new Random().nextInt(PEAK_SANITY * 2) >= sanity) {
+            if (new Random().nextInt(PEAK_SANITY.get() * 2) >= sanity) {
                 playerEntityMap.get(p).add(entity);
             }
         }

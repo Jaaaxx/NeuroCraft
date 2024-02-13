@@ -2,25 +2,18 @@ package com.dementia.neurocraft.server;
 
 import com.dementia.neurocraft.NeuroCraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.spongepowered.asm.util.Constants;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-import static com.dementia.neurocraft.EnabledFeatures.ORE_HALLUCINATIONS;
+import static com.dementia.neurocraft.config.ServerConfigs.ORE_HALLUCINATIONS;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
-import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
+import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 @Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
@@ -33,14 +26,14 @@ public class OreHallucinations {
 
     @SubscribeEvent
     public static void onBlockBreakEvent(BlockEvent.BreakEvent event) {
-        if (!ORE_HALLUCINATIONS)
+        if (!ORE_HALLUCINATIONS.get())
             return;
         var state = event.getState();
         var player = event.getPlayer();
         event.getPos();
         if (state.getBlock().getName().toString().contains("ore")) {
             var playerSanity = getPlayerSanity(player);
-            boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
+            boolean replaceBlock = (new Random().nextInt(PEAK_SANITY.get()) < playerSanity);
             var shadowBlocks = new Random().nextBoolean();
             if (replaceBlock) {
                 event.setCanceled(true);

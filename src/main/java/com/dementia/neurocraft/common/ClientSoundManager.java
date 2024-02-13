@@ -1,5 +1,6 @@
 package com.dementia.neurocraft.common;
 
+import com.dementia.neurocraft.config.ClientConfigs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;

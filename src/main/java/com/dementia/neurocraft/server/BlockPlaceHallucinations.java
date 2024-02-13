@@ -4,13 +4,8 @@ import com.dementia.neurocraft.NeuroCraft;
 import com.dementia.neurocraft.network.CHallBlockListUpdatePacket;
 import com.dementia.neurocraft.network.PacketHandler;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
-import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,21 +14,19 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.lang.reflect.Field;
-import java.util.BitSet;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.dementia.neurocraft.EnabledFeatures.FAKE_PLACE_BLOCKS;
-import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
+import static com.dementia.neurocraft.config.ServerConfigs.FAKE_PLACE_BLOCKS;
+import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 @Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
 public class BlockPlaceHallucinations {
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
-        if (!FAKE_PLACE_BLOCKS)
+        if (!FAKE_PLACE_BLOCKS.get())
             return;
 
         if (!(event.getEntity() instanceof ServerPlayer player))
@@ -53,7 +46,7 @@ public class BlockPlaceHallucinations {
     private static void ConfuseBlocks(BlockEvent.EntityPlaceEvent event, ServerPlayer player) {
         long playerSanity = getPlayerSanity(player);
         System.out.println(playerSanity);
-        boolean replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
+        boolean replaceBlock = (new Random().nextInt(PEAK_SANITY.get()) < playerSanity);
         if (replaceBlock) {
             var bp = event.getPos();
             ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, event.getPlacedBlock());
@@ -61,7 +54,7 @@ public class BlockPlaceHallucinations {
             PacketHandler.sendVanillaPacket(packet, player, 2);
             PacketHandler.sendToPlayer(new CHallBlockListUpdatePacket(new int[]{bp.getX(), bp.getY(), bp.getZ()}), player);
         } else {
-            replaceBlock = (new Random().nextInt(PEAK_SANITY) < playerSanity);
+            replaceBlock = (new Random().nextInt(PEAK_SANITY.get()) < playerSanity);
             if (replaceBlock) {
                 var bp = event.getPos();
                 ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, getRandomBlock());

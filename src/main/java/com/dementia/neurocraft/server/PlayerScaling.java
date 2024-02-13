@@ -1,31 +1,22 @@
 package com.dementia.neurocraft.server;
 
-import com.dementia.neurocraft.EnabledFeatures;
 import com.dementia.neurocraft.NeuroCraft;
-import com.mojang.logging.LogUtils;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Random;
+import static com.dementia.neurocraft.config.ServerConfigs.*;
 
 @EventBusSubscriber(modid = NeuroCraft.MODID)
 public class PlayerScaling {
     static private int c = 0;
-    static public final int PEAK_SANITY = 800;
-    static public final long INITIAL_SANITY = 1;
-    static public final int SCALING_INTERVAL = 30; // seconds
-    static public final int SCALING_INCREMENT = 1;
 
     public static void giveInitialSanity(final Player player) {
-        player.getPersistentData().putLong("Sanity", INITIAL_SANITY);
+        player.getPersistentData().putLong("Sanity", (long) INITIAL_SANITY.get());
     }
 
     public static long getPlayerSanity(final Player player) {
@@ -37,17 +28,17 @@ public class PlayerScaling {
 
     public static void incrementPlayerSanity(final Player player) {
         long currentSanity = getPlayerSanity(player);
-        if (currentSanity >= PEAK_SANITY)
+        if (currentSanity >= PEAK_SANITY.get())
             return;
-        if (EnabledFeatures.PLAYER_SCALING) {
-            player.getPersistentData().putLong("Sanity", currentSanity + SCALING_INCREMENT);
+        if (PLAYER_SCALING.get()) {
+            player.getPersistentData().putLong("Sanity", currentSanity + SCALING_INCREMENT.get());
         }
     }
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.type == TickEvent.Type.PLAYER && event.side == LogicalSide.SERVER) {
-            if (c++ == 20 * SCALING_INTERVAL) {
+            if (c++ == 20 * SCALING_INTERVAL.get()) {
                 incrementPlayerSanity(event.player);
                 c = 0;
             }
@@ -56,6 +47,8 @@ public class PlayerScaling {
 
     @SubscribeEvent
     public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event) {
-        giveInitialSanity(event.getEntity());
+        if (SANITY_RESET_UPON_DEATH.get()) {
+            giveInitialSanity(event.getEntity());
+        }
     }
 }

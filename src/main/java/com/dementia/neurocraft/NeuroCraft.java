@@ -1,6 +1,9 @@
 package com.dementia.neurocraft;
 
-import com.dementia.neurocraft.gui.SanityHudOverlay;
+import com.dementia.neurocraft.config.ClientConfigs;
+import com.dementia.neurocraft.config.NewWorldConfigs;
+import com.dementia.neurocraft.config.ServerConfigs;
+import com.dementia.neurocraft.gui.OptionsMenus.ClientModOptionsScreen;
 import com.dementia.neurocraft.common.ClientSoundManager;
 import com.dementia.neurocraft.util.ModBlocksRegistry;
 import com.dementia.neurocraft.util.ModSoundEventsRegistry;
@@ -10,8 +13,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,6 +29,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
+
+import static com.dementia.neurocraft.gui.OptionsMenus.ModVariableScreen.getForgeConfigScreenContext;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(NeuroCraft.MODID)
@@ -49,19 +55,14 @@ public class NeuroCraft {
         ModSoundEventsRegistry.register(modEventBus);
         ModBlocksRegistry.register(modEventBus);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfigs.SPEC, MODID + "-client.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NewWorldConfigs.SPEC, MODID + "-new_world.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigs.SPEC, MODID + "-server.toml");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -76,6 +77,7 @@ public class NeuroCraft {
     public static class ClientModEvents {
         static int c = 1;
         public static ClientSoundManager clientSoundManager;
+
         @SubscribeEvent
         public static void onClientSetup(FMLConstructModEvent event) {
             // Loads resources to ensure special title screen gets rendered
@@ -86,6 +88,12 @@ public class NeuroCraft {
                     instance.options.resourcePacks.add("mod_resources");
                     instance.options.save();
                 }
+            });
+
+            // Registers config screens
+            event.enqueueWork(() -> {
+                ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                        () -> new ConfigScreenHandler.ConfigScreenFactory((mc, screen) -> new ClientModOptionsScreen(new ModListScreen(getForgeConfigScreenContext()))));
             });
         }
     }

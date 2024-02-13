@@ -1,23 +1,19 @@
 package com.dementia.neurocraft.server;
 
 import com.dementia.neurocraft.NeuroCraft;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
-import static com.dementia.neurocraft.EnabledFeatures.RANDOM_TELEPORTING;
+import static com.dementia.neurocraft.config.ServerConfigs.RANDOM_TELEPORTING;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
-import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
+import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 @Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
@@ -27,7 +23,7 @@ public class RandomTeleporting {
 
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
-        if (!RANDOM_TELEPORTING)
+        if (!RANDOM_TELEPORTING.get())
             return;
 
         if (event.phase == TickEvent.Phase.END) {
@@ -48,7 +44,7 @@ public class RandomTeleporting {
 
     private static void queuePlayerTeleport(Player p) {
         var playerSanity = getPlayerSanity(p);
-        boolean queueTP = (new Random().nextInt((int) (PEAK_SANITY*1.25)) < playerSanity);
+        boolean queueTP = (new Random().nextInt((int) (PEAK_SANITY.get()*1.25)) < playerSanity);
         if (queueTP) {
             playerTeleportLocs.put(p, p.getEyePosition());
         }

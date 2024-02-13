@@ -1,7 +1,6 @@
 package com.dementia.neurocraft.client;
 
 import com.dementia.neurocraft.common.ClientSoundManager;
-import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -23,12 +22,11 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
 
-import static com.dementia.neurocraft.EnabledFeatures.*;
+import static com.dementia.neurocraft.config.ServerConfigs.*;
 import static com.dementia.neurocraft.NeuroCraft.MODID;
 import static com.dementia.neurocraft.client.PlayerSanityClientHandler.getPlayerSanityClient;
 import static com.dementia.neurocraft.common.Common.HallucinationOccuredClient;
-import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
-import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
+import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static net.minecraft.world.effect.MobEffects.BLINDNESS;
 import static com.dementia.neurocraft.util.ModSoundEventsRegistry.schitzoMusicOptions;
 
@@ -40,7 +38,7 @@ public class ClientOptionsChanges {
     private static int originalFramerate = -1;
     private static int originalRD = -1;
     private static int c = 540;
-    private static SoundEvent currentSchitzoMusic = null;
+    public static SoundEvent currentSchitzoMusic = null;
 
 
 
@@ -48,14 +46,14 @@ public class ClientOptionsChanges {
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent tick) {
         if (tick.side == LogicalSide.CLIENT && tick.phase == TickEvent.Phase.END) {
             // FOV Changes
-            if (c++ % (20 * 10) == 0 && OPTION_FOV_CHANGES) {
+            if (c++ % (20 * 10) == 0 && OPTION_FOV_CHANGES.get()) {
                 var instance = Minecraft.getInstance();
                 var player = instance.player;
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanityClient();
 
-                boolean switchFOV = new Random().nextInt(PEAK_SANITY) < playerSanity;
+                boolean switchFOV = new Random().nextInt(PEAK_SANITY.get()) < playerSanity;
                 if (switchFOV) {
                     var fov = instance.options.fov().get();
                     if (originalFOV == -1) {
@@ -72,14 +70,14 @@ public class ClientOptionsChanges {
 
 
             // Brightness Changes
-            if (c % (20 * 12) == 0 && OPTION_BRIGHTNESS_CHANGES) {
+            if (c % (20 * 12) == 0 && OPTION_BRIGHTNESS_CHANGES.get()) {
                 var instance = Minecraft.getInstance();
                 var player = instance.player;
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanityClient();
 
-                boolean switchBrightness = new Random().nextInt(PEAK_SANITY) < playerSanity;
+                boolean switchBrightness = new Random().nextInt(PEAK_SANITY.get()) < playerSanity;
                 if (switchBrightness) {
                     var brightness = instance.options.gamma().get();
                     if (originalBrightness == -1) {
@@ -94,14 +92,14 @@ public class ClientOptionsChanges {
 
 
             // Framerate Changes
-            if (c % (20 * 14) == 0 && OPTION_FRAMERATE_CHANGES) {
+            if (c % (20 * 14) == 0 && OPTION_FRAMERATE_CHANGES.get()) {
                 var instance = Minecraft.getInstance();
                 var player = instance.player;
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanityClient();
 
-                boolean switchFramerate = new Random().nextInt(PEAK_SANITY* 2) < playerSanity;
+                boolean switchFramerate = new Random().nextInt(PEAK_SANITY.get() * 2) < playerSanity;
                 int framerate = instance.options.framerateLimit().get();
                 if (originalFramerate == -1) {
                     originalFramerate = framerate;
@@ -118,13 +116,13 @@ public class ClientOptionsChanges {
             }
 
             // Control swaps
-            if (c % (20 * 16) == 0 && OPTION_CONTROL_SWAPS) {
+            if (c % (20 * 16) == 0 && OPTION_CONTROL_SWAPS.get()) {
                 var instance = Minecraft.getInstance();
                 var player = instance.player;
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanityClient();
-                boolean switchKeys = new Random().nextInt(PEAK_SANITY) < playerSanity;
+                boolean switchKeys = new Random().nextInt(PEAK_SANITY.get()) < playerSanity;
                 if (switchKeys) {
                     if (originalKeys == null) {
                         originalKeys = instance.options.keyMappings;
@@ -136,14 +134,14 @@ public class ClientOptionsChanges {
 
 
             // Render Distance Changes
-            if (c % (20 * 18) == 0 && OPTION_RENDER_DISTANCE_CHANGES) {
+            if (c % (20 * 18) == 0 && OPTION_RENDER_DISTANCE_CHANGES.get()) {
                 var instance = Minecraft.getInstance();
                 var player = instance.player;
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanityClient();
 
-                boolean switchRD = new Random().nextInt(PEAK_SANITY) < playerSanity;
+                boolean switchRD = new Random().nextInt(PEAK_SANITY.get()) < playerSanity;
                 if (switchRD) {
                     var rd = instance.options.renderDistance().get();
                     if (originalRD == -1) {
@@ -160,13 +158,13 @@ public class ClientOptionsChanges {
 
 
             // Random Changes
-            if (c % (20 * 30) == 0 && OPTION_SCHITZOWORLD) {
+            if (c % (20 * 30) == 0 && OPTION_SCHITZOWORLD.get()) {
                 var instance = Minecraft.getInstance();
                 var player = instance.player;
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanityClient();
-                boolean schitzoMode = new Random().nextInt(PEAK_SANITY) < playerSanity && new Random().nextInt(PEAK_SANITY) < playerSanity;
+                boolean schitzoMode = new Random().nextInt(PEAK_SANITY.get()) < playerSanity && new Random().nextInt(PEAK_SANITY.get()) < playerSanity;
                 if (schitzoMode || RandomizeTextures.crazyRenderingActive) {
                     if (!RandomizeTextures.crazyRenderingActive) {
                         player.addEffect(new MobEffectInstance(BLINDNESS, MobEffectInstance.INFINITE_DURATION, 3, false, false, false));

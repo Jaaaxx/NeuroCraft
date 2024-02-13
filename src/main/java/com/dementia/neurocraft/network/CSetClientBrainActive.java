@@ -3,8 +3,7 @@ package com.dementia.neurocraft.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import static com.dementia.neurocraft.client.RandomizeHealthBars.resetBarsToServer;
-import static com.dementia.neurocraft.gui.SanityHudOverlay.setGUIBrainActive;
+import static com.dementia.neurocraft.gui.Overlays.SanityHudOverlay.setGUIBrainActive;
 
 public class CSetClientBrainActive {
     public CSetClientBrainActive() {

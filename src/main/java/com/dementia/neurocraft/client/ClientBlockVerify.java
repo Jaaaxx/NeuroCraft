@@ -144,17 +144,4 @@ public class ClientBlockVerify {
         return false;
     }
 
-//
-//    @SubscribeEvent
-//    public static void onEvent(Event e) {
-//        try {
-//            var x = Minecraft.getInstance();
-//            if (x.player == null) {
-//                return;
-//            }
-//            LOGGER.info("Event: " + e.toString());
-//        } catch (Exception ignored) {
-//        }
-//    }
-
 }

@@ -3,7 +3,6 @@ package com.dementia.neurocraft.server;
 import com.dementia.neurocraft.NeuroCraft;
 import com.dementia.neurocraft.network.CAuditoryHallucinationPacket;
 import com.dementia.neurocraft.network.PacketHandler;
-import com.dementia.neurocraft.util.ServerTimingHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -16,9 +15,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.dementia.neurocraft.EnabledFeatures.AUDITORY_HALLUCINATIONS;
+import static com.dementia.neurocraft.config.ServerConfigs.AUDITORY_HALLUCINATIONS;
+import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
-import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 
@@ -48,15 +47,15 @@ public class AuditoryHallucinations {
     }
 
     private static void spawnAuditoryHallucinations(TickEvent.ServerTickEvent event) {
-        if (!AUDITORY_HALLUCINATIONS)
+        if (!AUDITORY_HALLUCINATIONS.get())
             return;
         for (ServerPlayer p : event.getServer().getPlayerList().getPlayers()) {
             var playerSanity = getPlayerSanity(p);
-            boolean spawnHallucination = (new Random().nextInt((int) (PEAK_SANITY / 1.5)) < playerSanity);
+            boolean spawnHallucination = (new Random().nextInt((int) (PEAK_SANITY.get() / 1.5)) < playerSanity);
 
             var pool = randomSoundEffects;
             if (spawnHallucination) {
-                if (playerSanity >= PEAK_SANITY / 2) {
+                if (playerSanity >= PEAK_SANITY.get() / 2) {
                     if (new Random().nextInt(2) == 1) {
                         pool = List.of(new SoundEvent[]{
                                 SoundEvents.ZOMBIE_AMBIENT,

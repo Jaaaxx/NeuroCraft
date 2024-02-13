@@ -16,9 +16,9 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 import java.util.Random;
 
-import static com.dementia.neurocraft.EnabledFeatures.FURNACE_UNCOOKING;
+import static com.dementia.neurocraft.config.ServerConfigs.FURNACE_UNCOOKING;
 import static com.dementia.neurocraft.common.Common.HallucinationOccured;
-import static com.dementia.neurocraft.server.PlayerScaling.PEAK_SANITY;
+import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 @Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
@@ -26,7 +26,7 @@ public class FurnaceRemoval {
     // TODO Remove item picked up from furnace AFTER inventory closed for bonus laughs
     @SubscribeEvent
     public static void onPlayerOpenFurnaceEvent(PlayerContainerEvent.Open event) {
-        if (!FURNACE_UNCOOKING)
+        if (!FURNACE_UNCOOKING.get())
             return;
         var pool = List.of(new MenuType[]{
                 MenuType.FURNACE, MenuType.SMOKER
@@ -34,7 +34,7 @@ public class FurnaceRemoval {
 
         var container = event.getContainer();
         Player player = event.getEntity();
-        boolean spawnHallucination = (new Random().nextInt(PEAK_SANITY) < getPlayerSanity(player));
+        boolean spawnHallucination = (new Random().nextInt(PEAK_SANITY.get()) < getPlayerSanity(player));
         if (pool.contains(container.getType()) && spawnHallucination) {
             var ingredient_slot = container.getSlot(0);
             var ing_item = ingredient_slot.getItem();
