@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.Mod;
@@ -106,22 +107,18 @@ public class RandomizeTextures {
         }
     }
 
-
     @SubscribeEvent
-    public static void onPlayerDeathEvent(LivingDeathEvent event) {
-        if (crazyRenderingActive && event.getEntity() instanceof ServerPlayer) {
+    public static void onRespawnEvent(PlayerEvent.PlayerRespawnEvent event) {
+        if (crazyRenderingActive) {
             var instance = Minecraft.getInstance();
             var player = instance.player;
             if (player == null)
                 return;
-            if (event.getEntity().getName().equals(player.getName())) {
-                crazyRenderingActive = false;
-                if (currentSchitzoMusic != null)
-                    ClientSoundManager.stopSound(currentSchitzoMusic);
-            }
+            crazyRenderingActive = false;
+            if (currentSchitzoMusic != null)
+                ClientSoundManager.stopSound(currentSchitzoMusic);
         }
     }
-
 
     public static HashMap<BlockPos, BlockState> getBlocksInRadius(Level level, BlockPos center, int radius) {
         HashMap<BlockPos, BlockState> blocks = new HashMap<>();

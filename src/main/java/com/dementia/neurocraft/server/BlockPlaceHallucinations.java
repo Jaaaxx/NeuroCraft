@@ -45,7 +45,6 @@ public class BlockPlaceHallucinations {
 
     private static void ConfuseBlocks(BlockEvent.EntityPlaceEvent event, ServerPlayer player) {
         long playerSanity = getPlayerSanity(player);
-        System.out.println(playerSanity);
         boolean replaceBlock = (new Random().nextInt(PEAK_SANITY.get()) < playerSanity);
         if (replaceBlock) {
             var bp = event.getPos();
