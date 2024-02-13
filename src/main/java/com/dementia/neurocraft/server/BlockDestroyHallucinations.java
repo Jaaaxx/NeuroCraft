@@ -28,7 +28,7 @@ public class BlockDestroyHallucinations {
             return;
 
         var playerSanity = getPlayerSanity(player);
-        boolean replaceBlock = (new Random().nextInt(PEAK_SANITY.get()) < playerSanity);
+        boolean replaceBlock = (new Random().nextInt((int) (PEAK_SANITY.get() * 1.5)) < playerSanity);
         if (replaceBlock) {
             var bp = event.getPos();
             event.setCanceled(true);

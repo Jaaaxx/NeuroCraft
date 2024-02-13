@@ -29,10 +29,8 @@ import static com.dementia.neurocraft.network.SRefreshClientBlockList.toIntArray
 
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ClientBlockVerify {
-    public static Level hallucinationBlockLevel;
     public static final List<BlockPos> hallucinationBlocks = new ArrayList<>();
     private static int tickC = 1;
-    // TODO FIX
 
     @SubscribeEvent
     public static void onClientBreakBlockEvent(PlayerInteractEvent.LeftClickBlock event) {
@@ -134,7 +132,7 @@ public class ClientBlockVerify {
         return level.clip(new ClipContext(vec3, vec31, net.minecraft.world.level.ClipContext.Block.OUTLINE, context, player));
     }
 
-    private static boolean arrayContainsBlockPos(BlockPos blockPos) {
+    public static boolean arrayContainsBlockPos(BlockPos blockPos) {
         for (BlockPos block : hallucinationBlocks) {
             if (block.getX() == blockPos.getX() && block.getY() == blockPos.getY() && block.getZ() == blockPos.getZ()) {
                 return true;

@@ -43,7 +43,8 @@ public class SRefreshClientBlockList {
             BlockState bs = level.getBlockState(bp);
 
             ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(bp, bs);
-            PacketHandler.sendVanillaPacket(packet, player);
+            player.connection.send(packet);
+            context.setPacketHandled(true);
         } else {
             context.setPacketHandled(false);
         }
