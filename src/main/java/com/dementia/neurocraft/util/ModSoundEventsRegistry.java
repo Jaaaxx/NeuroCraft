@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.util;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ModSoundEventsRegistry {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, NeuroCraft.MODID);
+            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Neurocraft.MODID);
 
     public static final RegistryObject<SoundEvent> CONFUSED = registerSoundEvent("confused");
     public static final RegistryObject<SoundEvent> STATICSWITCH = registerSoundEvent("staticswitch");
@@ -25,7 +25,7 @@ public class ModSoundEventsRegistry {
             new ArrayList<>(){{add(UNCANNY1); add(UNCANNY2); add(UNCANNY3); add(UNCANNY4);}};
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
-        return SOUND_EVENTS.register(name, () ->  SoundEvent.createVariableRangeEvent(new ResourceLocation(NeuroCraft.MODID, name)));
+        return SOUND_EVENTS.register(name, () ->  SoundEvent.createVariableRangeEvent(new ResourceLocation(Neurocraft.MODID, name)));
     }
 
     public static void register(IEventBus eventBus) {

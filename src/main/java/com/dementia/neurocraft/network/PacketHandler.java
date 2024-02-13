@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.network;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import com.dementia.neurocraft.util.ServerTimingHandler;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
@@ -12,7 +12,7 @@ public class PacketHandler {
     private static final String PROTOCOL_VERSION = "1";
     private int packetID = 0;
     public static final SimpleChannel INSTANCE = ChannelBuilder.named(
-                    new ResourceLocation(NeuroCraft.MODID, "main"))
+                    new ResourceLocation(Neurocraft.MODID, "main"))
             .serverAcceptedVersions((status, version) -> true)
             .clientAcceptedVersions((status, version) -> true)
             .networkProtocolVersion(1)

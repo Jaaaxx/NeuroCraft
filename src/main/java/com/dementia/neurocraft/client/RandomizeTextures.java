@@ -12,21 +12,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
-import static com.dementia.neurocraft.NeuroCraft.MODID;
+import static com.dementia.neurocraft.Neurocraft.MODID;
 import static com.dementia.neurocraft.client.ClientOptionsChanges.currentSchitzoMusic;
 import static com.dementia.neurocraft.network.SRefreshClientBlockList.toIntArray;
 import static com.dementia.neurocraft.util.ModSoundEventsRegistry.STATICSWITCH;

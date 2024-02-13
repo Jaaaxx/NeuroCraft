@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.server;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import static com.dementia.neurocraft.config.ServerConfigs.*;
 
-@EventBusSubscriber(modid = NeuroCraft.MODID)
+@EventBusSubscriber(modid = Neurocraft.MODID)
 public class PlayerScaling {
     static private int c = 0;
 

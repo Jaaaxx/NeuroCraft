@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.server;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import com.dementia.neurocraft.network.CHallBlockListUpdatePacket;
 import com.dementia.neurocraft.network.PacketHandler;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
@@ -22,7 +22,7 @@ import static com.dementia.neurocraft.config.ServerConfigs.FAKE_PLACE_BLOCKS;
 import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
-@Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
+@Mod.EventBusSubscriber(modid = Neurocraft.MODID)
 public class BlockPlaceHallucinations {
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {

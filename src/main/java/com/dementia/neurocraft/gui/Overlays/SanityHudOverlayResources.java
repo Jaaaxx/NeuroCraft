@@ -2,7 +2,7 @@ package com.dementia.neurocraft.gui.Overlays;
 
 import net.minecraft.resources.ResourceLocation;
 
-import static com.dementia.neurocraft.NeuroCraft.MODID;
+import static com.dementia.neurocraft.Neurocraft.MODID;
 import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 
 public class SanityHudOverlayResources {

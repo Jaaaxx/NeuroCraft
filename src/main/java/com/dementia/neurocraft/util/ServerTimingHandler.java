@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.util;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
+@Mod.EventBusSubscriber(modid = Neurocraft.MODID)
 public class ServerTimingHandler {
     private static final int maxTicks = 2000;
     private static int tickCount = 0;

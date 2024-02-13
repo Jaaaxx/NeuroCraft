@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.server;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import com.dementia.neurocraft.network.CHallucinationListUpdatePacket;
 import com.dementia.neurocraft.network.PacketHandler;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -27,7 +27,7 @@ import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 
-@EventBusSubscriber(modid = NeuroCraft.MODID)
+@EventBusSubscriber(modid = Neurocraft.MODID)
 public class ServerHallucinations {
     static int c = 0;
     static Map<Player, List<Entity>> playerEntityMap = new HashMap<>();

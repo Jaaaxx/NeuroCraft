@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.server;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -16,7 +16,7 @@ import static com.dementia.neurocraft.common.Common.HallucinationOccured;
 import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
-@Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
+@Mod.EventBusSubscriber(modid = Neurocraft.MODID)
 public class OreHallucinations {
 
 //    private static final List<Block> ores = new ArrayList<>(List.of(

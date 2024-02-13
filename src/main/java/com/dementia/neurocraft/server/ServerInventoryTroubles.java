@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.server;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +18,7 @@ import static com.dementia.neurocraft.config.ServerConfigs.ITEMS_SWAP_POSITIONS_
 import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
-@Mod.EventBusSubscriber(modid = NeuroCraft.MODID)
+@Mod.EventBusSubscriber(modid = Neurocraft.MODID)
 public class ServerInventoryTroubles {
     private static int c = 1;
 

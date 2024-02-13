@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.util;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class ModBlocksRegistry {
     public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, NeuroCraft.MODID);
+            DeferredRegister.create(ForgeRegistries.BLOCKS, Neurocraft.MODID);
 
     public static final RegistryObject<Block> SMOOTH_BLOCK = registerBlock("smooth_block",
             () -> new Block(BlockBehaviour.Properties.of()

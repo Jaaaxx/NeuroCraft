@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.server;
 
-import com.dementia.neurocraft.NeuroCraft;
+import com.dementia.neurocraft.Neurocraft;
 import com.dementia.neurocraft.network.CAuditoryHallucinationPacket;
 import com.dementia.neurocraft.network.PacketHandler;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,7 +21,7 @@ import static com.dementia.neurocraft.common.Common.HallucinationOccured;
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 
 
-@EventBusSubscriber(modid = NeuroCraft.MODID)
+@EventBusSubscriber(modid = Neurocraft.MODID)
 public class AuditoryHallucinations {
     static int c = 0;
     static Map<Player, List<Entity>> playerEntityMap = new HashMap<>();

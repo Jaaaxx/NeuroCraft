@@ -23,9 +23,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.dementia.neurocraft.NeuroCraft.MODID;
+import static com.dementia.neurocraft.Neurocraft.MODID;
 import static com.dementia.neurocraft.common.Common.HallucinationOccuredClient;
-import static com.dementia.neurocraft.network.CHallBlockListUpdatePacket.decode;
 import static com.dementia.neurocraft.network.SRefreshClientBlockList.toIntArray;
 
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)

@@ -1,6 +1,5 @@
 package com.dementia.neurocraft.util;
 
-import com.dementia.neurocraft.NeuroCraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static com.dementia.neurocraft.NeuroCraft.MODID;
+import static com.dementia.neurocraft.Neurocraft.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ClientTimingHandler {

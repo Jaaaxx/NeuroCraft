@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static com.dementia.neurocraft.NeuroCraft.MODID;
+import static com.dementia.neurocraft.Neurocraft.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class NewWorldCommonConfig {

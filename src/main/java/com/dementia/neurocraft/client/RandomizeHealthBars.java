@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Random;
 
 import static com.dementia.neurocraft.config.ServerConfigs.*;
-import static com.dementia.neurocraft.NeuroCraft.MODID;
+import static com.dementia.neurocraft.Neurocraft.MODID;
 import static com.dementia.neurocraft.client.PlayerSanityClientHandler.getPlayerSanityClient;
 import static com.dementia.neurocraft.common.Common.HallucinationOccuredClient;
 import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;

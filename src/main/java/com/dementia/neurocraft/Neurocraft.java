@@ -33,8 +33,8 @@ import org.slf4j.Logger;
 import static com.dementia.neurocraft.gui.OptionsMenus.ModVariableScreen.getForgeConfigScreenContext;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(NeuroCraft.MODID)
-public class NeuroCraft {
+@Mod(Neurocraft.MODID)
+public class Neurocraft {
     public static final String MODID = "neurocraft";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
@@ -42,7 +42,7 @@ public class NeuroCraft {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
 
-    public NeuroCraft() {
+    public Neurocraft() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);

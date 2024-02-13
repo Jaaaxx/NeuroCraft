@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 import static com.dementia.neurocraft.config.ServerConfigs.ITEMS_LOSE_LETTERS;
 import static com.dementia.neurocraft.config.ServerConfigs.REPLACE_ITEMS_IN_INVENTORY;
-import static com.dementia.neurocraft.NeuroCraft.MODID;
+import static com.dementia.neurocraft.Neurocraft.MODID;
 import static com.dementia.neurocraft.client.PlayerSanityClientHandler.getPlayerSanityClient;
 import static com.dementia.neurocraft.config.ServerConfigs.PEAK_SANITY;
 
