@@ -74,6 +74,11 @@ public class PacketHandler {
                 .decoder(CSetClientBrainActive::new)
                 .consumerMainThread(CSetClientBrainActive::handle)
                 .add();
+        INSTANCE.messageBuilder(CResetXPPacket.class, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CResetXPPacket::encode)
+                .decoder(CResetXPPacket::new)
+                .consumerMainThread(CResetXPPacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object msg) {

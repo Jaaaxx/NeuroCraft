@@ -28,6 +28,7 @@ public class NewWorldConfigs {
     public static final ForgeConfigSpec.ConfigValue<Boolean> ORE_HALLUCINATIONS;
     public static final ForgeConfigSpec.ConfigValue<Boolean> RANDOM_TELEPORTING;
     public static final ForgeConfigSpec.ConfigValue<Boolean> RANDOMIZE_BARS;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> RANDOMIZE_XP;
 
     // Sanity options
     public static final ForgeConfigSpec.ConfigValue<Boolean> PLAYER_SCALING;
@@ -60,6 +61,7 @@ public class NewWorldConfigs {
         ORE_HALLUCINATIONS = BUILDER.define("ORE_HALLUCINATIONS", true);
         RANDOM_TELEPORTING = BUILDER.define("RANDOM_TELEPORTING", true);
         RANDOMIZE_BARS = BUILDER.define("RANDOMIZE_BARS", true);
+        RANDOMIZE_XP = BUILDER.define("RANDOMIZE_XP", true);
 
 
         PLAYER_SCALING = BUILDER.define("PLAYER_SCALING", true);
