@@ -2,7 +2,9 @@ package com.dementia.neurocraft.network;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 import static com.dementia.neurocraft.server.ServerHallucinations.getPlayerEntities;
 
@@ -21,18 +23,14 @@ public class SRemoveHallucinationPacket {
         buffer.writeInt(entityID);
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
-        if (context.isServerSide()) {
-            var player = context.getSender();
-            if (player != null) {
-                var entity = player.level().getEntity(entityID);
-                if (entity != null) {
-                    getPlayerEntities(player).remove(entity);
-                    entity.remove(Entity.RemovalReason.DISCARDED);
-                }
+    public void handle(Supplier<NetworkEvent.Context> context) {
+        var player = context.get().getSender();
+        if (player != null) {
+            var entity = player.level().getEntity(entityID);
+            if (entity != null) {
+                getPlayerEntities(player).remove(entity);
+                entity.remove(Entity.RemovalReason.DISCARDED);
             }
-        } else {
-            context.setPacketHandled(false);
         }
     }
 }

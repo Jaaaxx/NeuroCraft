@@ -24,7 +24,7 @@ public class ServerModOptionsScreen extends ModOptionsScreen {
         super.init();
         assert this.minecraft != null;
 
-        this.list = this.addRenderableWidget(new OptionsList(this.minecraft, this.width, this.height - 64, 32, 25));
+        this.list = this.addRenderableWidget(new OptionsList(this.minecraft, this.width, this.height - 64, 32, 25, 20));
         putAllConfigsInMenu(this.newWorldConfig ? NewWorldConfigs.class : ServerConfigs.class);
 
         this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (doneButton) -> {

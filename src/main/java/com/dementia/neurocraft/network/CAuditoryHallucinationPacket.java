@@ -5,7 +5,10 @@ import com.dementia.neurocraft.config.ClientConfigs;
 import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.ClientCustomPayloadEvent;
+
+import java.util.function.Supplier;
 
 public class CAuditoryHallucinationPacket {
     private final SoundEvent sound;
@@ -22,14 +25,9 @@ public class CAuditoryHallucinationPacket {
         sound.writeToNetwork(buffer);
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
-        if (context.isClientSide()) {
-            if (sound == ModSoundEventsRegistry.CONFUSED.get() && ClientConfigs.HALLUCINATION_SFX.get()) {
-                ClientSoundManager.playSoundRandomPitchVolume(sound);
-            }
-            context.setPacketHandled(true);
-        } else {
-            context.setPacketHandled(false);
+    public void handle(Supplier<NetworkEvent.Context> context) {
+        if (sound == ModSoundEventsRegistry.CONFUSED.get() && ClientConfigs.HALLUCINATION_SFX.get()) {
+            ClientSoundManager.playSoundRandomPitchVolume(sound);
         }
     }
 }

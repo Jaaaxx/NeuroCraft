@@ -1,7 +1,10 @@
 package com.dementia.neurocraft.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.ClientCustomPayloadEvent;
+
+import java.util.function.Supplier;
 
 import static com.dementia.neurocraft.gui.Overlays.SanityHudOverlay.setGUIBrainActive;
 
@@ -16,12 +19,7 @@ public class CSetClientBrainActive {
     public void encode(FriendlyByteBuf buffer) {
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
-        if (context.isClientSide()) {
-            setGUIBrainActive();
-            context.setPacketHandled(true);
-        } else {
-            context.setPacketHandled(false);
-        }
+    public void handle(Supplier<NetworkEvent.Context> context) {
+        setGUIBrainActive();
     }
 }

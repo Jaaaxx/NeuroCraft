@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
@@ -72,9 +72,9 @@ public class FurnaceRemoval {
     }
 
     public static Ingredient getFurnaceIngredientFromResult(Level level, ItemStack result) {
-        for (RecipeHolder<SmeltingRecipe> recipe : level.getRecipeManager().getAllRecipesFor(RecipeType.SMELTING)) {
-            if (ItemStack.isSameItem(recipe.value().getResultItem(level.registryAccess()), result)) {
-                return recipe.value().getIngredients().get(0);
+        for (SmeltingRecipe recipe : level.getRecipeManager().getAllRecipesFor(RecipeType.SMELTING)) {
+            if (ItemStack.isSameItem(recipe.getResultItem(level.registryAccess()), result)) {
+                return recipe.getIngredients().get(0);
             }
         }
 

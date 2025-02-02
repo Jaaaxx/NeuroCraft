@@ -11,9 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.dementia.neurocraft.server.PlayerScaling.getPlayerSanity;
 import static com.dementia.neurocraft.server.ServerHallucinations.getPlayerEntities;
@@ -28,18 +29,14 @@ public class SResetBarsPacket {
     public void encode(FriendlyByteBuf buffer) {
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
-        if (context.isServerSide()) {
-            ServerPlayer player = context.getSender();
-            if (player == null)
-                return;
-            var foodLevel = player.getFoodData().getFoodLevel();
-            var health = player.getHealth();
-            PacketHandler.sendToPlayer(new CResetBarsPacket(foodLevel, health), player);
-            context.setPacketHandled(true);
-        } else {
-            context.setPacketHandled(false);
-        }
+    public void handle(Supplier<NetworkEvent.Context> context) {
+        ServerPlayer player = context.get().getSender();
+        if (player == null)
+            return;
+        var foodLevel = player.getFoodData().getFoodLevel();
+        var health = player.getHealth();
+        PacketHandler.sendToPlayer(new CResetBarsPacket(foodLevel, health), player);
+
     }
 
     public static int[] toIntArray(BlockPos bp) {

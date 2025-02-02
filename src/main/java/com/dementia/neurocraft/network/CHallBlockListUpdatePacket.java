@@ -4,15 +4,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.ClientCustomPayloadEvent;
 import net.minecraftforge.fml.DistExecutor;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 import static com.dementia.neurocraft.client.ClientBlockVerify.*;
 
 public class CHallBlockListUpdatePacket {
     private final int[] blockPosList;
+
     // TODO FIX
     public CHallBlockListUpdatePacket(int[] blockPosList) {
         this.blockPosList = blockPosList;
@@ -26,20 +29,15 @@ public class CHallBlockListUpdatePacket {
         buffer.writeVarIntArray(blockPosList);
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
-        if (context.isClientSide()) {
-            var player = Minecraft.getInstance().player;
-            if (player == null)
-                return;
-            addToHallucinationBlocks(decode(blockPosList));
-            var hallBlocks = getHallucinationBlocks();
-            if (hallBlocks.size() >= 5) {
-                var blockPos = hallBlocks.get(0);
-                removeHallucinationBlocks(blockPos);
-            }
-            context.setPacketHandled(true);
-        } else {
-            context.setPacketHandled(false);
+    public void handle(Supplier<NetworkEvent.Context> context) {
+        var player = Minecraft.getInstance().player;
+        if (player == null)
+            return;
+        addToHallucinationBlocks(decode(blockPosList));
+        var hallBlocks = getHallucinationBlocks();
+        if (hallBlocks.size() >= 5) {
+            var blockPos = hallBlocks.get(0);
+            removeHallucinationBlocks(blockPos);
         }
     }
 

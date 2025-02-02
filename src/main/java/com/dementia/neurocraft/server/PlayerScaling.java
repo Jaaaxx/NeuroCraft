@@ -23,7 +23,8 @@ public class PlayerScaling {
         if (!player.getPersistentData().contains("Sanity")) {
             giveInitialSanity(player);
         }
-        return player.getPersistentData().getLong("Sanity");
+//        return player.getPersistentData().getLong("Sanity");
+        return PEAK_SANITY.get();
     }
 
     public static void incrementPlayerSanity(final Player player) {

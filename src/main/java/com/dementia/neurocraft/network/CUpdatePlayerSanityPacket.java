@@ -1,12 +1,16 @@
 package com.dementia.neurocraft.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.ClientCustomPayloadEvent;
+
+import java.util.function.Supplier;
 
 import static com.dementia.neurocraft.client.PlayerSanityClientHandler.playerSanity;
 
 public class CUpdatePlayerSanityPacket {
     private final long sanity;
+
     public CUpdatePlayerSanityPacket(long sanity) {
         this.sanity = sanity;
     }
@@ -19,12 +23,7 @@ public class CUpdatePlayerSanityPacket {
         buffer.writeLong(sanity);
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
-        if (context.isClientSide()) {
-            playerSanity = sanity;
-            context.setPacketHandled(true);
-        } else {
-            context.setPacketHandled(false);
-        }
+    public void handle(Supplier<NetworkEvent.Context> context) {
+        playerSanity = sanity;
     }
 }

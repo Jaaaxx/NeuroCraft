@@ -3,9 +3,10 @@ package com.dementia.neurocraft.network;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 import static com.dementia.neurocraft.client.ClientHallucinations.playerEntities;
 
@@ -24,19 +25,15 @@ public class CHallucinationListUpdatePacket {
         buffer.writeVarIntArray(entityIDList);
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
-        if (context.isClientSide()) {
-            var player = Minecraft.getInstance().player;
-            var entities = new ArrayList<Entity>();
+    public void handle(Supplier<NetworkEvent.Context> context) {
+        var player = Minecraft.getInstance().player;
+        var entities = new ArrayList<Entity>();
 
-            for (var id : entityIDList) {
-                if (player != null) {
-                    entities.add(player.level().getEntity(id));
-                }
+        for (var id : entityIDList) {
+            if (player != null) {
+                entities.add(player.level().getEntity(id));
             }
-            playerEntities = entities;
-        } else {
-            context.setPacketHandled(false);
         }
+        playerEntities = entities;
     }
 }

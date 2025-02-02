@@ -1,7 +1,10 @@
 package com.dementia.neurocraft.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.ClientCustomPayloadEvent;
+
+import java.util.function.Supplier;
 
 import static com.dementia.neurocraft.client.PlayerSanityClientHandler.playerSanity;
 import static com.dementia.neurocraft.client.RandomizeHealthBars.resetBarsToServer;
@@ -9,6 +12,7 @@ import static com.dementia.neurocraft.client.RandomizeHealthBars.resetBarsToServ
 public class CResetBarsPacket {
     private final int foodLevel;
     private final float healthLevel;
+
     public CResetBarsPacket(int foodLevel, float healthLevel) {
         this.foodLevel = foodLevel;
         this.healthLevel = healthLevel;
@@ -23,12 +27,7 @@ public class CResetBarsPacket {
         buffer.writeFloat(healthLevel);
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
-        if (context.isClientSide()) {
-            resetBarsToServer(foodLevel, healthLevel);
-            context.setPacketHandled(true);
-        } else {
-            context.setPacketHandled(false);
-        }
+    public void handle(Supplier<NetworkEvent.Context> context) {
+        resetBarsToServer(foodLevel, healthLevel);
     }
 }
