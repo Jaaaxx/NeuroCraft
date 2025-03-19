@@ -21,6 +21,7 @@
   "neurocraft.serverConfig.ORE_HALLUCINATIONS": "Ore Hallucinations",
   "neurocraft.serverConfig.RANDOM_TELEPORTING": "Position Dementia",
   "neurocraft.serverConfig.RANDOMIZE_BARS": "GUI Bar Dementia",
+  "neurocraft.serverConfig.RANDOMIZE_XP": "Randomized XP Values",
   "neurocraft.serverConfig.PLAYER_SCALING": "Sanity Progresses",
   "neurocraft.serverConfig.SANITY_RESET_UPON_DEATH": "Sanity Resets On Death",
   "neurocraft.serverConfig.PEAK_SANITY": "Peak Sanity",
