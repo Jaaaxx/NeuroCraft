@@ -52,7 +52,7 @@ public class FurnaceRemoval {
 //                Ingredient res = getFurnaceIngredientFromResult(event.getEntity().level(), result_item);
 //                ing_item = res == null ? null : res.getItems()[0];
 //                if (ing_item == null)
-                    return;
+                return;
             }
 
             result_slot.set(ItemStack.EMPTY);
