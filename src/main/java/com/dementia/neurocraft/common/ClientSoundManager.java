@@ -1,16 +1,8 @@
 package com.dementia.neurocraft.common;
 
-import com.dementia.neurocraft.config.ClientConfigs;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.PlayLevelSoundEvent;
 
-import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 

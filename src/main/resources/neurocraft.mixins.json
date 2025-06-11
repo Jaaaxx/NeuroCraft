@@ -5,7 +5,8 @@
   "refmap": "neurocraft.mixins.refmap.json",
   "target": "@env(DEFAULT)",
   "client": [
-    "Client.MixinBlockStateBase",
+    "Client.HeavyFogMixin",
+    "Client.LocalPlayerMixin",
     "Client.MixinLevelRenderer"
   ]
 }

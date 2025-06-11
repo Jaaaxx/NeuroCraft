@@ -41,7 +41,6 @@ public class ClientOptionsChanges {
     public static SoundEvent currentSchitzoMusic = null;
 
 
-
     @SubscribeEvent
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent tick) {
         if (tick.side == LogicalSide.CLIENT && tick.phase == TickEvent.Phase.END) {
@@ -161,6 +160,7 @@ public class ClientOptionsChanges {
             if (c % (20 * 30) == 0 && OPTION_SCHITZOWORLD.get()) {
                 var instance = Minecraft.getInstance();
                 var player = instance.player;
+
                 if (player == null)
                     return;
                 var playerSanity = getPlayerSanityClient();
@@ -171,11 +171,16 @@ public class ClientOptionsChanges {
                         currentSchitzoMusic = schitzoMusicOptions.get(new Random().nextInt(schitzoMusicOptions.size())).get();
                         ClientSoundManager.forcePlaySound(currentSchitzoMusic, 1, 1);
                         RandomizeTextures.crazyRenderingActive = true;
+                        originalFOV = instance.options.fov().get();
+                        int max_fov = 110;
+                        instance.options.fov().set(max_fov);
+                        instance.options.save();
                     } else {
                         if (currentSchitzoMusic != null)
                             ClientSoundManager.stopSound(currentSchitzoMusic);
                         RandomizeTextures.crazyRenderingActive = false;
                         HallucinationOccuredClient();
+                        resetToOriginals();
                     }
                 }
                 c = 1;
@@ -190,6 +195,13 @@ public class ClientOptionsChanges {
         if (player == null)
             return;
 
+        resetToOriginals();
+    }
+
+    @SubscribeEvent
+    public static void onClientPlayerDeath(ClientPlayerDeathEvent event) {
+        if (currentSchitzoMusic != null)
+            ClientSoundManager.stopSound(currentSchitzoMusic);
         resetToOriginals();
     }
 

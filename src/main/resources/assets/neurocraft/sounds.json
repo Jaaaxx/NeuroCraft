@@ -40,5 +40,12 @@
     "sounds": [
       "neurocraft:uncanny4"
     ]
+  },
+  "invalid": {
+    "category": "sound",
+    "subtitle": "neurocraft.invalid",
+    "sounds": [
+      "neurocraft:invalid"
+    ]
   }
 }
