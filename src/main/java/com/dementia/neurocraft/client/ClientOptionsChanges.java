@@ -166,14 +166,12 @@ public class ClientOptionsChanges {
                 var playerSanity = getPlayerSanityClient();
                 boolean schitzoMode = new Random().nextInt(PEAK_SANITY.get()) < playerSanity && new Random().nextInt(PEAK_SANITY.get()) < playerSanity;
                 if (schitzoMode || RandomizeTextures.crazyRenderingActive) {
+                    Minecraft.getInstance().getMusicManager().stopPlaying();
                     if (!RandomizeTextures.crazyRenderingActive) {
-                        player.addEffect(new MobEffectInstance(BLINDNESS, MobEffectInstance.INFINITE_DURATION, 3, false, false, false));
                         currentSchitzoMusic = schitzoMusicOptions.get(new Random().nextInt(schitzoMusicOptions.size())).get();
                         ClientSoundManager.forcePlaySound(currentSchitzoMusic, 1, 1);
                         RandomizeTextures.crazyRenderingActive = true;
                     } else {
-                        player.removeEffectNoUpdate(BLINDNESS);
-                        player.removeEffect(BLINDNESS);
                         if (currentSchitzoMusic != null)
                             ClientSoundManager.stopSound(currentSchitzoMusic);
                         RandomizeTextures.crazyRenderingActive = false;

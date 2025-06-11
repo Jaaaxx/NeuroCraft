@@ -1,138 +1,253 @@
 package com.dementia.neurocraft.client;
 
 import com.dementia.neurocraft.common.ClientSoundManager;
-import com.dementia.neurocraft.network.PacketHandler;
-import com.dementia.neurocraft.network.SForceBlockUpdatePacket;
 import com.dementia.neurocraft.server.BlockPlaceHallucinations;
 import com.dementia.neurocraft.util.ModBlocksRegistry;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Camera;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.Mod;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.lwjgl.opengl.GL11;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Random;
+import java.util.*;
 
-import static com.dementia.neurocraft.Neurocraft.MODID;
-import static com.dementia.neurocraft.client.ClientOptionsChanges.currentSchitzoMusic;
-import static com.dementia.neurocraft.network.SRefreshClientBlockList.toIntArray;
 import static com.dementia.neurocraft.util.ModSoundEventsRegistry.STATICSWITCH;
 
-@Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
-public class RandomizeTextures {
-    public static boolean crazyRenderingActive = false;
-    private static boolean prevCRA = false;
-    private static boolean typeWASNORENDER = false;
-    private static int c = 0;
-    public static final HashSet<BlockPos> changedBlocks = new HashSet<>();
-    public static final HashSet<BlockPos> changedLiquids = new HashSet<>();
+@Mod.EventBusSubscriber(modid = com.dementia.neurocraft.Neurocraft.MODID, value = Dist.CLIENT)
+public final class RandomizeTextures {
 
-    @SubscribeEvent
-    public static void onClientRenderEvent(RenderLevelStageEvent event) {
-        if (c++ % 400 == 0 || prevCRA != crazyRenderingActive) {
-            if (prevCRA != crazyRenderingActive)
-                prevCRA = crazyRenderingActive;
-            var instance = Minecraft.getInstance();
-            var player = instance.player;
-            if (player == null)
-                return;
-            var level = player.level();
-            if (crazyRenderingActive) {
-                var nearbyBlocks = getBlocksInRadius(level, player.getOnPos(), 5);
-                if (new Random().nextBoolean()) {
-                    // removes all block textures
-                    nearbyBlocks.forEach((pos, state) -> {
-                        var block = state.getBlock();
-                        if (block != Blocks.AIR && block != Blocks.CAVE_AIR && block != Blocks.VOID_AIR) {
-                            var v1 = ModBlocksRegistry.SMOOTH_BLOCK.get();
-                            player.clientLevel.setBlock(pos, v1.defaultBlockState(), 1);
-                            if (block instanceof LiquidBlock || block instanceof IFluidBlock) {
-                                changedLiquids.add(pos);
-                            } else {
-                                changedBlocks.add(pos);
-                            }
-                        }
-                    });
-                    if (!typeWASNORENDER) {
-                        ClientSoundManager.playSoundRandomPitchVolume(STATICSWITCH.get());
-                    }
-                    typeWASNORENDER = true;
-                } else {
-                    // randomizes all block textures
-                    nearbyBlocks.forEach((pos, state) -> {
-                        var block = state.getBlock();
-                        if (block != Blocks.AIR && block != Blocks.CAVE_AIR && block != Blocks.VOID_AIR) {
-                            var v1 = BlockPlaceHallucinations.getRandomBlock();
-                            player.clientLevel.setBlock(pos, v1, 1);
-                            if (block instanceof LiquidBlock || block instanceof IFluidBlock) {
-                                changedLiquids.add(pos);
-                            } else {
-                                changedBlocks.add(pos);
-                            }
-                        }
-                    });
-                    if (typeWASNORENDER) {
-                        ClientSoundManager.playSound(STATICSWITCH.get(), 0.25f, 1);
-                    }
-                    typeWASNORENDER = false;
-                }
-            }
-            if (!crazyRenderingActive) {
-                if (!changedBlocks.isEmpty()) {
-                    for (var pos : changedBlocks) {
-                        PacketHandler.sendToServer(new SForceBlockUpdatePacket(toIntArray(pos)));
-                    }
-                    changedBlocks.clear();
-                }
-                if (!changedLiquids.isEmpty()) {
-                    for (var pos : changedLiquids) {
-                        PacketHandler.sendToServer(new SForceBlockUpdatePacket(toIntArray(pos)));
-                    }
-                    changedBlocks.clear();
-                }
-            }
+    public enum SchizoRenderType { ALL_BLOCKS, MISSING_TEXTURE }
+    public enum PsychosisType    { NORMAL_PSYCHOSIS, ROTATIONAL_PSYCHOSIS }
 
-            c = 1;
-        }
+    public static volatile boolean crazyRenderingActive = false;
+
+    private static final int     RENDER_RADIUS = 20;
+    private static final Random  RNG           = new Random();
+
+    private static final BlockPos[] REL_OFFSETS;
+    static {
+        List<BlockPos> tmp = new ArrayList<>((RENDER_RADIUS * 2 + 1) * (RENDER_RADIUS * 2 + 1) * (RENDER_RADIUS * 2 + 1));
+        for (int x = -RENDER_RADIUS; x <= RENDER_RADIUS; ++x)
+            for (int y = -5; y <= RENDER_RADIUS; ++y)
+                for (int z = -RENDER_RADIUS; z <= RENDER_RADIUS; ++z)
+                    tmp.add(new BlockPos(x, y, z));
+        REL_OFFSETS = tmp.toArray(BlockPos[]::new);
+    }
+
+    private static boolean prevCRA     = false;
+    private static int     ticker      = 0;
+    private static BlockPos lastAnchor = BlockPos.ZERO;
+
+    public static final Map<BlockPos, BlockState> changedBlocks = new HashMap<>();
+    public static final Map<BlockPos, BlockState> changedLiquids = new HashMap<>();
+
+    private static SchizoRenderType schizoRenderType = SchizoRenderType.ALL_BLOCKS;
+    private static PsychosisType   psychosisType     = PsychosisType.NORMAL_PSYCHOSIS;
+
+    private static void renderVoid(RenderLevelStageEvent ev) {
+        if (!crazyRenderingActive || ev.getStage() != RenderLevelStageEvent.Stage.AFTER_SKY) return;
+        Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
+        RenderSystem.disableDepthTest();
+        RenderSystem.clearColor(0f, 0f, 0f, 1f);
+        RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT, false);
+        RenderSystem.enableDepthTest();
     }
 
     @SubscribeEvent
-    public static void onRespawnEvent(PlayerEvent.PlayerRespawnEvent event) {
-        if (crazyRenderingActive) {
-            var instance = Minecraft.getInstance();
-            var player = instance.player;
-            if (player == null)
-                return;
-            crazyRenderingActive = false;
-            if (currentSchitzoMusic != null)
-                ClientSoundManager.stopSound(currentSchitzoMusic);
+    public static void onRenderEntity(net.minecraftforge.client.event.RenderLivingEvent.Pre<?, ?> ev) {
+        if (!crazyRenderingActive) return;
+        ev.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onRenderHallucinations(RenderLevelStageEvent ev) {
+        renderVoid(ev);
+        if (!crazyRenderingActive ||
+                ev.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
+
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) return;
+
+        boolean periodic = ((ticker++ & 0xFF) == 0);
+        boolean toggle   = (prevCRA != crazyRenderingActive);
+        prevCRA = crazyRenderingActive;
+
+        boolean reroll = periodic || toggle;
+        if (reroll) {
+            SchizoRenderType prevType = schizoRenderType;
+            schizoRenderType = SchizoRenderType.values()[RNG.nextInt(SchizoRenderType.values().length)];
+            psychosisType    = RNG.nextInt(100) == 0 ? PsychosisType.ROTATIONAL_PSYCHOSIS
+                    : PsychosisType.NORMAL_PSYCHOSIS;
+            if (schizoRenderType != prevType) {
+                ClientSoundManager.playSoundRandomPitchVolume(STATICSWITCH.get());
+            }
+
+            changedBlocks.clear();
+            changedLiquids.clear();
+        }
+
+        updateVisibleLists(mc, reroll);
+
+        Map<BlockPos, BlockState> drawList = new HashMap<>(changedBlocks);
+        drawList.putAll(changedLiquids);
+
+        PoseStack pose = ev.getPoseStack();
+        Camera cam    = ev.getCamera();
+        BlockRenderDispatcher disp = mc.getBlockRenderer();
+        MultiBufferSource.BufferSource buf = mc.renderBuffers().bufferSource();
+
+        mc.getMainRenderTarget().bindWrite(true);
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthMask(true);
+        RenderSystem.disableCull();
+
+        boolean rot = psychosisType == PsychosisType.ROTATIONAL_PSYCHOSIS;
+        renderDrawList(drawList, buf, pose, cam, disp, rot,
+                mc.levelRenderer.getFrustum());
+
+        flush(buf, RenderType.solid(),        pose, ev.getProjectionMatrix());
+        flush(buf, RenderType.cutout(),       pose, ev.getProjectionMatrix());
+        flush(buf, RenderType.cutoutMipped(), pose, ev.getProjectionMatrix());
+        flush(buf, RenderType.translucent(),  pose, ev.getProjectionMatrix());
+
+        RenderSystem.enableCull();
+    }
+
+    /* ───────────── first-person lock ───────────── */
+    private static final KeyMapping TOGGLE_VIEW = Minecraft.getInstance().options.keyTogglePerspective;
+
+    @SubscribeEvent
+    public static void onKeyMapping(InputEvent.InteractionKeyMappingTriggered ev) {
+        if (crazyRenderingActive && ev.getKeyMapping() == TOGGLE_VIEW) ev.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent ev) {
+        if (ev.phase != TickEvent.Phase.END || !crazyRenderingActive) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.options.getCameraType() != net.minecraft.client.CameraType.FIRST_PERSON)
+            mc.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON);
+    }
+
+    private static void updateVisibleLists(Minecraft mc, boolean forceReroll) {
+        BlockPos anchor = mc.player.blockPosition();
+
+        if (!forceReroll && anchor.equals(lastAnchor)) return;
+        lastAnchor = anchor;
+
+        Level lvl = mc.player.level();
+        BlockState missing = ModBlocksRegistry.SMOOTH_BLOCK.get().defaultBlockState();
+        Set<BlockPos> inRadius = new HashSet<>(REL_OFFSETS.length);
+        for (BlockPos rel : REL_OFFSETS) inRadius.add(anchor.offset(rel));
+
+        changedBlocks.keySet().removeIf(p -> !inRadius.contains(p));
+        changedLiquids.keySet().removeIf(p -> !inRadius.contains(p));
+
+        for (BlockPos p : inRadius) {
+            if (changedBlocks.containsKey(p) || changedLiquids.containsKey(p)) continue;
+
+            BlockState state = lvl.getBlockState(p);
+            if (state.isAir() || isFullyHidden(p, lvl)) continue;
+
+            BlockState finalState = switch (schizoRenderType) {
+                case MISSING_TEXTURE -> missing;
+                case ALL_BLOCKS      -> BlockPlaceHallucinations.getRandomBlock();
+            };
+
+            ((state.getBlock() instanceof LiquidBlock || state.getBlock() instanceof IFluidBlock)
+                    ? changedLiquids
+                    : changedBlocks).put(p, finalState);
         }
     }
 
-    public static HashMap<BlockPos, BlockState> getBlocksInRadius(Level level, BlockPos center, int radius) {
-        HashMap<BlockPos, BlockState> blocks = new HashMap<>();
-
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -2; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos pos = center.offset(x, y, z);
-                    BlockState state = level.getBlockState(pos);
-                    blocks.put(pos, state);
-                }
-            }
+    private static boolean isFullyHidden(BlockPos pos, Level lvl) {
+        for (Direction d : Direction.values()) {
+            BlockPos q = pos.relative(d);
+            BlockState n = lvl.getBlockState(q);
+            if (!n.isSolidRender(lvl, q)) return false;
         }
+        return true;
+    }
 
-        return blocks;
+
+    private static void renderDrawList(Map<BlockPos, BlockState> list,
+                                       MultiBufferSource.BufferSource buf,
+                                       PoseStack pose,
+                                       Camera cam,
+                                       BlockRenderDispatcher disp,
+                                       boolean rotational,
+                                       Frustum frustum) {
+        double cx = cam.getPosition().x();
+        double cy = cam.getPosition().y();
+        double cz = cam.getPosition().z();
+
+        for (var entry : list.entrySet()) {
+            BlockPos pos = entry.getKey();
+            if (!frustum.isVisible(new AABB(pos))) continue;
+
+            pose.pushPose();
+            if (rotational) {
+                Vector3f off = new Vector3f((float)(pos.getX()-cx),
+                        (float)(pos.getY()-cy),
+                        (float)(pos.getZ()-cz));
+                off.rotate(cam.rotation());
+                pose.translate(off.x(), off.y(), off.z());
+            } else {
+                pose.translate(pos.getX()-cx, pos.getY()-cy, pos.getZ()-cz);
+            }
+
+            VertexConsumer vc = buf.getBuffer(ItemBlockRenderTypes.getRenderType(entry.getValue(), false));
+            disp.getModelRenderer().renderModel(pose.last(), vc, entry.getValue(),
+                    disp.getBlockModel(entry.getValue()),
+                    1f, 1f, 1f, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            pose.popPose();
+        }
+    }
+
+    private static void flush(MultiBufferSource.BufferSource buf,
+                              RenderType type,
+                              PoseStack pose,
+                              Matrix4f proj) {
+
+        if (type == RenderType.solid())
+            RenderSystem.setShader(GameRenderer::getRendertypeSolidShader);
+        else if (type == RenderType.cutout())
+            RenderSystem.setShader(GameRenderer::getRendertypeCutoutShader);
+        else if (type == RenderType.cutoutMipped())
+            RenderSystem.setShader(GameRenderer::getRendertypeCutoutMippedShader);
+        else if (type == RenderType.translucent())
+            RenderSystem.setShader(GameRenderer::getRendertypeTranslucentShader);
+        else
+            RenderSystem.setShader(GameRenderer::getPositionColorLightmapShader);
+
+        ShaderInstance sh = RenderSystem.getShader();
+        if (sh.MODEL_VIEW_MATRIX != null) sh.MODEL_VIEW_MATRIX.set(pose.last().pose());
+        if (sh.PROJECTION_MATRIX  != null) sh.PROJECTION_MATRIX.set(proj);
+        sh.apply();
+
+        type.setupRenderState();
+        buf.endBatch(type);
+        type.clearRenderState();
     }
 }
