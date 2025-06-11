@@ -125,6 +125,7 @@ repositories {
 }
 
 dependencies {
+
     // Specify the version of Minecraft to use.
     // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.
     // The "userdev" classifier will be requested and setup by ForgeGradle.
@@ -146,6 +147,10 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+
+    implementation "net.bytebuddy:byte-buddy:1.17.5"
+    implementation "net.bytebuddy:byte-buddy-agent:1.17.5"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
