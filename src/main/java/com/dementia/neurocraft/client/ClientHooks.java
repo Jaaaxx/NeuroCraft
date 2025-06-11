@@ -14,12 +14,9 @@ public final class ClientHooks {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || injected) return;
+        if (event.phase != TickEvent.Phase.END) return;
+        if (Minecraft.getInstance().level == null) return;
 
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.level != null) {
-            EntityRendererInterceptor.injectTextureAdvice();
-            injected = true;
-        }
+        HallucinationRenderHijack.apply();   // run once
     }
 }
