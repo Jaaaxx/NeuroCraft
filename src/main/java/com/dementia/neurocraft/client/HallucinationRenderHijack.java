@@ -1,5 +1,6 @@
 package com.dementia.neurocraft.client;
 
+import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.agent.ByteBuddyAgent;
@@ -16,6 +17,9 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.WalkAnimationState;
 import net.minecraft.world.entity.player.Player;
+
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Field;
 
 import static com.dementia.neurocraft.Neurocraft.LOGGER;
 
@@ -48,8 +52,8 @@ public final class HallucinationRenderHijack {
     }
 
     public static final class DummyPlayer extends AbstractClientPlayer {
-        public DummyPlayer(AbstractClientPlayer template) {
-            super((ClientLevel) template.level(), template.getGameProfile());
+        public DummyPlayer(net.minecraft.world.level.Level lvl, GameProfile gp) {
+            super((ClientLevel) lvl, gp);
         }
 
         @Override
@@ -62,8 +66,58 @@ public final class HallucinationRenderHijack {
             return false;
         }
     }
+    /* ---------- WalkAnimationState reflective helpers ---------- */
+    public static final class WalkAnimMirror {
+
+        public static final Field POS, SPD, SPD_OLD;
+
+        static {
+            try {
+                POS     = WalkAnimationState.class.getDeclaredField("position");
+                SPD     = WalkAnimationState.class.getDeclaredField("speed");
+                SPD_OLD = WalkAnimationState.class.getDeclaredField("speedOld");
+                AccessibleObject.setAccessible(
+                        new AccessibleObject[]{POS, SPD, SPD_OLD}, true);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException("Cannot access WalkAnimationState internals", e);
+            }
+        }
+
+        public static void copy(WalkAnimationState from, WalkAnimationState to) {
+            try {
+                POS.setFloat(to,     POS.getFloat(from));
+                SPD.setFloat(to,     SPD.getFloat(from));
+                SPD_OLD.setFloat(to, SPD_OLD.getFloat(from));
+            } catch (IllegalAccessException ex) {
+                throw new AssertionError(ex);
+            }
+        }
+
+        public static float getSpeed(WalkAnimationState s) {
+            try {
+                return SPD.getFloat(s);
+            } catch (IllegalAccessException ex) {
+                throw new AssertionError(ex);
+            }
+        }
+    }
+
 
     public static final class RenderAdvice {
+        public static DummyPlayer getOrCreateDummy(LivingEntity mob) {
+            return DUMMIES.computeIfAbsent(mob, m -> {
+                GameProfile profile = PROFILES.computeIfAbsent(m, RenderAdvice::newRandomProfile);
+                return new DummyPlayer(m.level(), profile);
+            });
+        }
+
+        /* mob → cached dummy (GC-safe) */
+        public static final java.util.Map<LivingEntity, DummyPlayer> DUMMIES =
+                new java.util.WeakHashMap<>();
+        public static final ThreadLocal<Boolean> REENTRY = ThreadLocal.withInitial(() -> false);
+        /* mob → profile cache (auto-removes when mob GC’d) */
+        public static final java.util.Map<LivingEntity, com.mojang.authlib.GameProfile> PROFILES =
+                new java.util.WeakHashMap<>();
         public static com.mojang.authlib.GameProfile newRandomProfile(LivingEntity mob) {
             Minecraft mc = Minecraft.getInstance();
             java.util.UUID id = java.util.UUID.randomUUID();
@@ -71,82 +125,68 @@ public final class HallucinationRenderHijack {
             mc.getSkinManager().getOrLoad(profile);
             return profile;
         }
-
-        public static final ThreadLocal<Boolean> REENTRY = ThreadLocal.withInitial(() -> false);
-        public static PlayerRenderer PLAYER_RENDERER;
-
-        /* mob → profile cache (auto-removes when mob GC’d) */
-        public static final java.util.Map<LivingEntity, com.mojang.authlib.GameProfile> PROFILES =
-                new java.util.WeakHashMap<>();
-
         @Advice.OnMethodEnter(skipOn = Advice.OnNonDefaultValue.class)
-        public static boolean enter(@Advice.This Object renderer,
-                                    @Advice.Argument(0) LivingEntity mob,
+        public static boolean enter(@Advice.Argument(0) LivingEntity mob,
                                     @Advice.Argument(1) float yaw,
                                     @Advice.Argument(2) float pt,
                                     @Advice.Argument(3) PoseStack pose,
                                     @Advice.Argument(4) MultiBufferSource buf,
                                     @Advice.Argument(5) int light) {
 
-            if (!RandomizeTextures.crazyRenderingActive) return false;
-            if (renderer instanceof PlayerRenderer) return false;
-            if (REENTRY.get()) return false;
+            if (!RandomizeTextures.crazyRenderingActive
+                    || mob == Minecraft.getInstance().player
+                    || REENTRY.get())
+                return false;
 
-            Minecraft mc = Minecraft.getInstance();
-            var real = mc.player;
-            if (mob == real) return false;
+            /* renderer & profile unchanged … */
 
-            /* lazily grab player renderer */
-            if (PLAYER_RENDERER == null)
-                PLAYER_RENDERER = (PlayerRenderer) mc.getEntityRenderDispatcher().getRenderer(real);
+            /* one dummy per mob — keeps animation history */
+            DummyPlayer dummy = getOrCreateDummy(mob);
 
-            /* obtain or create random profile for this mob */
-            com.mojang.authlib.GameProfile prof =
-                    PROFILES.computeIfAbsent(mob, RenderAdvice::newRandomProfile);
-
-            /* build disposable dummy with that profile */
-            DummyPlayer dummy = new DummyPlayer(mob.level(), prof);
-
-            mirrorState(mob, dummy);
+            mirrorState(mob, dummy, pt);
 
             REENTRY.set(true);
             try {
+                if (PLAYER_RENDERER == null) {
+                    var real = Minecraft.getInstance().player;
+                    PLAYER_RENDERER = (PlayerRenderer)
+                            Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(real);
+                }
                 PLAYER_RENDERER.render(dummy, yaw, pt, pose, buf, light);
             } finally {
                 REENTRY.set(false);
             }
-
             return true;
         }
 
         /* ---------- helpers ---------- */
 
-        public static void mirrorState(LivingEntity src,
-                                       DummyPlayer dst) {
-
-            /* ─ position / rotation ─ */
+        public static void mirrorState(LivingEntity src, DummyPlayer dst, float pt) {
+            // Position & old position
             dst.setPos(src.getX(), src.getY(), src.getZ());
+            dst.xo = src.xo;
+            dst.yo = src.yo;
+            dst.zo = src.zo;
+
+            // Rotations
             dst.setYRot(src.getYRot());
             dst.setXRot(src.getXRot());
-            dst.yHeadRot = src.yHeadRot;
+            dst.yHeadRot  = src.yHeadRot;
             dst.yHeadRotO = src.yHeadRotO;
-            dst.yBodyRot = src.yBodyRot;
+            dst.yBodyRot  = src.yBodyRot;
             dst.yBodyRotO = src.yBodyRotO;
 
-            WalkAnimationState srcWalk = src.walkAnimation;
-            WalkAnimationState dstWalk = dst.walkAnimation;
-
+            // Recompute walk speed based on movement
             double dx = src.getX() - src.xo;
             double dz = src.getZ() - src.zo;
-            float target = Math.min((float) Math.sqrt(dx * dx + dz * dz) * 4.0F, 1.0F);
+            float speed = Math.min((float) Math.sqrt(dx * dx + dz * dz) * 4.0F, 1.0F);
+            dst.walkAnimation.update(speed, pt);
 
-            dstWalk.update(target, 0.4F);
-
+            // Combat & pose
             dst.attackAnim = src.attackAnim;
-            dst.hurtTime = src.hurtTime;
+            dst.hurtTime   = src.hurtTime;
             dst.setPose(src.getPose());
         }
-
 
         /**
          * simple pronounceable 6-10 char string
@@ -159,24 +199,6 @@ public final class HallucinationRenderHijack {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < len; i++) sb.append(syll[r.nextInt(syll.length)]);
             return sb.substring(0, Math.min(16, sb.length()));
-        }
-
-        /* Disposable client-side player */
-        public static final class DummyPlayer extends AbstractClientPlayer {
-            public DummyPlayer(net.minecraft.world.level.Level lvl,
-                               com.mojang.authlib.GameProfile gp) {
-                super((ClientLevel) lvl, gp);
-            }
-
-            @Override
-            public boolean isSpectator() {
-                return false;
-            }
-
-            @Override
-            public boolean isCreative() {
-                return false;
-            }
         }
     }
 }
