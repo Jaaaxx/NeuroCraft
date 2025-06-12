@@ -22,6 +22,7 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 
 import static com.dementia.neurocraft.Neurocraft.LOGGER;
+import static com.dementia.neurocraft.client.PlayerHallucinations.getRandomName;
 
 public final class HallucinationRenderHijack {
 
@@ -121,7 +122,7 @@ public final class HallucinationRenderHijack {
         public static com.mojang.authlib.GameProfile newRandomProfile(LivingEntity mob) {
             Minecraft mc = Minecraft.getInstance();
             java.util.UUID id = java.util.UUID.randomUUID();
-            var profile = new com.mojang.authlib.GameProfile(id, randomName());
+            var profile = new com.mojang.authlib.GameProfile(id, getRandomName());
             mc.getSkinManager().getOrLoad(profile);
             return profile;
         }
@@ -177,10 +178,14 @@ public final class HallucinationRenderHijack {
             dst.yBodyRotO = src.yBodyRotO;
 
             // Recompute walk speed based on movement
-            double dx = src.getX() - src.xo;
-            double dz = src.getZ() - src.zo;
-            float speed = Math.min((float) Math.sqrt(dx * dx + dz * dz) * 4.0F, 1.0F);
-            dst.walkAnimation.update(speed, pt);
+            // --- Walk-cycle synchronisation ---
+            if (dst.tickCount != src.tickCount) {               // run exactly once per tick
+                double dx = src.getX() - src.xo;
+                double dz = src.getZ() - src.zo;
+                float speed = Math.min((float) Math.sqrt(dx*dx + dz*dz) * 4.0F, 1.0F);
+                dst.walkAnimation.update(speed, 1.0F);          // delta = 1 tick, not partial-tick
+                dst.tickCount = src.tickCount;                  // keep in step
+            }
 
             // Combat & pose
             dst.attackAnim = src.attackAnim;
@@ -188,17 +193,5 @@ public final class HallucinationRenderHijack {
             dst.setPose(src.getPose());
         }
 
-        /**
-         * simple pronounceable 6-10 char string
-         */
-        public static String randomName() {
-            String[] syll = {"ba", "be", "bi", "bo", "bu", "ka", "ke", "ki", "ko", "ku", "ra", "re", "ri", "ro", "ru",
-                    "ta", "te", "ti", "to", "tu", "za", "ze", "zi", "zo", "zu"};
-            java.util.Random r = java.util.concurrent.ThreadLocalRandom.current();
-            int len = 3 + r.nextInt(3);            // 3–5 syllables
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < len; i++) sb.append(syll[r.nextInt(syll.length)]);
-            return sb.substring(0, Math.min(16, sb.length()));
-        }
     }
 }

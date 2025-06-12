@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPauseEvent;
 import net.minecraftforge.client.event.InputEvent;
@@ -218,6 +219,7 @@ public final class RandomizeTextures {
         Minecraft mc = Minecraft.getInstance();
         if (mc.options.getCameraType() != net.minecraft.client.CameraType.FIRST_PERSON)
             mc.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON);
+        mc.player.setSprinting(false);
     }
 
     private static void updateVisibleLists(Minecraft mc, boolean forceReroll) {
@@ -239,7 +241,7 @@ public final class RandomizeTextures {
             if (changedBlocks.containsKey(p) || changedLiquids.containsKey(p)) continue;
 
             BlockState state = lvl.getBlockState(p);
-            if (state.isAir() || isFullyHidden(p, lvl)) continue;
+            if (state.isAir() || isFullyHidden(p, lvl) || state.getCollisionShape(lvl, p).equals(Shapes.empty())) continue;
 
             if (state.getBlock() instanceof LiquidBlock || state.getBlock() instanceof IFluidBlock) {
                 changedLiquids.put(p, Blocks.AIR.defaultBlockState());
