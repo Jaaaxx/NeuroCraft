@@ -1,14 +1,12 @@
 package com.dementia.neurocraft.client;
 
 import com.dementia.neurocraft.common.ClientSoundManager;
-import com.dementia.neurocraft.events.ClientEvents;
 import com.dementia.neurocraft.server.BlockPlaceHallucinations;
 import com.dementia.neurocraft.util.ModBlocksRegistry;
 import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexSorting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -29,14 +27,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPauseEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.Mod;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import org.lwjgl.opengl.GL11;
 
 import java.util.*;
@@ -84,15 +78,6 @@ public final class RandomizeTextures {
     private static SchizoRenderType schizoRenderType = SchizoRenderType.ALL_BLOCKS;
     private static PsychosisType psychosisType = PsychosisType.NORMAL_PSYCHOSIS;
 
-
-    private static Matrix4f buildMaxFovProjection(Minecraft mc) {
-        float aspect = (float) mc.getWindow().getWidth() /
-                (float) mc.getWindow().getHeight();
-        float far = mc.options.getEffectiveRenderDistance() * 16.0F;
-        return new Matrix4f().setPerspective(
-                (float) Math.toRadians(MAX_FOV_DEG), aspect, 0.05F, far);
-    }
-
     private static void renderVoid(RenderLevelStageEvent ev) {
         if (!crazyRenderingActive || ev.getStage() != RenderLevelStageEvent.Stage.AFTER_SKY) return;
         Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
@@ -139,9 +124,9 @@ public final class RandomizeTextures {
         Map<BlockPos, BlockState> drawList = new HashMap<>(changedBlocks);
         drawList.putAll(changedLiquids);
 
-        PoseStack pose = ev.getPoseStack();
         Camera cam = ev.getCamera();
-        BlockRenderDispatcher disp = mc.getBlockRenderer();
+        PoseStack ps = ev.getPoseStack();
+        BlockRenderDispatcher brd = mc.getBlockRenderer();
         MultiBufferSource.BufferSource buf = mc.renderBuffers().bufferSource();
 
         if (screenShouldShake) {
@@ -153,28 +138,29 @@ public final class RandomizeTextures {
             RenderSystem.clearColor(1f, 1f, 1f, 1f);
             RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT, false);
 
-            pose.translate(dx, dy, dz);
+            ps.translate(dx, dy, dz);
         }
 
-        mc.getMainRenderTarget().bindWrite(true);
-        Matrix4f proj = buildMaxFovProjection(mc);
 
-        Vector3f eye = new Vector3f(
-                (float) cam.getPosition().x(),
-                (float) cam.getPosition().y(),
-                (float) cam.getPosition().z());
+        final double camX = cam.getPosition().x();
+        final double camY = cam.getPosition().y();
+        final double camZ = cam.getPosition().z();
 
-        RenderSystem.setProjectionMatrix(
-                proj,
-                VertexSorting.byDistance(eye));
+        for (var e : drawList.entrySet()) {
+            BlockPos p = e.getKey();
+            ps.pushPose();
+            ps.translate(p.getX() - camX,
+                    p.getY() - camY,
+                    p.getZ() - camZ);          // keep this one translation
 
-
-        RenderSystem.enableDepthTest();
-        RenderSystem.depthMask(true);
-        RenderSystem.disableCull();
-
-        boolean rot = psychosisType == PsychosisType.ROTATIONAL_PSYCHOSIS;
-        renderDrawList(drawList, buf, pose, cam, disp, rot, null);
+            VertexConsumer vc = buf.getBuffer(
+                    ItemBlockRenderTypes.getRenderType(e.getValue(), false));
+            brd.getModelRenderer().renderModel(
+                    ps.last(), vc, e.getValue(),
+                    brd.getBlockModel(e.getValue()),
+                    1f, 1f, 1f, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            ps.popPose();
+        }
 
         flush(buf, RenderType.solid());
         flush(buf, RenderType.cutout());
@@ -185,14 +171,6 @@ public final class RandomizeTextures {
     }
 
     private static final KeyMapping TOGGLE_VIEW = Minecraft.getInstance().options.keyTogglePerspective;
-
-    @SubscribeEvent
-    public static void onKeyMapping(InputEvent.InteractionKeyMappingTriggered ev) {
-        if (crazyRenderingActive && ev.getKeyMapping() == TOGGLE_VIEW)  {
-            ClientSoundManager.playSoundRandomPitchVolume(ModSoundEventsRegistry.INVALID.get());
-            ev.setCanceled(true);
-        }
-    }
 
     @SubscribeEvent
     public static void onClickEvent(InputEvent.InteractionKeyMappingTriggered ev) {
@@ -211,15 +189,6 @@ public final class RandomizeTextures {
             }
             ev.setCanceled(true);
         }
-    }
-
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent ev) {
-        if (ev.phase != TickEvent.Phase.END || !crazyRenderingActive) return;
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.options.getCameraType() != net.minecraft.client.CameraType.FIRST_PERSON)
-            mc.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON);
-        mc.player.setSprinting(false);
     }
 
     private static void updateVisibleLists(Minecraft mc, boolean forceReroll) {
@@ -241,7 +210,8 @@ public final class RandomizeTextures {
             if (changedBlocks.containsKey(p) || changedLiquids.containsKey(p)) continue;
 
             BlockState state = lvl.getBlockState(p);
-            if (state.isAir() || isFullyHidden(p, lvl) || state.getCollisionShape(lvl, p).equals(Shapes.empty())) continue;
+            if (state.isAir() || isFullyHidden(p, lvl) || state.getCollisionShape(lvl, p).equals(Shapes.empty()))
+                continue;
 
             if (state.getBlock() instanceof LiquidBlock || state.getBlock() instanceof IFluidBlock) {
                 changedLiquids.put(p, Blocks.AIR.defaultBlockState());
@@ -301,6 +271,7 @@ public final class RandomizeTextures {
 
 
     private static boolean crazyRenderingWasActive = false;
+
     @SubscribeEvent
     public static void onPauseEvent(ClientPauseEvent event) {
         if (event.isPaused()) {
