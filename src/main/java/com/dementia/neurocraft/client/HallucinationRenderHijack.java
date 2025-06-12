@@ -103,6 +103,27 @@ public final class HallucinationRenderHijack {
         }
     }
 
+    public static final class LivingAnimMirror {
+        /* attackAnimO is protected; reflect once */
+        public static final Field ATTACK_OLD;
+        static {
+            try {
+                ATTACK_OLD = LivingEntity.class.getDeclaredField("oAttackAnim");
+                ATTACK_OLD.setAccessible(true);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        public static float getAttackOld(LivingEntity e) {
+            try { return ATTACK_OLD.getFloat(e); }
+            catch (IllegalAccessException ex) { throw new AssertionError(ex); }
+        }
+        public static void setAttackOld(LivingEntity e, float v) {
+            try { ATTACK_OLD.setFloat(e, v); }
+            catch (IllegalAccessException ex) { throw new AssertionError(ex); }
+        }
+    }
+
 
     public static final class RenderAdvice {
         public static DummyPlayer getOrCreateDummy(LivingEntity mob) {
@@ -160,36 +181,44 @@ public final class HallucinationRenderHijack {
             return true;
         }
 
-        /* ---------- helpers ---------- */
-
         public static void mirrorState(LivingEntity src, DummyPlayer dst, float pt) {
-            // Position & old position
+
+            /* absolute position */
             dst.setPos(src.getX(), src.getY(), src.getZ());
-            dst.xo = src.xo;
-            dst.yo = src.yo;
-            dst.zo = src.zo;
+            dst.xo = src.xo; dst.yo = src.yo; dst.zo = src.zo;
 
-            // Rotations
-            dst.setYRot(src.getYRot());
-            dst.setXRot(src.getXRot());
-            dst.yHeadRot  = src.yHeadRot;
-            dst.yHeadRotO = src.yHeadRotO;
-            dst.yBodyRot  = src.yBodyRot;
-            dst.yBodyRotO = src.yBodyRotO;
+            /* ---------- copy once-per-tick ---------- */
+            boolean newTick = dst.tickCount != src.tickCount;
+            if (newTick) {
+                // base rotations
+                dst.xRotO = src.xRotO;          // old pitch
+                dst.yRotO = src.yRotO;          // old yaw
 
-            // Recompute walk speed based on movement
-            // --- Walk-cycle synchronisation ---
-            if (dst.tickCount != src.tickCount) {               // run exactly once per tick
+                // body & head
+                dst.yBodyRotO = src.yBodyRotO;
+                dst.yHeadRotO = src.yHeadRotO;
+
+                // attack swing
+                LivingAnimMirror.setAttackOld(dst, LivingAnimMirror.getAttackOld(src));
+
+                // walk cycle
                 double dx = src.getX() - src.xo;
                 double dz = src.getZ() - src.zo;
-                float speed = Math.min((float) Math.sqrt(dx*dx + dz*dz) * 4.0F, 1.0F);
-                dst.walkAnimation.update(speed, 1.0F);          // delta = 1 tick, not partial-tick
-                dst.tickCount = src.tickCount;                  // keep in step
+                float speed = Math.min((float)Math.sqrt(dx*dx + dz*dz) * 4.0F, 1.0F);
+                dst.walkAnimation.update(speed, 1.0F);
+
+                dst.tickCount = src.tickCount;
             }
 
-            // Combat & pose
+            /* ---------- current-frame values ---------- */
+            dst.setYRot(src.getYRot());
+            dst.setXRot(src.getXRot());
+            dst.yBodyRot = src.yBodyRot;
+            dst.yHeadRot = src.yHeadRot;
             dst.attackAnim = src.attackAnim;
-            dst.hurtTime   = src.hurtTime;
+
+            /* combat pose */
+            dst.hurtTime = src.hurtTime;
             dst.setPose(src.getPose());
         }
 
