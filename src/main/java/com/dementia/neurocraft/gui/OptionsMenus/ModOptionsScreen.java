@@ -14,12 +14,15 @@ import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.config.IConfigEvent;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -102,21 +105,23 @@ public class ModOptionsScreen extends Screen {
                     boolean b = "true".equals(val);
                     config.set(b);
 
+
                     if (ServerConfigs.modConfig != null) {
                         ServerConfigs.modConfig.save();
-                        FMLJavaModLoadingContext
-                                .get()
-                                .getModEventBus()
-                                .post(new ModConfigEvent.Reloading(ServerConfigs.modConfig));
+                        ServerConfigs.SPEC.afterReload();
+                        try {
+                            Method fireEvent = ModConfig.class.getDeclaredMethod("fireEvent", IConfigEvent.class);
+                            fireEvent.setAccessible(true);
+                            fireEvent.invoke(ServerConfigs.modConfig, IConfigEvent.reloading(ServerConfigs.modConfig));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     if (FMLEnvironment.dist.isClient()) {
                         var conn = Minecraft.getInstance().getConnection();
-                        if (conn != null && !Minecraft.getInstance().isLocalServer()) {
-                            PacketHandler.sendToServer(
-                                    new CFeatureToggleUpdatePacket(config.getPath().get(0), b)
-                            );
-                        }
+                        PacketHandler.sendToServer(
+                                new CFeatureToggleUpdatePacket(config.getPath().get(0), b));
                     }
                 }
         );

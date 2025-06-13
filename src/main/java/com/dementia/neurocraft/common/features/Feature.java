@@ -82,6 +82,7 @@ public abstract class Feature {
         return tickCount % (secondsInterval * 20) == 0;
     }
     private boolean passChance(int sanity) {
-        return RNG.nextDouble() <= maxTriggerChance * sanity / (double) PEAK_SANITY;
+        var db = RNG.nextDouble();
+        return db <= maxTriggerChance * sanity / (double) PEAK_SANITY;
     }
 }

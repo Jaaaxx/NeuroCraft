@@ -138,10 +138,7 @@ public final class Psychosis extends Feature {
 
     @SubscribeEvent
     public static void onClientPlayerDeathEvent(ClientPlayerDeathEvent event) {
-        LOGGER.info("Hello from death123");
-
         if (!active) return;
-        LOGGER.info("Hello from death");
 
         enablePsychosis(false);
     }

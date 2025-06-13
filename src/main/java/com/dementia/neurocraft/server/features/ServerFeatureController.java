@@ -62,7 +62,6 @@ public final class ServerFeatureController {
 
             ((FeatureBlockBreak) feature).onBlockBreak(event);
             feature.tryRunServer(player, getPlayerSanity(player));
-            event.setCanceled(true);
         }
     }
 
@@ -76,7 +75,6 @@ public final class ServerFeatureController {
 
             ((FeatureBlockPlace) feature).onBlockPlace(event);
             feature.tryRunServer(player, getPlayerSanity(player));
-            event.setCanceled(true);
         }
     }
 
@@ -90,7 +88,6 @@ public final class ServerFeatureController {
 
             ((FeatureLivingEntityFinishUseItem) feature).onFinishUseItemEvent(event);
             feature.tryRunServer(player, getPlayerSanity(player));
-            event.setCanceled(true);
         }
     }
     @SubscribeEvent

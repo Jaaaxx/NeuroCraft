@@ -53,8 +53,8 @@ public class Neurocraft {
         ModSoundEventsRegistry.register(modEventBus);
         ModBlocksRegistry.register(modEventBus);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfigs.SPEC, MODID + "-client.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigs.SPEC, MODID + "-server.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfigs.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigs.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.gui.OptionsMenus;
 
-import com.dementia.neurocraft.config.ConfigSyncHandler;
+//import com.dementia.neurocraft.config.ConfigSyncHandler;
 import com.dementia.neurocraft.config.ServerConfigs;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
@@ -8,6 +8,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.config.ConfigTracker;
+import net.minecraftforge.fml.config.ModConfig.Type;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +40,7 @@ public class ServerModOptionsScreen extends ModOptionsScreen {
             this.minecraft.setScreen(this.lastScreen);
             if (ServerConfigs.modConfig != null) {
                 ServerConfigs.modConfig.save();
-                ConfigSyncHandler.syncFeatureStates();
+//                ConfigSyncHandler.syncFeatureStates();
                 ServerConfigs.SPEC.afterReload();
             }
         }).bounds(this.width / 2 - 100, this.height - 27, 200, 20).build());
