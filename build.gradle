@@ -73,6 +73,18 @@ dependencies {
     jarJar(group: "net.bytebuddy", name: "byte-buddy-agent", version: "[1.17.5]")
 }
 
+tasks.register('updateLang', JavaExec) {
+    group = 'development'
+    description = 'Scans Feature classes and updates en_us.json with any missing config display names.'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('com.dementia.neurocraft.dev.FeatureLangUpdater')
+
+    doFirst {
+        println "Running FeatureLangUpdater to patch en_us.json..."
+    }
+}
+
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
@@ -137,6 +149,10 @@ tasks.withType(JavaCompile).configureEach {
 
 eclipse {
     synchronizationTasks 'genEclipseRuns'
+}
+
+tasks.named('build') {
+    dependsOn tasks.named('updateLang')
 }
 
 sourceSets.each {

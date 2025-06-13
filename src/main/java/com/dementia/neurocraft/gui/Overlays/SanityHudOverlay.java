@@ -1,15 +1,13 @@
 package com.dementia.neurocraft.gui.Overlays;
 
-import com.dementia.neurocraft.gui.OptionsMenus.PauseRenderScreen;
 import com.dementia.neurocraft.util.ClientTimingHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 import static com.dementia.neurocraft.config.ClientConfigs.SANITY_GUI;
-import static com.dementia.neurocraft.client.PlayerSanityClientHandler.getPlayerSanityClient;
+import static com.dementia.neurocraft.client.internal.PlayerSanityClientHandler.getPlayerSanityClient;
 import static com.dementia.neurocraft.gui.Overlays.SanityHudOverlayResources.*;
 
 public class SanityHudOverlay {

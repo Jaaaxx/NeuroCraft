@@ -3,8 +3,7 @@ package com.dementia.neurocraft.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import static com.dementia.neurocraft.client.PlayerSanityClientHandler.playerSanity;
-import static com.dementia.neurocraft.client.RandomizeHealthBars.resetBarsToServer;
+import static com.dementia.neurocraft.client.features.impl.RandomizeHealthBars.resetBarsToServer;
 
 public class CResetBarsPacket {
     private final int foodLevel;

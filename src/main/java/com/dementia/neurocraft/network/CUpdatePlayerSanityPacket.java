@@ -3,20 +3,20 @@ package com.dementia.neurocraft.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import static com.dementia.neurocraft.client.PlayerSanityClientHandler.playerSanity;
+import static com.dementia.neurocraft.client.internal.PlayerSanityClientHandler.playerSanity;
 
 public class CUpdatePlayerSanityPacket {
-    private final long sanity;
-    public CUpdatePlayerSanityPacket(long sanity) {
+    private final int sanity;
+    public CUpdatePlayerSanityPacket(int sanity) {
         this.sanity = sanity;
     }
 
     public CUpdatePlayerSanityPacket(FriendlyByteBuf buffer) {
-        this(buffer.readLong());
+        this(buffer.readInt());
     }
 
     public void encode(FriendlyByteBuf buffer) {
-        buffer.writeLong(sanity);
+        buffer.writeInt(sanity);
     }
 
     public void handle(CustomPayloadEvent.Context context) {

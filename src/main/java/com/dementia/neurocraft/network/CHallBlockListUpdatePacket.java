@@ -3,13 +3,11 @@ package com.dementia.neurocraft.network;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.fml.DistExecutor;
 
 import java.util.ArrayList;
 
-import static com.dementia.neurocraft.client.ClientBlockVerify.*;
+import static com.dementia.neurocraft.client.internal.ClientBlockVerify.*;
 
 public class CHallBlockListUpdatePacket {
     private final int[] blockPosList;

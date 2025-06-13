@@ -1,12 +1,12 @@
 {
   "required": true,
-  "package": "com.dementia.neurocraft.mixins",
+  "package": "com.dementia.neurocraft.client.mixins",
   "compatibilityLevel": "JAVA_16",
   "refmap": "neurocraft.mixins.refmap.json",
   "target": "@env(DEFAULT)",
   "client": [
-    "Client.HeavyFogMixin",
-    "Client.LocalPlayerMixin",
-    "Client.MixinLevelRenderer"
+    "PsychosisLevelRenderer",
+    "PsychosisLocalPlayer",
+    "PsychosisRenderSystem"
   ]
 }

@@ -22,7 +22,7 @@ public class ModSoundEventsRegistry {
     public static final RegistryObject<SoundEvent> UNCANNY4 = registerSoundEvent("uncanny4");
     public static final RegistryObject<SoundEvent> INVALID = registerSoundEvent("invalid");
 
-    public static final ArrayList<RegistryObject<SoundEvent>> schitzoMusicOptions =
+    public static final ArrayList<RegistryObject<SoundEvent>> schizoMusicOptions =
             new ArrayList<>(){{add(UNCANNY1); add(UNCANNY2); add(UNCANNY3); add(UNCANNY4);}};
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {

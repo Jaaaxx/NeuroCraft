@@ -1,6 +1,7 @@
 package com.dementia.neurocraft.gui.OptionsMenus;
 
 import com.dementia.neurocraft.config.ClientConfigs;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.PauseScreen;
@@ -35,9 +36,15 @@ public class ClientModOptionsScreen extends ModOptionsScreen {
             this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (doneButton) -> {
                 this.minecraft.setScreen(this.lastScreen);
             }).bounds(this.width / 2 - 100, this.height - 27, 100, 20).build());
-            this.addRenderableWidget(Button.builder(Component.literal("Server Options"), (doneButton) -> {
+
+            Button serverConfigButton = Button.builder(Component.literal("Server Options"), (doneButton) -> {
                 this.minecraft.setScreen(new ServerModOptionsScreen(this));
-            }).bounds(this.width / 2 + 10, this.height - 27, 100, 20).build());
+            }).bounds(this.width / 2 + 10, this.height - 27, 100, 20).build();
+            if (Minecraft.getInstance().level == null) {
+                serverConfigButton.active = false;
+                serverConfigButton.setMessage(Component.literal("Server Options").withStyle(style -> style.withColor(0x777777))); // Gray out
+            }
+            this.addRenderableWidget(serverConfigButton);
         }
 
         addResetToDefaultsButton();

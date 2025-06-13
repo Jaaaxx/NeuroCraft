@@ -1,10 +1,9 @@
 package com.dementia.neurocraft;
 
 import com.dementia.neurocraft.config.ClientConfigs;
-import com.dementia.neurocraft.config.NewWorldConfigs;
 import com.dementia.neurocraft.config.ServerConfigs;
 import com.dementia.neurocraft.gui.OptionsMenus.ClientModOptionsScreen;
-import com.dementia.neurocraft.common.ClientSoundManager;
+import com.dementia.neurocraft.client.internal.SoundManager;
 import com.dementia.neurocraft.util.ModBlocksRegistry;
 import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import com.mojang.logging.LogUtils;
@@ -56,7 +55,6 @@ public class Neurocraft {
         ModBlocksRegistry.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfigs.SPEC, MODID + "-client.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NewWorldConfigs.SPEC, MODID + "-new_world.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigs.SPEC, MODID + "-server.toml");
     }
 
@@ -76,7 +74,7 @@ public class Neurocraft {
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         static int c = 1;
-        public static ClientSoundManager clientSoundManager;
+        public static SoundManager soundManager;
 
         @SubscribeEvent
         public static void onClientSetup(FMLConstructModEvent event) {

@@ -1,6 +1,6 @@
 package com.dementia.neurocraft.network;
 
-import com.dementia.neurocraft.common.ClientSoundManager;
+import com.dementia.neurocraft.client.internal.SoundManager;
 import com.dementia.neurocraft.config.ClientConfigs;
 import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -24,8 +24,12 @@ public class CAuditoryHallucinationPacket {
 
     public void handle(CustomPayloadEvent.Context context) {
         if (context.isClientSide()) {
-            if (sound == ModSoundEventsRegistry.CONFUSED.get() && ClientConfigs.HALLUCINATION_SFX.get()) {
-                ClientSoundManager.playSoundRandomPitchVolume(sound);
+            if (sound == ModSoundEventsRegistry.CONFUSED.get()) {
+                if (ClientConfigs.HALLUCINATION_SFX.get()) {
+                    SoundManager.playSoundRandomPitchVolume(sound);
+                }
+            } else {
+                SoundManager.playSoundRandomPitchVolume(sound);
             }
             context.setPacketHandled(true);
         } else {

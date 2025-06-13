@@ -79,6 +79,17 @@ public class PacketHandler {
                 .decoder(CResetXPPacket::new)
                 .consumerMainThread(CResetXPPacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CFeatureToggleUpdatePacket.class, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(CFeatureToggleUpdatePacket::encode)
+                .decoder(CFeatureToggleUpdatePacket::new)
+                .consumerMainThread(CFeatureToggleUpdatePacket::handle)
+                .add();
+        INSTANCE.messageBuilder(SFeatureSyncPacket.class, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SFeatureSyncPacket::encode)
+                .decoder(SFeatureSyncPacket::new)
+                .consumerMainThread(SFeatureSyncPacket::handle)
+                .add();
+
     }
 
     public static void sendToServer(Object msg) {

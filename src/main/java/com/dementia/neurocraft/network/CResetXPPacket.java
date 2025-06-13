@@ -3,7 +3,7 @@ package com.dementia.neurocraft.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import static com.dementia.neurocraft.client.RandomizeXPBars.resetXPToServer;
+import static com.dementia.neurocraft.client.features.impl.RandomizeXP.resetXPToServer;
 
 public class CResetXPPacket {
   int xp;
@@ -22,7 +22,7 @@ public class CResetXPPacket {
 
   public void handle(CustomPayloadEvent.Context context) {
     if (context.isClientSide()) {
-      resetXPToServer(xp);
+      resetXPToServer();
       context.setPacketHandled(true);
     } else {
       context.setPacketHandled(false);

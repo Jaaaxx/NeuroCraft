@@ -1,7 +1,9 @@
 package com.dementia.neurocraft.gui.OptionsMenus;
 
-import com.dementia.neurocraft.config.NewWorldConfigs;
+import com.dementia.neurocraft.config.ConfigSyncHandler;
 import com.dementia.neurocraft.config.ServerConfigs;
+import com.dementia.neurocraft.network.CFeatureToggleUpdatePacket;
+import com.dementia.neurocraft.network.PacketHandler;
 import com.mojang.serialization.Codec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -14,6 +16,10 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.apache.logging.log4j.core.jmx.Server;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -25,7 +31,6 @@ public class ModOptionsScreen extends Screen {
     protected OptionsList list;
     protected String lang_prefix;
     protected ArrayList<ForgeConfigSpec.ConfigValue> all_options = new ArrayList<>();
-    private boolean newWorldConfig = false;
 
 
     public ModOptionsScreen(Screen lastScreen, Component title, String lang_prefix) {
@@ -58,12 +63,25 @@ public class ModOptionsScreen extends Screen {
         String disp_name = Component.translatable(this.lang_prefix + name).getString();
         String prefix = disp_name + ": ";
         String suffix = name.equals("SCALING_INTERVAL") ? " sec" : "";
-        var range = this.newWorldConfig ? NewWorldConfigs.RANGES.get(config) : ServerConfigs.RANGES.get(config);
-        return new OptionInstance<>(disp_name, OptionInstance.noTooltip(),
+        var range = ServerConfigs.RANGES.get(config);
+        int currentVal = config.get(); // use live value
+
+        return new OptionInstance<>(
+                disp_name,
+                OptionInstance.noTooltip(),
                 (label, val) -> Component.literal(prefix + val + suffix),
-                (new OptionInstance.IntRange(range.getKey(), range.getValue()))
-                        .xmap((val) -> val, (val) -> val),
-                Codec.intRange(range.getKey(), range.getValue()), config.get(), config::set);
+                new OptionInstance.IntRange(range.getKey(), range.getValue()).xmap(v -> v, v -> v),
+                Codec.intRange(range.getKey(), range.getValue()),
+                currentVal,
+                val -> {
+                    config.set(val);
+                    if (ServerConfigs.modConfig != null) {
+                        ServerConfigs.modConfig.save();
+                        ConfigSyncHandler.syncFeatureStates();
+                        ServerConfigs.SPEC.afterReload(); // immediate sync
+                    }
+                }
+        );
     }
 
     protected void resetValuesToDefault() {
@@ -73,20 +91,42 @@ public class ModOptionsScreen extends Screen {
         this.rebuildWidgets();
     }
 
-    protected OptionInstance createBooleanButtonFromConfig(String name, ForgeConfigSpec.ConfigValue<Boolean> config) {
-        List<String> bools = new ArrayList<>(config.get() ? Arrays.asList("true", "false") : Arrays.asList("false", "true"));
-        name = Component.translatable(this.lang_prefix + name).getString();
-        return new OptionInstance(name, OptionInstance.noTooltip(), (label, val) -> {
-            return val.equals("") ? styleBool(bools.get(0)) : styleBool((String) val);
-        }, new OptionInstance.LazyEnum(() -> {
-            return bools.stream().toList();
-        }, (p_232011_) -> {
-            return Optional.of(p_232011_);
-        }, Codec.STRING), "", (val) -> {
-            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-            config.set(val.equals("true"));
-        });
+    protected OptionInstance<Boolean> createBooleanButtonFromConfig(String name, ForgeConfigSpec.ConfigValue<Boolean> config) {
+        String dispName = Component.translatable(this.lang_prefix + name).getString();
+        String current = config.get() ? "true" : "false";   // live value
+
+        return new OptionInstance<>(
+                dispName,
+                OptionInstance.noTooltip(),
+                (lbl, val) -> styleBool((String) val),
+                new OptionInstance.LazyEnum(() -> List.of("true", "false"), Optional::of, Codec.STRING),
+                current,
+                val -> {
+                    boolean b = "true".equals(val);
+                    config.set(b);
+
+                    // Rapid‐fire save & reload to overcome Forge’s dropped‐event issue
+                    if (ServerConfigs.modConfig != null) {
+                        ServerConfigs.modConfig.save();
+                        FMLJavaModLoadingContext
+                                .get()
+                                .getModEventBus()
+                                .post(new ModConfigEvent.Reloading(ServerConfigs.modConfig));
+                    }
+
+                    // If this is a remote client, notify server repeatedly as well
+                    if (FMLEnvironment.dist.isClient()) {
+                        var conn = Minecraft.getInstance().getConnection();
+                        if (conn != null && !Minecraft.getInstance().isLocalServer()) {
+                            PacketHandler.sendToServer(
+                                    new CFeatureToggleUpdatePacket(config.getPath().get(0), b)
+                            );
+                        }
+                    }
+                }
+        );
     }
+
 
     protected Component styleBool(String textBool) {
         return textBool.equals("true")
@@ -99,9 +139,6 @@ public class ModOptionsScreen extends Screen {
     }
 
     protected void putAllConfigsInMenu(Class configClass) {
-        if (configClass == NewWorldConfigs.class)
-            this.newWorldConfig = true;
-
         List<Field> configFields = Stream.of(configClass.getFields())
                 .filter(field -> ForgeConfigSpec.ConfigValue.class.isAssignableFrom(field.getType()))
                 .toList();
@@ -113,9 +150,10 @@ public class ModOptionsScreen extends Screen {
         for (Field cf : configFields) {
             try {
                 ForgeConfigSpec.ConfigValue option = (ForgeConfigSpec.ConfigValue) cf.get(null);
-                if (option.get() instanceof Boolean) {
+                Object defaultVal = option.getDefault();
+                if (defaultVal instanceof Boolean) {
                     boolOptions.put(cf.getName(), (ForgeConfigSpec.ConfigValue<Boolean>) option);
-                } else if (option.get() instanceof Integer) {
+                } else if (defaultVal instanceof Integer) {
                     intOptions.put(cf.getName(), (ForgeConfigSpec.ConfigValue<Integer>) option);
                 }
                 all_options.add(option);
