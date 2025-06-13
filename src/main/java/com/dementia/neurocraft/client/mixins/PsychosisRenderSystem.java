@@ -28,7 +28,7 @@ public abstract class PsychosisRenderSystem {
 
     @Inject(method = "_setShaderFogEnd(F)V", at = @At("TAIL"))
     private static void forceEnd(float ignored, CallbackInfo ci) {
-        if (Psychosis.active) shaderFogEnd = RENDER_RADIUS;        // ≈1.5 blocks
+        if (Psychosis.active) shaderFogEnd = RENDER_RADIUS;
     }
 
     @Inject(method = "_setShaderFogColor(FFFF)V", at = @At("TAIL"))

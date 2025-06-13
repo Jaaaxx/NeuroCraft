@@ -124,7 +124,7 @@ public final class ServerFeatureController {
         }
     }
 
-    static {         // register all server-side features here
+    static {
         FEATURES.add(new AuditoryHallucinations());
         FEATURES.add(new FakeBlockBreaking());
         FEATURES.add(new FakeBlockPlacing());

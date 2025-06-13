@@ -22,7 +22,7 @@ public final class ClientHooks {
         if (injected || event.phase != TickEvent.Phase.END) return;
         if (Minecraft.getInstance().level == null) return;
         LOGGER.info("Attempting to hijack render system!");
-        HallucinationRenderHijack.apply();   // run once
+        HallucinationRenderHijack.apply();
         injected = true;
     }
 

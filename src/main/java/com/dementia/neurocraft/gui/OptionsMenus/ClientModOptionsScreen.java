@@ -42,7 +42,7 @@ public class ClientModOptionsScreen extends ModOptionsScreen {
             }).bounds(this.width / 2 + 10, this.height - 27, 100, 20).build();
             if (Minecraft.getInstance().level == null) {
                 serverConfigButton.active = false;
-                serverConfigButton.setMessage(Component.literal("Server Options").withStyle(style -> style.withColor(0x777777))); // Gray out
+                serverConfigButton.setMessage(Component.literal("Server Options").withStyle(style -> style.withColor(0x777777)));
             }
             this.addRenderableWidget(serverConfigButton);
         }

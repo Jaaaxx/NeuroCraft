@@ -1,4 +1,3 @@
-// com.dementia.neurocraft.server.features.impl.EnemyHallucination.java
 package com.dementia.neurocraft.server.features.impl;
 
 import com.dementia.neurocraft.common.features.Feature;
@@ -33,7 +32,6 @@ public final class EnemyHallucination extends Feature {
         int sanity = getPlayerSanity(player);
         if (RNG.nextInt((int)(PEAK_SANITY*1.5)) >= sanity) return;
 
-        // choose mob + spawn position
         Direction dir   = player.getDirection();
         Vec3 origin     = player.getPosition(0);
         Vec3 spawnPos   = origin.relative(dir.getOpposite(), RNG.nextInt(1,5));
@@ -60,11 +58,9 @@ public final class EnemyHallucination extends Feature {
         mob.setPos(spawnPos);
         player.level().addFreshEntity(mob);
 
-        // decide if hallucination
         if (RNG.nextInt(PEAK_SANITY*2) >= sanity)
             tracker.addHallucination(player, mob);
 
-        // sync list every tick interval
         int[] ids = tracker.get(player).stream().mapToInt(Integer::intValue).toArray();
         PacketHandler.sendToPlayer(new CHallucinationListUpdatePacket(ids), player);
 

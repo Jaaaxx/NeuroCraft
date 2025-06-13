@@ -59,13 +59,10 @@ public abstract class Feature {
         return triggerType;
     }
 
-    /* ----- client path ----- */
     public void performClient(Minecraft mc) { /* default no-op */ }
 
-    /* ----- server path ----- */
     public void performServer(ServerPlayer player) { /* default no-op */ }
 
-    /* unified tick driver */
     public final void tryRunClient(Minecraft mc, int sanity) {
         if (enabled && sanity >= sanityThreshold && passChance(sanity) && passInterval(mc.player.tickCount))
             performClient(mc);
@@ -77,7 +74,7 @@ public abstract class Feature {
     }
 
     public boolean supportsManualTrigger() {
-        return true; // override in subclasses if needed
+        return true;
     }
 
     /* shared helpers */

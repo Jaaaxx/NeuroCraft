@@ -17,11 +17,7 @@ import static com.dementia.neurocraft.common.util.HallucinationUtils.Hallucinati
 public final class InventoryDisarray extends Feature {
 
     public InventoryDisarray() {
-        super("ITEMS_SWAP_POSITIONS_IN_INVENTORY", "Inventory Disarray",
-                200,           // Sanity threshold
-                0.15,          // Max trigger chance at PEAK_SANITY
-                60,            // Once every 60 seconds
-                true, FeatureTrigger.TICK);         // Enabled by default
+        super("ITEMS_SWAP_POSITIONS_IN_INVENTORY", "Inventory Disarray", 200, 0.15, 60, true, FeatureTrigger.TICK);
     }
 
     @Override

@@ -31,7 +31,6 @@ import org.slf4j.Logger;
 
 import static com.dementia.neurocraft.gui.OptionsMenus.ModVariableScreen.getForgeConfigScreenContext;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(Neurocraft.MODID)
 public class Neurocraft {
     public static final String MODID = "neurocraft";
@@ -59,18 +58,14 @@ public class Neurocraft {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         static int c = 1;
@@ -78,7 +73,6 @@ public class Neurocraft {
 
         @SubscribeEvent
         public static void onClientSetup(FMLConstructModEvent event) {
-            // Loads resources to ensure special title screen gets rendered
             event.enqueueWork(() -> {
                 var instance = Minecraft.getInstance();
                 if (instance.options.resourcePacks.contains("mod_resources")) {
@@ -88,7 +82,6 @@ public class Neurocraft {
                 }
             });
 
-            // Registers config screens
             event.enqueueWork(() -> {
                 ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
                         () -> new ConfigScreenHandler.ConfigScreenFactory((mc, screen) -> new ClientModOptionsScreen(new ModListScreen(getForgeConfigScreenContext()))));

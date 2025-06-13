@@ -49,7 +49,7 @@ public final class OreHallucinationVein extends FeatureBlockBreak {
             level.setBlock(blockPos, newState, shadowBlocks ? 1 : 2);
         }
 
-        player.setPos(player.getPosition(0)); // causes re-sync
+        player.setPos(player.getPosition(0));
         HallucinationOccured(player);
 
         triggeredState = null;

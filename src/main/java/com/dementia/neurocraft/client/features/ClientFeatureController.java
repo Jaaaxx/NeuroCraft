@@ -78,18 +78,14 @@ public final class ClientFeatureController {
     static {
         FEATURES.add(new Psychosis());
 
-        // Inventory-related
         FEATURES.add(new ItemNameDementia());
         FEATURES.add(new ItemTypeDementia());
 
-        // GUI/Stat bars
         FEATURES.add(new RandomizeHealthBars());
         FEATURES.add(new RandomizeXP());
 
-        // Hallucinations
         FEATURES.add(new EnemyHallucination());
 
-        // Client option modifications
         FEATURES.add(new FOVChanges());
         FEATURES.add(new BrightnessChanges());
         FEATURES.add(new FramerateChanges());

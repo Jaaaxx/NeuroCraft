@@ -20,12 +20,7 @@ public final class FakeBlockPlacing extends FeatureBlockPlace {
     private BlockEvent.EntityPlaceEvent currentEvent;
 
     public FakeBlockPlacing() {
-        super("FAKE_PLACE_BLOCKS", "Fake Block Placing",
-                400,           // sanity threshold
-                0.2,           // max trigger chance at PEAK_SANITY
-                0,             // no interval (event-based)
-                false,
-                FeatureTrigger.BLOCK_PLACE);
+        super("FAKE_PLACE_BLOCKS", "Fake Block Placing", 400, 0.2, 0, false, FeatureTrigger.BLOCK_PLACE);
     }
 
 
@@ -47,9 +42,7 @@ public final class FakeBlockPlacing extends FeatureBlockPlace {
         }
 
         PacketHandler.sendVanillaPacket(new ClientboundBlockUpdatePacket(pos, hallucinated), player, 2);
-        PacketHandler.sendToPlayer(new CHallBlockListUpdatePacket(new int[]{
-                pos.getX(), pos.getY(), pos.getZ()
-        }), player);
+        PacketHandler.sendToPlayer(new CHallBlockListUpdatePacket(new int[]{pos.getX(), pos.getY(), pos.getZ()}), player);
 
         HallucinationOccured(player, false, true);
         currentEvent = null;

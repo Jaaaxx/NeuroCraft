@@ -15,11 +15,7 @@ public final class RandomTeleportingHallucination extends Feature {
     private final HashMap<ServerPlayer, Vec3> playerTeleportLocs = new HashMap<>();
 
     public RandomTeleportingHallucination() {
-        super("RANDOM_TELEPORTING", "Random Teleporting",
-                600,        // sanity threshold
-                0.4,        // max chance at PEAK_SANITY
-                5,          // try every 5s
-                true, FeatureTrigger.TICK);      // enabled by default
+        super("RANDOM_TELEPORTING", "Random Teleporting", 600, 0.4, 5, true, FeatureTrigger.TICK);
     }
 
     @Override

@@ -12,12 +12,7 @@ public final class EatingDisorder extends FeatureLivingEntityFinishUseItem {
     private LivingEntityUseItemEvent.Finish event;
 
     public EatingDisorder() {
-        super("EATING_DISORDER", "Eating Disorder",
-                300,    // sanity threshold
-                0.3,    // trigger chance
-                0,      // event-based
-                true,
-                FeatureTrigger.FINISH_USE_ITEM);
+        super("EATING_DISORDER", "Eating Disorder", 300, 0.3, 0, true, FeatureTrigger.FINISH_USE_ITEM);
     }
 
     @Override

@@ -12,14 +12,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import org.apache.logging.log4j.core.jmx.Server;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -64,7 +61,7 @@ public class ModOptionsScreen extends Screen {
         String prefix = disp_name + ": ";
         String suffix = name.equals("SCALING_INTERVAL") ? " sec" : "";
         var range = ServerConfigs.RANGES.get(config);
-        int currentVal = config.get(); // use live value
+        int currentVal = config.get();
 
         return new OptionInstance<>(
                 disp_name,
@@ -78,7 +75,7 @@ public class ModOptionsScreen extends Screen {
                     if (ServerConfigs.modConfig != null) {
                         ServerConfigs.modConfig.save();
                         ConfigSyncHandler.syncFeatureStates();
-                        ServerConfigs.SPEC.afterReload(); // immediate sync
+                        ServerConfigs.SPEC.afterReload();
                     }
                 }
         );
@@ -93,7 +90,7 @@ public class ModOptionsScreen extends Screen {
 
     protected OptionInstance<Boolean> createBooleanButtonFromConfig(String name, ForgeConfigSpec.ConfigValue<Boolean> config) {
         String dispName = Component.translatable(this.lang_prefix + name).getString();
-        String current = config.get() ? "true" : "false";   // live value
+        String current = config.get() ? "true" : "false";
 
         return new OptionInstance<>(
                 dispName,
@@ -105,7 +102,6 @@ public class ModOptionsScreen extends Screen {
                     boolean b = "true".equals(val);
                     config.set(b);
 
-                    // Rapid‐fire save & reload to overcome Forge’s dropped‐event issue
                     if (ServerConfigs.modConfig != null) {
                         ServerConfigs.modConfig.save();
                         FMLJavaModLoadingContext
@@ -114,7 +110,6 @@ public class ModOptionsScreen extends Screen {
                                 .post(new ModConfigEvent.Reloading(ServerConfigs.modConfig));
                     }
 
-                    // If this is a remote client, notify server repeatedly as well
                     if (FMLEnvironment.dist.isClient()) {
                         var conn = Minecraft.getInstance().getConnection();
                         if (conn != null && !Minecraft.getInstance().isLocalServer()) {

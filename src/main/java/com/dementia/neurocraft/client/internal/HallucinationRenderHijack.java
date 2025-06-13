@@ -92,7 +92,6 @@ public final class HallucinationRenderHijack {
         }
     }
 
-    // Obfuscation-safe, lazy reflection for previous attack animation
     public static final class LivingAnimMirror {
         private static Field ATTACK_OLD;
         private static boolean initialized = false;
@@ -100,7 +99,6 @@ public final class HallucinationRenderHijack {
         private static void init() {
             if (initialized) return;
             initialized = true;
-            // Try Yarn and known obf names for oAttackAnim
             String[] names = {"oAttackAnim", "aN", "f_20920_"};
             for (String name : names) {
                 try {
@@ -150,7 +148,7 @@ public final class HallucinationRenderHijack {
 
         public static GameProfile randomProfile(LivingEntity ignored) {
             String name = getRandomName();
-            return new GameProfile(UUID.randomUUID(), name); // UUID is irrelevant; skin supplied manually
+            return new GameProfile(UUID.randomUUID(), name);
         }
 
         @Advice.OnMethodEnter(skipOn = Advice.OnNonDefaultValue.class)
@@ -176,11 +174,7 @@ public final class HallucinationRenderHijack {
             return true;
         }
 
-        /* ---------- state mirroring ---------- */
-
         public static void mirrorState(LivingEntity src, DummyPlayer dst, float pt) {
-
-            /* absolute position */
             dst.setPos(src.getX(), src.getY(), src.getZ());
             dst.xo = src.xo;
             dst.yo = src.yo;

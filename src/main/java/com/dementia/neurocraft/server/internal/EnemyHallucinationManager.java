@@ -38,7 +38,6 @@ public class EnemyHallucinationManager {
 
         var tracker = ServerFeatureController.getHallucinationTracker();
         for (ServerPlayer p : event.getServer().getPlayerList().getPlayers()) {
-            // Clean up invalid references
             tracker.get(p).removeIf(id -> {
                 Entity e = p.level().getEntity(id);
                 return e == null || !e.isAlive();
@@ -83,7 +82,6 @@ public class EnemyHallucinationManager {
         entity.remove(Entity.RemovalReason.KILLED);
         tracker.get(player).remove((Integer) entity.getId());
 
-        // Occasionally disorient the player
         if (new Random().nextInt(25) == 1) {
             player.setPos(pos);
             player.lookAt(EntityAnchorArgument.Anchor.EYES, oldPos);

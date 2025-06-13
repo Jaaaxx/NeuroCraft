@@ -17,22 +17,17 @@ import static com.dementia.neurocraft.Neurocraft.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class ConfigSyncHandler {
-
-    /* ─────────────────────────────────────────────────────────────────── */
-    /*  CONFIG EVENTS                                                     */
-    /* ─────────────────────────────────────────────────────────────────── */
-
     @SubscribeEvent
     public static void onConfigLoaded(ModConfigEvent.Loading evt) {
         if (evt.getConfig().getSpec() == ServerConfigs.SPEC) {
-            syncFeatureStates();          // first-time load (startup)
+            syncFeatureStates();
         }
     }
 
     @SubscribeEvent
     public static void onConfigReloaded(ModConfigEvent.Reloading evt) {
         if (evt.getConfig().getSpec() == ServerConfigs.SPEC) {
-            syncFeatureStates();          // hot reload
+            syncFeatureStates();
             MinecraftServer srv = ServerLifecycleHooks.getCurrentServer();
             if (srv != null) {
                 ServerFeatureController.broadcastFeatureStatesToClients(srv);
@@ -40,27 +35,20 @@ public final class ConfigSyncHandler {
         }
     }
 
-    /* ─────────────────────────────────────────────────────────────────── */
-    /*  RUNTIME SYNC                                                      */
-    /* ─────────────────────────────────────────────────────────────────── */
-
     public static void syncFeatureStates() {
-        /* ------------ CLIENT FEATURES ------------- */
         for (Feature f : ClientFeatureController.getFeatures()) {
             var cfg = ServerConfigs.FEATURE_CONFIGS.get(f.getId());
             if (cfg != null) f.setEnabled(Boolean.TRUE.equals(cfg.get()));
         }
 
-        /* ------------ SERVER FEATURES ------------- */
         for (Feature f : ServerFeatureController.getFeatures()) {
             var cfg = ServerConfigs.FEATURE_CONFIGS.get(f.getId());
             if (cfg != null) f.setEnabled(Boolean.TRUE.equals(cfg.get()));
         }
 
-        /* ---------- SEND TO SERVER (CLIENT) ------- */
         if (FMLEnvironment.dist.isClient()) {
             var conn = Minecraft.getInstance().getConnection();
-            if (conn != null && !Minecraft.getInstance().isLocalServer()) {      // remote client-side only
+            if (conn != null && !Minecraft.getInstance().isLocalServer()) {
                 for (Feature f : ClientFeatureController.getFeatures()) {
                     var cfg = ServerConfigs.FEATURE_CONFIGS.get(f.getId());
                     if (cfg != null) {

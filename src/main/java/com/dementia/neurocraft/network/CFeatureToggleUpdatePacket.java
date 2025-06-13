@@ -42,8 +42,8 @@ public class CFeatureToggleUpdatePacket {
                 if (cfg != null) {
                     configValue.set(enabled);
                     cfg.save();
-                    cfg.getSpec().afterReload();             // crucial for Forge to rebind values
-                    ConfigSyncHandler.syncFeatureStates();   // update runtime values
+                    cfg.getSpec().afterReload();
+                    ConfigSyncHandler.syncFeatureStates();
                 }
 
 

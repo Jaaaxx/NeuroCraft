@@ -30,11 +30,11 @@ import static com.dementia.neurocraft.Neurocraft.LOGGER;
 
 @Mod.EventBusSubscriber(modid = "neurocraft", value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class PlayerHallucinations {
-    private static final int    SAMPLE_SIZE = 5;
-    private static final Random RNG          = new Random();
+    private static final int SAMPLE_SIZE = 5;
+    private static final Random RNG = new Random();
 
-    private static List<String> NAMES    = null;
-    private static boolean      started  = false;
+    private static List<String> NAMES = null;
+    private static boolean started = false;
     private static final Map<String, PlayerSkin> SKINS = new ConcurrentHashMap<>();
     private static final Set<String> DYNAMIC_NAMES = ConcurrentHashMap.newKeySet();
 
@@ -44,15 +44,11 @@ public final class PlayerHallucinations {
         if (base + extra == 0) return "Steve";
 
         int idx = RNG.nextInt(base + extra);
-        return idx < base ? NAMES.get(idx) :               // from static 100
-                DYNAMIC_NAMES.stream().skip(idx - base).findFirst().orElse("Steve");
+        return idx < base ? NAMES.get(idx) : DYNAMIC_NAMES.stream().skip(idx - base).findFirst().orElse("Steve");
     }
 
     public static PlayerSkin getSkin(String name) {
-        return SKINS.getOrDefault(
-                name,
-                DefaultPlayerSkin.get(UUID.nameUUIDFromBytes(name.getBytes()))
-        );
+        return SKINS.getOrDefault(name, DefaultPlayerSkin.get(UUID.nameUUIDFromBytes(name.getBytes())));
     }
 
     @SubscribeEvent
@@ -85,20 +81,15 @@ public final class PlayerHallucinations {
         SkinManager sm = Minecraft.getInstance().getSkinManager();
 
         for (String name : names) {
-            CompletableFuture
-                    .supplyAsync(() -> buildProfile(name), Util.ioPool())         // IO thread
-                    .thenCompose(profileOpt -> profileOpt
-                            .map(sm::getOrLoad)                                   // trigger download
-                            .orElseGet(() -> CompletableFuture.completedFuture(null)))
-                    .thenAcceptAsync(ps -> {                                      // back on game thread
-                        if (ps != null && ps.texture() != null) {
-                            SKINS.put(name, ps);
-                            LOGGER.info("[SkinFetch] Skin OK for {} → {}", name, ps.texture());
-                        } else {
-                            LOGGER.warn("[SkinFetch] Custom skin missing for {}; defaulting", name);
-                            SKINS.put(name, DefaultPlayerSkin.get(UUID.nameUUIDFromBytes(name.getBytes())));
-                        }
-                    }, Minecraft.getInstance());
+            CompletableFuture.supplyAsync(() -> buildProfile(name), Util.ioPool()).thenCompose(profileOpt -> profileOpt.map(sm::getOrLoad).orElseGet(() -> CompletableFuture.completedFuture(null))).thenAcceptAsync(ps -> {
+                if (ps != null && ps.texture() != null) {
+                    SKINS.put(name, ps);
+                    LOGGER.info("[SkinFetch] Skin OK for {} → {}", name, ps.texture());
+                } else {
+                    LOGGER.warn("[SkinFetch] Custom skin missing for {}; defaulting", name);
+                    SKINS.put(name, DefaultPlayerSkin.get(UUID.nameUUIDFromBytes(name.getBytes())));
+                }
+            }, Minecraft.getInstance());
         }
     }
 
@@ -110,7 +101,7 @@ public final class PlayerHallucinations {
         Optional<Property> textures = fetchTextures(uuid);
         if (textures.isEmpty()) {
             LOGGER.warn("[SkinFetch] No textures property for {}", name);
-            return Optional.of(new GameProfile(uuid, name)); // will give default skin
+            return Optional.of(new GameProfile(uuid, name));
         }
 
         GameProfile gp = new GameProfile(uuid, name);
@@ -120,12 +111,11 @@ public final class PlayerHallucinations {
 
     private static Optional<UUID> fetchUuid(String name) {
         try {
-            HttpURLConnection con = (HttpURLConnection) new URL(
-                    "https://api.minecraftservices.com/minecraft/profile/lookup/name/" + name).openConnection();
+            HttpURLConnection con = (HttpURLConnection) new URL("https://api.minecraftservices.com/minecraft/profile/lookup/name/" + name).openConnection();
             vanillaHeaders(con);
             int code = con.getResponseCode();
 
-            if (code == 204) {                                 // name not taken
+            if (code == 204) {
                 LOGGER.info("[SkinFetch] {} → free username (204)", name);
                 return Optional.empty();
             }
@@ -134,12 +124,8 @@ public final class PlayerHallucinations {
                 return Optional.empty();
             }
 
-            JsonObject jo = JsonParser.parseReader(
-                            new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))
-                    .getAsJsonObject();
-            String dashed = jo.get("id").getAsString().replaceFirst(
-                    "(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})",
-                    "$1-$2-$3-$4-$5");
+            JsonObject jo = JsonParser.parseReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)).getAsJsonObject();
+            String dashed = jo.get("id").getAsString().replaceFirst("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
             return Optional.of(UUID.fromString(dashed));
 
         } catch (Exception ex) {
@@ -150,9 +136,7 @@ public final class PlayerHallucinations {
 
     private static Optional<Property> fetchTextures(UUID uuid) {
         try {
-            HttpURLConnection con = (HttpURLConnection) new URL(
-                    "https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false")
-                    .openConnection();
+            HttpURLConnection con = (HttpURLConnection) new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false").openConnection();
             vanillaHeaders(con);
             int code = con.getResponseCode();
             if (code != 200) {
@@ -160,10 +144,8 @@ public final class PlayerHallucinations {
                 return Optional.empty();
             }
 
-            JsonObject jo = JsonParser.parseReader(
-                            new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))
-                    .getAsJsonObject();
-            JsonArray  arr = jo.getAsJsonArray("properties");
+            JsonObject jo = JsonParser.parseReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8)).getAsJsonObject();
+            JsonArray arr = jo.getAsJsonArray("properties");
             if (arr == null || arr.size() == 0) return Optional.empty();
 
             JsonObject texObj = arr.get(0).getAsJsonObject();
@@ -179,8 +161,7 @@ public final class PlayerHallucinations {
     private static void vanillaHeaders(HttpURLConnection con) {
         con.setConnectTimeout(200);
         con.setReadTimeout(200);
-        con.setRequestProperty("User-Agent",
-                "Minecraft Java/" + SharedConstants.getCurrentVersion().getName());
+        con.setRequestProperty("User-Agent", "Minecraft Java/" + SharedConstants.getCurrentVersion().getName());
         con.setRequestProperty("Accept", "application/json");
         con.setRequestProperty("Connection", "close");
         con.setRequestProperty("Host", con.getURL().getHost());
@@ -201,8 +182,7 @@ public final class PlayerHallucinations {
                             if (!isValidUsername(n)) continue;
                             seen++;
                             if (out.size() < SAMPLE_SIZE) out.add(n);
-                            else if (RNG.nextInt(seen) < SAMPLE_SIZE)
-                                out.set(RNG.nextInt(SAMPLE_SIZE), n);
+                            else if (RNG.nextInt(seen) < SAMPLE_SIZE) out.set(RNG.nextInt(SAMPLE_SIZE), n);
                         }
                     }
                 }
@@ -222,9 +202,7 @@ public final class PlayerHallucinations {
     }
 
     private static String randomName() {
-        String[] syl = {"ba","be","bi","bo","bu","ka","ke","ki","ko","ku",
-                "ra","re","ri","ro","ru","ta","te","ti","to","tu",
-                "za","ze","zi","zo","zu"};
+        String[] syl = {"ba", "be", "bi", "bo", "bu", "ka", "ke", "ki", "ko", "ku", "ra", "re", "ri", "ro", "ru", "ta", "te", "ti", "to", "tu", "za", "ze", "zi", "zo", "zu"};
         int len = 3 + RNG.nextInt(3);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < len; i++) sb.append(syl[RNG.nextInt(syl.length)]);

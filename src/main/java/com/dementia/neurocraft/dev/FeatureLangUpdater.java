@@ -20,7 +20,6 @@ public final class FeatureLangUpdater {
     public static void main(String[] args) throws Exception {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        // Load existing lang file
         File file = LANG_FILE.toFile();
         if (!file.exists()) {
             throw new IllegalStateException("Lang file not found: " + LANG_FILE);

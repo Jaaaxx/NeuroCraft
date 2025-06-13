@@ -18,7 +18,7 @@ public final class FOVChanges extends Feature {
         var options = mc.options;
         OptionsUtils.captureDefaults(options);
 
-        int newFov = 30 + RNG.nextInt(81); // 30–110
+        int newFov = 30 + RNG.nextInt(81);
         options.fov().set(newFov);
         options.save();
         HallucinationOccuredClient();

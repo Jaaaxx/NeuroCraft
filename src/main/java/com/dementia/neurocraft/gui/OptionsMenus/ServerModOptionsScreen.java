@@ -2,14 +2,12 @@ package com.dementia.neurocraft.gui.OptionsMenus;
 
 import com.dementia.neurocraft.config.ConfigSyncHandler;
 import com.dementia.neurocraft.config.ServerConfigs;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +26,6 @@ public class ServerModOptionsScreen extends ModOptionsScreen {
         super.init();
         assert this.minecraft != null;
 
-        // If no world is loaded, skip showing config screen
         if (this.minecraft.level == null) {
             this.minecraft.setScreen(this.lastScreen);
             return;
@@ -41,8 +38,8 @@ public class ServerModOptionsScreen extends ModOptionsScreen {
             this.minecraft.setScreen(this.lastScreen);
             if (ServerConfigs.modConfig != null) {
                 ServerConfigs.modConfig.save();
-                ConfigSyncHandler.syncFeatureStates();     // update runtime
-                ServerConfigs.SPEC.afterReload();          // ensure values reapply
+                ConfigSyncHandler.syncFeatureStates();
+                ServerConfigs.SPEC.afterReload();
             }
         }).bounds(this.width / 2 - 100, this.height - 27, 200, 20).build());
 
@@ -54,7 +51,6 @@ public class ServerModOptionsScreen extends ModOptionsScreen {
     protected void putAllConfigsInMenu(Class configClass) {
         super.putAllConfigsInMenu(configClass);
 
-        // Dynamic feature toggles
         Map<String, ForgeConfigSpec.ConfigValue<Boolean>> dynamic =
                 ServerConfigs.getFeatureBooleanConfigs();
 

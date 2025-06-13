@@ -35,7 +35,6 @@ public class SRemoveHallucinationPacket {
 
         hallucinations.removeIf(id -> id == entityID);
 
-        // Remove the entity from the world if it still exists
         Entity entity = player.level().getEntity(entityID);
         if (entity != null) {
             entity.remove(Entity.RemovalReason.DISCARDED);

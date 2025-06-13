@@ -33,21 +33,19 @@ public class ServerConfigs {
     public static Map<String, ForgeConfigSpec.ConfigValue<Boolean>> getFeatureBooleanConfigs() {
         return FEATURE_CONFIGS;
     }
-    public static ModConfig modConfig; // reference for saving
+    public static ModConfig modConfig;
 
 
     static {
         BUILDER.push("Server Configs for Neurocraft");
-
-        // Dynamically define config entries for each Feature
         for (Feature feature : ClientFeatureController.getFeatures()) {
-            if (FEATURE_CONFIGS.containsKey(feature.getId())) continue;   // already defined
+            if (FEATURE_CONFIGS.containsKey(feature.getId())) continue;
 
             ForgeConfigSpec.ConfigValue<Boolean> configValue = BUILDER.define(feature.getId(), true);
             FEATURE_CONFIGS.put(feature.getId(), configValue);
         }
         for (Feature feature : ServerFeatureController.getFeatures()) {
-            if (FEATURE_CONFIGS.containsKey(feature.getId())) continue;   // already defined
+            if (FEATURE_CONFIGS.containsKey(feature.getId())) continue;
 
             ForgeConfigSpec.ConfigValue<Boolean> configValue = BUILDER.define(feature.getId(), true);
             FEATURE_CONFIGS.put(feature.getId(), configValue);
