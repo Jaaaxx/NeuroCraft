@@ -10,20 +10,21 @@ import java.util.HashMap;
 import static com.dementia.neurocraft.common.util.HallucinationUtils.HallucinationOccured;
 
 
-public final class RandomTeleportingHallucination extends Feature {
+public final class RandomTeleportBackwards extends Feature {
 
     private final HashMap<ServerPlayer, Vec3> playerTeleportLocs = new HashMap<>();
 
-    public RandomTeleportingHallucination() {
-        super("RANDOM_TELEPORTING", "Random Teleporting", 600, 0.4, 5, true, FeatureTrigger.TICK);
+    public RandomTeleportBackwards() {
+        super("RANDOM_TELEPORTING", "Random Teleporting", 100, 0.4, 8, true, FeatureTrigger.TICK, true);
     }
 
     @Override
     public void performServer(ServerPlayer player) {
         if (!playerTeleportLocs.containsKey(player)) {
-            playerTeleportLocs.put(player, player.getEyePosition());
+            playerTeleportLocs.put(player, player.position());
         } else {
-            player.setPos(playerTeleportLocs.get(player));
+            Vec3 eye = playerTeleportLocs.get(player);
+            player.connection.teleport(eye.x, eye.y, eye.z, player.getYRot(), player.getXRot());
             playerTeleportLocs.remove(player);
             HallucinationOccured(player, false, true);
         }

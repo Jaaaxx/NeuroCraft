@@ -10,7 +10,7 @@ import static com.dementia.neurocraft.common.util.HallucinationUtils.Hallucinati
 public final class RenderDistanceChanges extends Feature {
 
     public RenderDistanceChanges() {
-        super("OPTION_RENDER_DISTANCE_CHANGES", "Render Dist. Changes", 150, 0.3, 18, true, FeatureTrigger.TICK);
+        super("OPTION_RENDER_DISTANCE_CHANGES", "Render Dist. Changes", 150, 0.3, 18, true, FeatureTrigger.TICK, true);
     }
 
     @Override

@@ -17,15 +17,17 @@ public abstract class Feature {
     private final int secondsInterval;      // Evaluate once every <interval> seconds
     private boolean enabled;             // Can be toggled at runtime
     private final FeatureTrigger triggerType;
+    private final boolean canForceTrigger; // can be force triggered (by commands, etc.)
 
-    protected Feature(String id, String displayName, int sanityThreshold, double maxTriggerChance, int secondsInterval, boolean enabled, FeatureTrigger triggerType) {
+    protected Feature(String id, String displayName, int sanityThreshold, double maxTriggerChance, int secondsInterval, boolean enabled, FeatureTrigger triggerType, boolean canForceTrigger) {
         this.id = id;
         this.displayName = displayName;
         this.sanityThreshold = sanityThreshold;
         this.maxTriggerChance = maxTriggerChance;
-        this.secondsInterval = Math.max(1, secondsInterval);
+        this.secondsInterval = secondsInterval;
         this.enabled = enabled;
         this.triggerType = triggerType;
+        this.canForceTrigger = canForceTrigger;
     }
 
     public String getId() {
@@ -74,12 +76,16 @@ public abstract class Feature {
     }
 
     public boolean supportsManualTrigger() {
-        return true;
+        return canForceTrigger;
     }
 
     /* shared helpers */
     private boolean passInterval(int tickCount) {
-        return tickCount % (secondsInterval * 20) == 0;
+        int intervalTicks = secondsInterval * 20;
+
+        if (intervalTicks <= 0) return true;
+
+        return tickCount % intervalTicks == 0;
     }
     private boolean passChance(int sanity) {
         var db = RNG.nextDouble();

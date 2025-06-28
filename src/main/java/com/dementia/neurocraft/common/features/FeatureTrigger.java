@@ -1,10 +1,16 @@
 package com.dementia.neurocraft.common.features;
 
 public enum FeatureTrigger {
-    TICK,            // Primary (server/player) Tick-driven only
+    // Global
+    TICK,
+
+    // Client-side
+    CLIENT_MOB_SPAWN,
     CLIENT_TICK,
-    BLOCK_BREAK,
-    BLOCK_PLACE,
-    FINISH_USE_ITEM,
-    CONTAINER_OPEN
+
+    // Server-side
+    SERVER_FINISH_USE_ITEM,
+    SERVER_CONTAINER_OPEN,
+    SERVER_BLOCK_BREAK,
+    SERVER_BLOCK_PLACE;
 }

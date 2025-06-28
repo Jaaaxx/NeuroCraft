@@ -10,7 +10,7 @@ import static com.dementia.neurocraft.common.util.HallucinationUtils.Hallucinati
 public final class FOVChanges extends Feature {
 
     public FOVChanges() {
-        super("OPTION_FOV_CHANGES", "FOV Changes", 100, 0.3, 10, true, FeatureTrigger.TICK);
+        super("OPTION_FOV_CHANGES", "FOV Changes", 100, 0.3, 10, true, FeatureTrigger.TICK, true);
     }
 
     @Override

@@ -26,5 +26,6 @@
   "neurocraft.serverConfig.ITEMS_SWAP_POSITIONS_IN_INVENTORY": "Inventory Disarray",
   "neurocraft.serverConfig.ORE_HALLUCINATIONS": "Ore Vein Hallucinations",
   "neurocraft.serverConfig.RANDOM_TELEPORTING": "Random Teleporting",
-  "neurocraft.serverConfig.PLAYER_DISORIENTATION": "Player Disorientation"
+  "neurocraft.serverConfig.PLAYER_DISORIENTATION": "Player Disorientation",
+  "neurocraft.serverConfig.MOB_SPAWN_RANDOMIZATION": "Mob Spawn Randomization"
 }

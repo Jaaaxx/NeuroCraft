@@ -14,6 +14,7 @@ import java.util.*;
 import static com.dementia.neurocraft.common.util.HallucinationUtils.HallucinationOccured;
 
 
+//todo fix?
 public final class OreHallucinationVein extends FeatureBlockBreak {
 
     private BlockState triggeredState;
@@ -22,7 +23,7 @@ public final class OreHallucinationVein extends FeatureBlockBreak {
 
     public OreHallucinationVein() {
         super("ORE_HALLUCINATIONS", "Ore Vein Hallucinations",
-                300, 0.3, 0, true, FeatureTrigger.BLOCK_BREAK);
+                300, 0.3, 0, true, FeatureTrigger.SERVER_BLOCK_BREAK, false);
     }
 
     @Override

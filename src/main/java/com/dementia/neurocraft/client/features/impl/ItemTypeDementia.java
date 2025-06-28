@@ -13,16 +13,12 @@ import static com.dementia.neurocraft.client.internal.InventoryUtils.*;
 public final class ItemTypeDementia extends Feature {
 
     public ItemTypeDementia() {
-        super("REPLACE_ITEMS_IN_INVENTORY", "Item Type Dementia", 150, 0.3, 30, true, FeatureTrigger.TICK);
+        super("REPLACE_ITEMS_IN_INVENTORY", "Item Type Dementia", 150, 0.3, 30, true, FeatureTrigger.TICK, true);
     }
 
     @Override
     public void performClient(Minecraft mc) {
         var inventory = mc.player.getInventory();
-        int sanity = getPlayerSanityClient();
-
-        if (RNG.nextInt(PEAK_SANITY) >= sanity) return;
-
         int slotIndex = getRandomNonEmptySlotIndex(inventory);
         if (slotIndex == -1) return;
 

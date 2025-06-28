@@ -9,18 +9,20 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static com.dementia.neurocraft.client.internal.PlayerSanityClientHandler.getPlayerSanityClient;
 import static com.dementia.neurocraft.common.util.HallucinationUtils.HallucinationOccuredClient;
 import static com.dementia.neurocraft.common.util.HallucinationUtils.PEAK_SANITY;
 
 public final class RandomizeHealthBars extends Feature {
-
-    private static final Timer timer = new Timer();
+    static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static boolean barsAreRandomized = false;
 
     public RandomizeHealthBars() {
-        super("RANDOMIZE_BARS", "GUI Bar Dementia", 100, 0.4, 10, true, FeatureTrigger.TICK);
+        super("RANDOMIZE_BARS", "GUI Bar Dementia", 100, 0.4, 10, true, FeatureTrigger.TICK, true);
     }
 
     @Override
@@ -28,26 +30,17 @@ public final class RandomizeHealthBars extends Feature {
         Player player = mc.player;
         if (player == null) return;
 
-        int sanity = getPlayerSanityClient();
-        boolean shouldRandomize = RNG.nextInt(PEAK_SANITY * 2) < sanity;
-
-        if (!shouldRandomize) return;
-
         player.setHealth(RNG.nextInt(1, (int) player.getMaxHealth()));
         player.getFoodData().setFoodLevel(RNG.nextInt(1, 20));
         barsAreRandomized = true;
 
-        HallucinationOccuredClient();
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (barsAreRandomized) {
-                    PacketHandler.sendToServer(new SUpdatePlayerSanityPacket());
-                    barsAreRandomized = false;
-                }
+        scheduler.schedule(() -> {
+            if (barsAreRandomized) {
+                PacketHandler.sendToServer(new SUpdatePlayerSanityPacket());
+                barsAreRandomized = false;
+                HallucinationOccuredClient();
             }
-        }, 2000); // reset after 2 seconds (2000 ms)
+        }, 2, TimeUnit.SECONDS);
     }
 
     public static void resetBarsToServer(int foodLevel, float healthLevel) {

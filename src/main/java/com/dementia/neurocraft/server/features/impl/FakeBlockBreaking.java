@@ -12,12 +12,13 @@ import net.minecraftforge.event.level.BlockEvent;
 
 import static com.dementia.neurocraft.common.util.HallucinationUtils.HallucinationOccured;
 
+//todo fix
 public final class FakeBlockBreaking extends FeatureBlockBreak {
 
     private BlockPos lastTriggeredPos;
 
     public FakeBlockBreaking() {
-        super("FAKE_BREAK_BLOCKS", "Fake Block Breaking", 400, 0.25, 0, false, FeatureTrigger.BLOCK_BREAK);
+        super("FAKE_BREAK_BLOCKS", "Fake Block Breaking", 400, 0.25, 0, false, FeatureTrigger.SERVER_BLOCK_BREAK, false);
     }
 
     @Override

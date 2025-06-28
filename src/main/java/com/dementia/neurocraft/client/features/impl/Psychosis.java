@@ -87,7 +87,7 @@ public final class Psychosis extends Feature {
     public static SoundEvent currentSchizoMusic = null;
 
     public Psychosis() {
-        super("PSYCHOSIS", "Psychosis", 200, 0.5, 60, true, FeatureTrigger.TICK);
+        super("PSYCHOSIS", "Psychosis", 200, 0.5, 60, true, FeatureTrigger.TICK, true);
     }
 
     @Override

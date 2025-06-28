@@ -57,7 +57,7 @@ public final class ServerFeatureController {
         if (!(event.getPlayer() instanceof ServerPlayer player)) return;
 
         for (Feature feature : FEATURES) {
-            if (feature.getTriggerType() != FeatureTrigger.BLOCK_BREAK || !feature.isEnabled() || !(feature instanceof FeatureBlockBreak))
+            if (feature.getTriggerType() != FeatureTrigger.SERVER_BLOCK_BREAK || !feature.isEnabled() || !(feature instanceof FeatureBlockBreak))
                 continue;
 
             ((FeatureBlockBreak) feature).onBlockBreak(event);
@@ -70,7 +70,7 @@ public final class ServerFeatureController {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
         for (Feature feature : FEATURES) {
-            if (feature.getTriggerType() != FeatureTrigger.BLOCK_PLACE || !feature.isEnabled() || !(feature instanceof FeatureBlockPlace))
+            if (feature.getTriggerType() != FeatureTrigger.SERVER_BLOCK_PLACE || !feature.isEnabled() || !(feature instanceof FeatureBlockPlace))
                 continue;
 
             ((FeatureBlockPlace) feature).onBlockPlace(event);
@@ -83,30 +83,33 @@ public final class ServerFeatureController {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
         for (Feature feature : FEATURES) {
-            if (feature.getTriggerType() != FeatureTrigger.FINISH_USE_ITEM || !feature.isEnabled() || !(feature instanceof FeatureLivingEntityFinishUseItem))
+            if (feature.getTriggerType() != FeatureTrigger.SERVER_FINISH_USE_ITEM || !feature.isEnabled() || !(feature instanceof FeatureLivingEntityFinishUseItem))
                 continue;
 
             ((FeatureLivingEntityFinishUseItem) feature).onFinishUseItemEvent(event);
             feature.tryRunServer(player, getPlayerSanity(player));
         }
     }
+
     @SubscribeEvent
     public static void ContainerOpenEvent(PlayerContainerEvent.Open event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
         for (Feature feature : FEATURES) {
-            if (feature.getTriggerType() != FeatureTrigger.CONTAINER_OPEN || !feature.isEnabled() || !(feature instanceof FeatureContainerOpen))
+            if (feature.getTriggerType() != FeatureTrigger.SERVER_CONTAINER_OPEN || !feature.isEnabled() || !(feature instanceof FeatureContainerOpen))
                 continue;
 
             ((FeatureContainerOpen) feature).onContainerOpen(event);
             feature.tryRunServer(player, getPlayerSanity(player));
         }
     }
+
     private static final HallucinationTracker H_TRACKER = new HallucinationTracker();
 
     public static HallucinationTracker getHallucinationTracker() {
         return H_TRACKER;
     }
+
     public static Optional<Feature> getFeatureById(String id) {
         return FEATURES.stream()
                 .filter(f -> f.getId().equals(id))
@@ -129,7 +132,7 @@ public final class ServerFeatureController {
         FEATURES.add(new FurnaceUncooking());
         FEATURES.add(new InventoryDisarray());
         FEATURES.add(new OreHallucinationVein());
-        FEATURES.add(new RandomTeleportingHallucination());
+        FEATURES.add(new RandomTeleportBackwards());
         FEATURES.add(new EnemyHallucination(H_TRACKER));
     }
 }

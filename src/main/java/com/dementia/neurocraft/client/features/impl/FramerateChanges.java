@@ -10,7 +10,7 @@ import static com.dementia.neurocraft.common.util.HallucinationUtils.Hallucinati
 public final class FramerateChanges extends Feature {
 
     public FramerateChanges() {
-        super("OPTION_FRAMERATE_CHANGES", "Framerate Changes", 120, 0.2, 14, true, FeatureTrigger.TICK);
+        super("OPTION_FRAMERATE_CHANGES", "Framerate Changes", 120, 0.2, 14, true, FeatureTrigger.TICK, true);
     }
 
     @Override

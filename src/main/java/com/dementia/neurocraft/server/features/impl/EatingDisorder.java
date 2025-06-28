@@ -7,12 +7,13 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 
 import static com.dementia.neurocraft.common.util.HallucinationUtils.HallucinationOccured;
 
+//todo fix?
 public final class EatingDisorder extends FeatureLivingEntityFinishUseItem {
 
     private LivingEntityUseItemEvent.Finish event;
 
     public EatingDisorder() {
-        super("EATING_DISORDER", "Eating Disorder", 300, 0.3, 0, true, FeatureTrigger.FINISH_USE_ITEM);
+        super("EATING_DISORDER", "Eating Disorder", 300, 0.3, 0, true, FeatureTrigger.SERVER_FINISH_USE_ITEM, false);
     }
 
     @Override

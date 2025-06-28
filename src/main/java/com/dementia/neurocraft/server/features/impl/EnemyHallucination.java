@@ -17,15 +17,17 @@ import static com.dementia.neurocraft.common.util.HallucinationUtils.Hallucinati
 import static com.dementia.neurocraft.common.util.HallucinationUtils.PEAK_SANITY;
 import static com.dementia.neurocraft.server.internal.PlayerScalingManager.getPlayerSanity;
 
-
+//todo fix
 public final class EnemyHallucination extends Feature {
 
     private final HallucinationTracker tracker;
 
     public EnemyHallucination(HallucinationTracker commonTracker) {
-        super("ENEMY_HALLUCINATIONS","Mob Hallucinations",300,0.3,8,true, FeatureTrigger.TICK);
+        super("ENEMY_HALLUCINATIONS","Mob Hallucinations",300,0.3,8,true, FeatureTrigger.TICK, false);
         this.tracker = commonTracker;
     }
+
+
 
     @Override
     public void performServer(ServerPlayer player) {

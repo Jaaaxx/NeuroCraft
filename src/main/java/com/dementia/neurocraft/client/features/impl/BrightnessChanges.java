@@ -10,7 +10,7 @@ import static com.dementia.neurocraft.common.util.HallucinationUtils.Hallucinati
 public final class BrightnessChanges extends Feature {
 
     public BrightnessChanges() {
-        super("OPTION_BRIGHTNESS_CHANGES", "Brightness Changes", 100, 0.3, 12, true, FeatureTrigger.TICK);
+        super("OPTION_BRIGHTNESS_CHANGES", "Brightness Changes", 100, 0.3, 12, true, FeatureTrigger.TICK, true);
     }
 
     @Override

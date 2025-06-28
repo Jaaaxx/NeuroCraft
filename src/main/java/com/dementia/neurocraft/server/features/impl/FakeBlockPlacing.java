@@ -16,11 +16,12 @@ import java.util.concurrent.ThreadLocalRandom;
 import static com.dementia.neurocraft.common.util.HallucinationUtils.HallucinationOccured;
 import static com.dementia.neurocraft.common.util.BlockUtils.getRandomBlock;
 
+//todo fix
 public final class FakeBlockPlacing extends FeatureBlockPlace {
     private BlockEvent.EntityPlaceEvent currentEvent;
 
     public FakeBlockPlacing() {
-        super("FAKE_PLACE_BLOCKS", "Fake Block Placing", 400, 0.2, 0, false, FeatureTrigger.BLOCK_PLACE);
+        super("FAKE_PLACE_BLOCKS", "Fake Block Placing", 400, 0.2, 0, false, FeatureTrigger.SERVER_BLOCK_PLACE, false);
     }
 
 

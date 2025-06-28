@@ -22,11 +22,13 @@ public final class EntityRandomizer {
 
     public static void renderAllEntitiesAsRandomPlayers(boolean enable) {
         enabled = enable;
+        if (!enable) {
+            PROFILES.clear();
+            DUMMIES.clear();
+        }
     }
-
     public static void convertEntityIntoRandomPlayer(LivingEntity entity, boolean enable) {
         if (entity == null) return;
-
         if (enable) {
             GameProfile profile = new GameProfile(UUID.randomUUID(), PlayerHallucinations.getRandomName());
             PROFILES.put(entity, profile);
@@ -38,7 +40,8 @@ public final class EntityRandomizer {
     }
 
     public static boolean shouldRenderAsPlayer(LivingEntity entity) {
-        return enabled && entity != Minecraft.getInstance().player;
+        return (enabled || PROFILES.containsKey(entity))
+                && entity != Minecraft.getInstance().player;
     }
 
     public static HallucinationRenderHijack.DummyPlayer getOrCreateDummy(LivingEntity mob) {

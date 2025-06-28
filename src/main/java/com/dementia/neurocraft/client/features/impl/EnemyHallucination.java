@@ -18,6 +18,7 @@ import java.util.*;
 import static com.dementia.neurocraft.Neurocraft.MODID;
 import static com.dementia.neurocraft.common.util.HallucinationUtils.HallucinationOccuredClient;
 
+// todo fix
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public final class EnemyHallucination extends Feature {
 
@@ -26,7 +27,7 @@ public final class EnemyHallucination extends Feature {
     private int tickCounter = 0;
 
     public EnemyHallucination() {
-        super("ENEMY_HALLUCINATIONS", "Mob Hallucinations", 300, 0.3, 5, true, FeatureTrigger.TICK);
+        super("ENEMY_HALLUCINATIONS", "Mob Hallucinations", 300, 0.3, 5, true, FeatureTrigger.TICK, false);
     }
 
     @Override

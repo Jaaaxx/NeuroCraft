@@ -16,7 +16,7 @@ public final class FurnaceUncooking extends FeatureContainerOpen {
 
     public FurnaceUncooking() {
         super("FURNACE_UNCOOKING", "Furnace Uncooking",
-                300, 0.2, 0, true, FeatureTrigger.CONTAINER_OPEN);
+                300, 0.2, 0, true, FeatureTrigger.SERVER_CONTAINER_OPEN, false);
     }
 
     @Override

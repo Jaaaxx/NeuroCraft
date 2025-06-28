@@ -19,7 +19,7 @@ import static com.dementia.neurocraft.common.util.HallucinationUtils.PEAK_SANITY
 
 public final class PlayerDisorientation extends Feature {
     public PlayerDisorientation() {
-        super("PLAYER_DISORIENTATION", "Player Disorientation", 120, 1, 15, true, FeatureTrigger.TICK);
+        super("PLAYER_DISORIENTATION", "Player Disorientation", 120, 1, 15, true, FeatureTrigger.TICK, true);
     }
 
     @Override

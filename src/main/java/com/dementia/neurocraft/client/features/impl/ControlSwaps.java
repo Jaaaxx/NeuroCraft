@@ -18,7 +18,7 @@ import static com.dementia.neurocraft.common.util.HallucinationUtils.Hallucinati
 public final class ControlSwaps extends Feature {
 
     public ControlSwaps() {
-        super("OPTION_CONTROL_SWAPS", "Control Swaps", 120, 0.25, 16, true, FeatureTrigger.TICK);
+        super("OPTION_CONTROL_SWAPS", "Control Swaps", 120, 0.25, 16, true, FeatureTrigger.TICK, true);
     }
 
     @Override

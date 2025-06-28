@@ -19,7 +19,7 @@ public final class AuditoryHallucinations extends Feature {
 
 
     public AuditoryHallucinations() {
-        super("AUDITORY_HALLUCINATIONS", "Auditory Hallucinations", 0, 0.25, 1, true, FeatureTrigger.TICK);
+        super("AUDITORY_HALLUCINATIONS", "Auditory Hallucinations", 0, 0.25, 1, true, FeatureTrigger.TICK, true);
     }
 
     private List<SoundEvent> getRandomSFX() {
