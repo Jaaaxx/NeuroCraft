@@ -51,7 +51,8 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 mixin {
     add sourceSets.main, 'neurocraft.mixins.refmap.json'
-    config 'neurocraft.mixins.json'
+    config 'neurocraft.mixins.client.json'
+    config 'neurocraft.mixins.common.json'
     showMessageTypes = true
 }
 
