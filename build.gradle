@@ -111,7 +111,7 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Version'     : project.jar.archiveVersion,
                 'Implementation-Vendor'      : mod_authors,
                 'TweakClass'                 : 'org.spongepowered.asm.launch.MixinTweaker',
-                'MixinConfigs'               : 'neurocraft.mixins.json',
+                'MixinConfigs'               : 'neurocraft.mixins.client.json,neurocraft.mixins.common.json',
                 'FMLCorePluginContainsFMLMod': 'true',
         ])
     }
