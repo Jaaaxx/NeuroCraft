@@ -3,11 +3,15 @@ package com.dementia.neurocraft.client.features;
 import com.dementia.neurocraft.client.features.impl.*;
 import com.dementia.neurocraft.client.features.impl.Psychosis;
 import com.dementia.neurocraft.common.features.Feature;
+import com.dementia.neurocraft.common.features.FeatureBlockBreak;
 import com.dementia.neurocraft.common.features.FeatureTrigger;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +23,7 @@ import java.util.Optional;
 
 import static com.dementia.neurocraft.Neurocraft.MODID;
 import static com.dementia.neurocraft.client.internal.PlayerSanityClientHandler.getPlayerSanityClient;
+import static com.dementia.neurocraft.server.internal.PlayerScalingManager.getPlayerSanity;
 
 /**
  * Central dispatcher that owns and evaluates all registered {@link Feature}s.
@@ -68,7 +73,6 @@ public final class ClientFeatureController {
         }
     }
 
-
     public static Optional<Feature> getFeatureById(String id) {
         return FEATURES.stream()
                 .filter(f -> f.getId().equals(id))
@@ -91,6 +95,8 @@ public final class ClientFeatureController {
         FEATURES.add(new FramerateChanges());
         FEATURES.add(new RenderDistanceChanges());
         FEATURES.add(new ControlSwaps());
+
+        FEATURES.add(new PlayerDisorientation());
     }
 
 }
