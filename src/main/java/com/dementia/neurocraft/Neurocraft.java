@@ -4,6 +4,7 @@ import com.dementia.neurocraft.config.ClientConfigs;
 import com.dementia.neurocraft.config.ServerConfigs;
 import com.dementia.neurocraft.gui.OptionsMenus.ClientModOptionsScreen;
 import com.dementia.neurocraft.client.internal.SoundManager;
+import com.dementia.neurocraft.network.PacketHandler;
 import com.dementia.neurocraft.util.ModBlocksRegistry;
 import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import com.mojang.logging.LogUtils;
@@ -52,6 +53,9 @@ public class Neurocraft {
         MinecraftForge.EVENT_BUS.register(this);
         ModSoundEventsRegistry.register(modEventBus);
         ModBlocksRegistry.register(modEventBus);
+        
+        // Register network packets
+        PacketHandler.register();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfigs.SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigs.SPEC);

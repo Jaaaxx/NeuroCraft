@@ -1,10 +1,11 @@
 package com.dementia.neurocraft.commands;
 
 import com.dementia.neurocraft.common.features.Feature;
-import com.dementia.neurocraft.client.features.ClientFeatureController;
+import com.dementia.neurocraft.common.features.FeatureRegistry;
 import com.dementia.neurocraft.server.features.ServerFeatureController;
+import com.dementia.neurocraft.network.PacketHandler;
+import com.dementia.neurocraft.network.CTriggerClientFeaturePacket;
 import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -22,10 +23,9 @@ public final class FeatureCommandDispatcher {
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
-        for (Feature feature : ClientFeatureController.getFeatures()) {
-            if (!feature.supportsManualTrigger()) continue;
-
-            String id = feature.getId().toLowerCase();
+        // Register commands for client features (triggered via packets)
+        for (String featureId : FeatureRegistry.CLIENT_FEATURE_IDS) {
+            String id = featureId.toLowerCase();
 
             dispatcher.register(
                     Commands.literal("feature")
@@ -33,8 +33,9 @@ public final class FeatureCommandDispatcher {
                                     .then(Commands.literal("run")
                                             .requires(src -> src.getEntity() instanceof ServerPlayer)
                                             .executes(ctx -> {
-                                                var mc = net.minecraft.client.Minecraft.getInstance();
-                                                feature.performClient(Minecraft.getInstance());
+                                                ServerPlayer player = (ServerPlayer) ctx.getSource().getEntity();
+                                                // Send packet to trigger client feature on the target player
+                                                PacketHandler.sendToPlayer(new CTriggerClientFeaturePacket(featureId), player);
                                                 ctx.getSource().sendSuccess(() -> Component.literal("Feature '" + id + "' triggered."), false);
                                                 return 1;
                                             })
@@ -42,6 +43,8 @@ public final class FeatureCommandDispatcher {
                             )
             );
         }
+
+        // Register commands for server features
         for (Feature feature : ServerFeatureController.getFeatures()) {
             if (!feature.supportsManualTrigger()) continue;
 

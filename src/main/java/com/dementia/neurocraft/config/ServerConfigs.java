@@ -1,7 +1,7 @@
 package com.dementia.neurocraft.config;
 
 import com.dementia.neurocraft.common.features.Feature;
-import com.dementia.neurocraft.client.features.ClientFeatureController;
+import com.dementia.neurocraft.common.features.FeatureRegistry;
 import com.dementia.neurocraft.server.features.ServerFeatureController;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
@@ -38,12 +38,14 @@ public class ServerConfigs {
 
     static {
         BUILDER.push("Server Configs for Neurocraft");
-        for (Feature feature : ClientFeatureController.getFeatures()) {
-            if (FEATURE_CONFIGS.containsKey(feature.getId())) continue;
+        // Add client feature configs using shared registry
+        for (String featureId : FeatureRegistry.CLIENT_FEATURE_IDS) {
+            if (FEATURE_CONFIGS.containsKey(featureId)) continue;
 
-            ForgeConfigSpec.ConfigValue<Boolean> configValue = BUILDER.define(feature.getId(), true);
-            FEATURE_CONFIGS.put(feature.getId(), configValue);
+            ForgeConfigSpec.ConfigValue<Boolean> configValue = BUILDER.define(featureId, true);
+            FEATURE_CONFIGS.put(featureId, configValue);
         }
+        // Add server feature configs
         for (Feature feature : ServerFeatureController.getFeatures()) {
             if (FEATURE_CONFIGS.containsKey(feature.getId())) continue;
 

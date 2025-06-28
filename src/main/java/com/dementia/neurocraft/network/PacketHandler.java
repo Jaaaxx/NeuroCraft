@@ -84,6 +84,11 @@ public class PacketHandler {
                 .decoder(SFeatureSyncPacket::new)
                 .consumerMainThread(SFeatureSyncPacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CTriggerClientFeaturePacket.class, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CTriggerClientFeaturePacket::encode)
+                .decoder(CTriggerClientFeaturePacket::new)
+                .consumerMainThread(CTriggerClientFeaturePacket::handle)
+                .add();
 
     }
 
