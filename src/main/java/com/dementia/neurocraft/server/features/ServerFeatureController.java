@@ -1,17 +1,21 @@
 package com.dementia.neurocraft.server.features;
 
+import com.dementia.neurocraft.client.features.impl.AbleToSleep;
 import com.dementia.neurocraft.common.features.*;
 import com.dementia.neurocraft.common.internal.HallucinationTracker;
 import com.dementia.neurocraft.network.PacketHandler;
 import com.dementia.neurocraft.network.SFeatureSyncPacket;
 import com.dementia.neurocraft.server.features.impl.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -22,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.dementia.neurocraft.Neurocraft.MODID;
+import static com.dementia.neurocraft.client.internal.PlayerSanityClientHandler.getPlayerSanityClient;
 import static com.dementia.neurocraft.server.internal.PlayerScalingManager.getPlayerSanity;
 
 @Mod.EventBusSubscriber(modid = MODID)
@@ -124,6 +129,22 @@ public final class ServerFeatureController {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
+    public static void onSleepEvent(SleepingLocationCheckEvent ev) {
+        Minecraft mc = Minecraft.getInstance();
+        var player = mc.player;
+        if (player == null) return;
+        int sanity = getPlayerSanityClient();
+
+
+        for (Feature feature : FEATURES) {
+            if (feature.getTriggerType() != FeatureTrigger.SLEEP_IN_BED || !feature.isEnabled() || !(feature instanceof FeatureSleepInBed))
+                continue;
+            ((FeatureSleepInBed) feature).OnSleepEvent(ev);
+            feature.tryRunClient(mc, sanity);
+        }
+    }
+
     static {
         FEATURES.add(new AuditoryHallucinations());
         FEATURES.add(new FakeBlockBreaking());
@@ -134,5 +155,6 @@ public final class ServerFeatureController {
         FEATURES.add(new OreHallucinationVein());
         FEATURES.add(new RandomTeleportBackwards());
         FEATURES.add(new EnemyHallucination(H_TRACKER));
+        FEATURES.add(new AbleToSleep());
     }
 }

@@ -3,6 +3,7 @@ package com.dementia.neurocraft.common.features;
 public enum FeatureTrigger {
     // Global
     TICK,
+    SLEEP_IN_BED,
 
     // Client-side
     CLIENT_MOB_SPAWN,

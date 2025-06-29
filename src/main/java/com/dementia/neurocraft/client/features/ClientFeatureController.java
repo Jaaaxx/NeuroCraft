@@ -4,6 +4,7 @@ import com.dementia.neurocraft.client.features.impl.*;
 import com.dementia.neurocraft.client.features.impl.Psychosis;
 import com.dementia.neurocraft.common.features.Feature;
 import com.dementia.neurocraft.common.features.FeatureClientMobSpawn;
+import com.dementia.neurocraft.common.features.FeatureSleepInBed;
 import com.dementia.neurocraft.common.features.FeatureTrigger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Mob;
@@ -11,6 +12,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -110,6 +113,21 @@ public final class ClientFeatureController {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
+    public static void onSleepEvent(SleepingLocationCheckEvent ev) {
+        Minecraft mc = Minecraft.getInstance();
+        var player = mc.player;
+        if (player == null) return;
+        int sanity = getPlayerSanityClient();
+
+
+        for (Feature feature : FEATURES) {
+            if (feature.getTriggerType() != FeatureTrigger.SLEEP_IN_BED || !feature.isEnabled() || !(feature instanceof FeatureSleepInBed))
+                continue;
+            ((FeatureSleepInBed) feature).OnSleepEvent(ev);
+            feature.tryRunClient(mc, sanity);
+        }
+    }
 
     public static Optional<Feature> getFeatureById(String id) {
         return FEATURES.stream()
@@ -137,6 +155,7 @@ public final class ClientFeatureController {
         FEATURES.add(new PlayerDisorientation());
 
         FEATURES.add(new ClientMobSpawnRandomization());
+        FEATURES.add(new AbleToSleep());
     }
 
 }
