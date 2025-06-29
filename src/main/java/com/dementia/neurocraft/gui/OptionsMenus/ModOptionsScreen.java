@@ -80,6 +80,8 @@ public class ModOptionsScreen extends Screen {
                         ServerConfigs.modConfig.save();
                         ConfigSyncHandler.syncFeatureStates();
                         ServerConfigs.SPEC.afterReload();
+                        // Broadcast all config values to all players
+                        ServerConfigs.broadcastConfigValues();
                     }
                 }
         );
@@ -117,6 +119,8 @@ public class ModOptionsScreen extends Screen {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        // Broadcast all config values to all players
+                        ServerConfigs.broadcastConfigValues();
                     }
 
                     // Only send packet if connected to a server

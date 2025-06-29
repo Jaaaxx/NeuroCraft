@@ -43,6 +43,8 @@ public class ServerModOptionsScreen extends ModOptionsScreen {
                 ServerConfigs.modConfig.save();
 //                ConfigSyncHandler.syncFeatureStates();
                 ServerConfigs.SPEC.afterReload();
+                // Broadcast all config values to all players
+                ServerConfigs.broadcastConfigValues();
             }
         }).bounds(this.width / 2 - 100, this.height - 27, 200, 20).build());
 

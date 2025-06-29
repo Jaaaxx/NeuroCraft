@@ -51,6 +51,8 @@ public class CFeatureToggleUpdatePacket {
                         .ifPresent(feature -> feature.setEnabled(enabled));
 
                 ServerFeatureController.broadcastFeatureStatesToClients(player.getServer());
+                // Broadcast all config values to all players
+                ServerConfigs.broadcastConfigValues();
             }
         });
     }

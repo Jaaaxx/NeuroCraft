@@ -95,6 +95,11 @@ public class PacketHandler {
                 .decoder(CTriggerClientFeaturePacket::new)
                 .consumerMainThread(CTriggerClientFeaturePacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CConfigValueSyncPacket.class, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CConfigValueSyncPacket::encode)
+                .decoder(CConfigValueSyncPacket::new)
+                .consumerMainThread(CConfigValueSyncPacket::handle)
+                .add();
 
     }
 

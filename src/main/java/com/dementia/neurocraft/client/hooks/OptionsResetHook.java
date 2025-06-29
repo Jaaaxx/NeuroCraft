@@ -3,6 +3,8 @@ package com.dementia.neurocraft.client.hooks;
 import com.dementia.neurocraft.client.internal.OptionsUtils;
 import com.dementia.neurocraft.client.internal.ClientPlayerDeathEvent;
 import com.dementia.neurocraft.client.internal.PlayerSanityClientHandler;
+import com.dementia.neurocraft.config.ServerConfigs;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
