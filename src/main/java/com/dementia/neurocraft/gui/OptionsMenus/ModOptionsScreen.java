@@ -19,8 +19,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.api.distmarker.Dist;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -125,15 +123,10 @@ public class ModOptionsScreen extends Screen {
                         ServerConfigs.broadcastConfigValues();
                     }
 
-                    // Only send packet if connected to a server (client-side only)
-                    if (FMLEnvironment.dist.isClient()) {
-                        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                            var mc = Minecraft.getInstance();
-                            if (mc.getConnection() != null) {
-                                PacketHandler.sendToServer(
-                                        new CFeatureToggleUpdatePacket(config.getPath().get(0), b));
-                            }
-                        });
+                    // Only send packet if connected to a server
+                    if (FMLEnvironment.dist.isClient() && Minecraft.getInstance().getConnection() != null) {
+                        PacketHandler.sendToServer(
+                                new CFeatureToggleUpdatePacket(config.getPath().get(0), b));
                     }
                 }
         );
