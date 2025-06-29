@@ -234,6 +234,7 @@ public final class Psychosis extends Feature {
             BlockPos p = e.getKey();
             ps.pushPose();
             ps.translate(p.getX() - camX, p.getY() - camY, p.getZ() - camZ);
+            if (psychosisType == PsychosisType.ROTATIONAL_PSYCHOSIS) ps.mulPose(cam.rotation());
             VertexConsumer vc = buf.getBuffer(ItemBlockRenderTypes.getRenderType(e.getValue(), false));
             brd.getModelRenderer().renderModel(ps.last(), vc, e.getValue(), brd.getBlockModel(e.getValue()), 1f, 1f, 1f, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
             ps.popPose();
