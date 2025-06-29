@@ -10,6 +10,7 @@ import com.dementia.neurocraft.util.ModSoundEventsRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -30,7 +31,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
-import static com.dementia.neurocraft.gui.OptionsMenus.ModVariableScreen.getForgeConfigScreenContext;
+
 
 @Mod(Neurocraft.MODID)
 public class Neurocraft {
@@ -88,7 +89,7 @@ public class Neurocraft {
 
             event.enqueueWork(() -> {
                 ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                        () -> new ConfigScreenHandler.ConfigScreenFactory((mc, screen) -> new ClientModOptionsScreen(new ModListScreen(getForgeConfigScreenContext()))));
+                        () -> new ConfigScreenHandler.ConfigScreenFactory((mc, screen) -> new ClientModOptionsScreen(screen)));
             });
         }
     }
