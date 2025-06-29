@@ -1,9 +1,10 @@
 package com.dementia.neurocraft.network;
 
 import com.dementia.neurocraft.config.ServerConfigs;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.fml.DistExecutor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -91,12 +92,10 @@ public class CConfigValueSyncPacket {
             // Trigger config spec reload to update any dependent systems
             ServerConfigs.SPEC.afterReload();
             
-            // Refresh GUI if player is in config menu
-            var currentScreen = Minecraft.getInstance().screen;
-            if (currentScreen != null && currentScreen.getClass().getName().contains("ModOptionsScreen")) {
-                // Force screen refresh by rebuilding widgets
-                currentScreen.init(Minecraft.getInstance(), currentScreen.width, currentScreen.height);
-            }
+            // Refresh GUI if player is in config menu (client-side only)
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                ClientPacketHandler.handleConfigGUIRefresh();
+            });
         });
         
         ctx.setPacketHandled(true);
