@@ -14,12 +14,14 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 import static com.dementia.neurocraft.Neurocraft.MODID;
+import static com.dementia.neurocraft.Neurocraft.LOGGER;
 
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class ConfigSyncHandler {
     @SubscribeEvent
     public static void onConfigLoaded(ModConfigEvent.Loading evt) {
         if (evt.getConfig().getSpec() == ServerConfigs.SPEC) {
+            LOGGER.info("Server config loaded - syncing feature states");
             syncFeatureStates();
         }
     }
@@ -27,6 +29,7 @@ public final class ConfigSyncHandler {
     @SubscribeEvent
     public static void onConfigReloaded(ModConfigEvent.Reloading evt) {
         if (evt.getConfig().getSpec() == ServerConfigs.SPEC) {
+            LOGGER.info("Server config reloaded - syncing feature states");
             syncFeatureStates();
             MinecraftServer srv = ServerLifecycleHooks.getCurrentServer();
             if (srv != null) {
@@ -36,15 +39,38 @@ public final class ConfigSyncHandler {
     }
 
     public static void syncFeatureStates() {
+        LOGGER.info("=== SYNCING FEATURE STATES ===");
+        
+        // Debug: Print available config keys
+        LOGGER.info("Available config keys: {}", ServerConfigs.FEATURE_CONFIGS.keySet());
+        
+        int clientSynced = 0;
         for (Feature f : ClientFeatureController.getFeatures()) {
             var cfg = ServerConfigs.FEATURE_CONFIGS.get(f.getId());
-            if (cfg != null) f.setEnabled(Boolean.TRUE.equals(cfg.get()));
+            if (cfg != null) {
+                boolean enabled = Boolean.TRUE.equals(cfg.get());
+                f.setEnabled(enabled);
+                LOGGER.info("Client feature {} -> enabled: {}", f.getId(), enabled);
+                clientSynced++;
+            } else {
+                LOGGER.warn("No config found for client feature: {}", f.getId());
+            }
         }
 
+        int serverSynced = 0;
         for (Feature f : ServerFeatureController.getFeatures()) {
             var cfg = ServerConfigs.FEATURE_CONFIGS.get(f.getId());
-            if (cfg != null) f.setEnabled(Boolean.TRUE.equals(cfg.get()));
+            if (cfg != null) {
+                boolean enabled = Boolean.TRUE.equals(cfg.get());
+                f.setEnabled(enabled);
+                LOGGER.info("Server feature {} -> enabled: {}", f.getId(), enabled);
+                serverSynced++;
+            } else {
+                LOGGER.warn("No config found for server feature: {}", f.getId());
+            }
         }
+        
+        LOGGER.info("Synced {} client features and {} server features", clientSynced, serverSynced);
 
         if (FMLEnvironment.dist.isClient()) {
             var conn = Minecraft.getInstance().getConnection();

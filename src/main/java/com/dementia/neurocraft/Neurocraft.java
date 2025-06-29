@@ -53,9 +53,6 @@ public class Neurocraft {
         MinecraftForge.EVENT_BUS.register(this);
         ModSoundEventsRegistry.register(modEventBus);
         ModBlocksRegistry.register(modEventBus);
-        
-        // Register network packets
-        PacketHandler.register();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfigs.SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigs.SPEC);
@@ -63,6 +60,9 @@ public class Neurocraft {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("HELLO FROM COMMON SETUP");
+        
+        // Register network packets during common setup
+        PacketHandler.register();
     }
 
     @SubscribeEvent

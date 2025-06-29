@@ -28,6 +28,15 @@ public class PlayerScalingManager {
         return player.getPersistentData().getInt("Sanity");
     }
 
+    /**
+     * Manually set player sanity to a specific value (for commands/testing)
+     */
+    public static void setPlayerSanity(final Player player, int sanity) {
+        // Clamp sanity value between 0 and PEAK_SANITY
+        int clampedSanity = Math.max(0, Math.min(PEAK_SANITY, sanity));
+        player.getPersistentData().putInt("Sanity", clampedSanity);
+    }
+
     public static void incrementPlayerSanity(final Player player) {
         int currentSanity = getPlayerSanity(player);
         if (currentSanity >= PEAK_SANITY)

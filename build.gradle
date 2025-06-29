@@ -86,6 +86,31 @@ tasks.register('updateLang', JavaExec) {
     }
 }
 
+// === FEATURE REGISTRY AUTO-GENERATION ===
+// The FeatureRegistry.java file is automatically generated from actual Feature classes.
+// This prevents manual maintenance and ensures consistency between features and configs.
+//
+// WORKFLOW:
+// 1. Add/remove features in ClientFeatureController or ServerFeatureController
+// 2. Run: ./gradlew updateFeatureRegistry
+// 3. Run: ./gradlew build (to compile with updated registry)
+// 4. Commit both your feature changes AND the updated FeatureRegistry.java
+
+tasks.register('generateFeatureRegistry', JavaExec) {
+    group = 'development'
+    description = 'Automatically generates FeatureRegistry.java from actual feature controllers.'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('com.dementia.neurocraft.dev.FeatureRegistryGenerator')
+    
+    // Run after classes are compiled
+    dependsOn 'classes'
+
+    doFirst {
+        println "Running FeatureRegistryGenerator to auto-generate FeatureRegistry.java..."
+    }
+}
+
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
@@ -150,6 +175,22 @@ tasks.withType(JavaCompile).configureEach {
 
 eclipse {
     synchronizationTasks 'genEclipseRuns'
+}
+
+// Convenience task for updating feature registry when features are added/removed
+tasks.register('updateFeatureRegistry') {
+    group = 'development'
+    description = 'MANUAL: Run when adding/removing features. Compiles -> Generates Registry -> Cleans for recompile'
+    
+    dependsOn 'generateFeatureRegistry'
+    
+    doLast {
+        println "✅ FeatureRegistry.java has been updated!"
+        println "📝 Next: Run './gradlew build' to compile with the new registry."
+        
+        // Clean compiled classes to ensure fresh compilation
+        delete fileTree('build/classes/java/main/com/dementia/neurocraft/common/features')
+    }
 }
 
 tasks.named('build') {

@@ -75,7 +75,8 @@ public class ModOptionsScreen extends Screen {
                 currentVal,
                 val -> {
                     config.set(val);
-                    if (ServerConfigs.modConfig != null) {
+                    // Only save server config if it exists and is loaded
+                    if (ServerConfigs.modConfig != null && ServerConfigs.modConfig.getConfigData() != null) {
                         ServerConfigs.modConfig.save();
                         ConfigSyncHandler.syncFeatureStates();
                         ServerConfigs.SPEC.afterReload();
@@ -105,8 +106,8 @@ public class ModOptionsScreen extends Screen {
                     boolean b = "true".equals(val);
                     config.set(b);
 
-
-                    if (ServerConfigs.modConfig != null) {
+                    // Only save server config if it exists and is loaded
+                    if (ServerConfigs.modConfig != null && ServerConfigs.modConfig.getConfigData() != null) {
                         ServerConfigs.modConfig.save();
                         ServerConfigs.SPEC.afterReload();
                         try {
@@ -118,8 +119,8 @@ public class ModOptionsScreen extends Screen {
                         }
                     }
 
-                    if (FMLEnvironment.dist.isClient()) {
-                        var conn = Minecraft.getInstance().getConnection();
+                    // Only send packet if connected to a server
+                    if (FMLEnvironment.dist.isClient() && Minecraft.getInstance().getConnection() != null) {
                         PacketHandler.sendToServer(
                                 new CFeatureToggleUpdatePacket(config.getPath().get(0), b));
                     }

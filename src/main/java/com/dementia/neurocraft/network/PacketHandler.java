@@ -11,6 +11,8 @@ import net.minecraftforge.network.*;
 public class PacketHandler {
     private static final String PROTOCOL_VERSION = "1";
     private int packetID = 0;
+    private static boolean packetsRegistered = false;
+    
     public static final SimpleChannel INSTANCE = ChannelBuilder.named(
                     new ResourceLocation(Neurocraft.MODID, "main"))
             .serverAcceptedVersions((status, version) -> true)
@@ -19,6 +21,10 @@ public class PacketHandler {
             .simpleChannel();
 
     public static void register() {
+        if (packetsRegistered) {
+            return; // Prevent duplicate registration
+        }
+        packetsRegistered = true;
         INSTANCE.messageBuilder(CHallucinationListUpdatePacket.class, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(CHallucinationListUpdatePacket::encode)
                 .decoder(CHallucinationListUpdatePacket::new)

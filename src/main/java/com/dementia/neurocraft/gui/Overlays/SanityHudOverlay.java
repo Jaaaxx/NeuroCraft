@@ -12,6 +12,7 @@ import static com.dementia.neurocraft.gui.Overlays.SanityHudOverlayResources.*;
 
 public class SanityHudOverlay {
     private static boolean hurtBrainActive = false;
+    
     public static final IGuiOverlay HUD_SANITY = ((gui, guiGraphics, partialTick, width, height) -> {
         if (SANITY_GUI.get() && !RenderSanityHudInMenu.isPaused) {
             var playerSanity = getPlayerSanityClient();

@@ -38,7 +38,8 @@ public class ServerModOptionsScreen extends ModOptionsScreen {
 
         this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (doneButton) -> {
             this.minecraft.setScreen(this.lastScreen);
-            if (ServerConfigs.modConfig != null) {
+            // Only save server config if it exists and is loaded
+            if (ServerConfigs.modConfig != null && ServerConfigs.modConfig.getConfigData() != null) {
                 ServerConfigs.modConfig.save();
 //                ConfigSyncHandler.syncFeatureStates();
                 ServerConfigs.SPEC.afterReload();
