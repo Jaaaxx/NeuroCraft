@@ -120,8 +120,10 @@ public class ModOptionsScreen extends Screen {
 
                     if (FMLEnvironment.dist.isClient()) {
                         var conn = Minecraft.getInstance().getConnection();
-                        PacketHandler.sendToServer(
-                                new CFeatureToggleUpdatePacket(config.getPath().get(0), b));
+                        if (conn != null) {
+                            PacketHandler.sendToServer(
+                                    new CFeatureToggleUpdatePacket(config.getPath().get(0), b));
+                        }
                     }
                 }
         );

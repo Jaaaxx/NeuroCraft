@@ -37,6 +37,11 @@ public class PlayerScalingManager {
         }
     }
 
+    public static void setPlayerSanity(final Player player, int newSanity) {
+        int currentSanity = getPlayerSanity(player);
+        player.getPersistentData().putInt("Sanity", newSanity);
+    }
+
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.type == TickEvent.Type.PLAYER && event.side == LogicalSide.SERVER) {
