@@ -155,7 +155,6 @@ public final class ClientFeatureController {
         FEATURES.add(new PlayerDisorientation());
 
         FEATURES.add(new ClientMobSpawnRandomization());
-        FEATURES.add(new AbleToSleep());
     }
 
 }

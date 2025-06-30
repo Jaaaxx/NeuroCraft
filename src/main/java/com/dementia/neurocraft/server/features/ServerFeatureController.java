@@ -1,6 +1,5 @@
 package com.dementia.neurocraft.server.features;
 
-import com.dementia.neurocraft.client.features.impl.AbleToSleep;
 import com.dementia.neurocraft.common.features.*;
 import com.dementia.neurocraft.common.internal.HallucinationTracker;
 import com.dementia.neurocraft.network.PacketHandler;
@@ -155,6 +154,6 @@ public final class ServerFeatureController {
         FEATURES.add(new OreHallucinationVein());
         FEATURES.add(new RandomTeleportBackwards());
         FEATURES.add(new EnemyHallucination(H_TRACKER));
-        FEATURES.add(new AbleToSleep());
+        FEATURES.add(new Insomnia());
     }
 }
