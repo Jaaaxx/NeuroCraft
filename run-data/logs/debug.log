@@ -1,0 +1,579 @@
+[28Jun2025 20:01:31.455] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forge_userdev_data, --assetIndex, 12, --assetsDir, C:\Users\js113\.gradle\caches\forge_gradle\assets, --gameDir, ., --mod, neurocraft, --all, --output, C:\Users\js113\IdeaProjects\NeuroCraft\src\generated\resources, --existing, C:\Users\js113\IdeaProjects\NeuroCraft\src\main\resources, --mixin.config, neurocraft.mixins.client.json, --mixin.config, neurocraft.mixins.common.json]
+[28Jun2025 20:01:31.457] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Microsoft OpenJDK 64-Bit Server VM 17.0.15+6-LTS
+[28Jun2025 20:01:31.459] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.1.2 starting: java version 17.0.15 by Microsoft; OS Windows 11 arch amd64 version 10.0
+[28Jun2025 20:01:31.485] [main/DEBUG] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Found launch services [forge_userdev_client,forge_dev_data,minecraft,forge_userdev_server_gametest,forge_dev_client,forge_userdev_data,forge_dev_server_gametest,testharness,forge_userdev_server,forge_client,forge_dev_server,forge_server]
+[28Jun2025 20:01:31.499] [main/DEBUG] [cpw.mods.modlauncher.NameMappingServiceHandler/MODLAUNCHER]: Found naming services : [srgtomcp]
+[28Jun2025 20:01:31.528] [main/DEBUG] [cpw.mods.modlauncher.LaunchPluginHandler/MODLAUNCHER]: Found launch plugins: [mixin,eventbus,slf4jfixer,object_holder_definalize,runtime_enum_extender,capability_token_subclass,accesstransformer,runtimedistcleaner]
+[28Jun2025 20:01:31.534] [main/DEBUG] [cpw.mods.modlauncher.TransformationServicesHandler/MODLAUNCHER]: Discovering transformation services
+[28Jun2025 20:01:31.535] [main/DEBUG] [net.minecraftforge.fml.loading.FMLPaths/CORE]: Path GAMEDIR is C:\Users\js113\IdeaProjects\NeuroCraft\run-data
+[28Jun2025 20:01:31.535] [main/DEBUG] [net.minecraftforge.fml.loading.FMLPaths/CORE]: Path MODSDIR is C:\Users\js113\IdeaProjects\NeuroCraft\run-data\mods
+[28Jun2025 20:01:31.536] [main/DEBUG] [net.minecraftforge.fml.loading.FMLPaths/CORE]: Path CONFIGDIR is C:\Users\js113\IdeaProjects\NeuroCraft\run-data\config
+[28Jun2025 20:01:31.536] [main/DEBUG] [net.minecraftforge.fml.loading.FMLPaths/CORE]: Path FMLCONFIG is C:\Users\js113\IdeaProjects\NeuroCraft\run-data\config\fml.toml
+[28Jun2025 20:01:31.559] [main/WARN] [net.minecraftforge.fml.loading.FMLConfig/CORE]: Configuration file C:\Users\js113\IdeaProjects\NeuroCraft\run-data\config\fml.toml is not correct. Correcting
+[28Jun2025 20:01:31.559] [main/INFO] [net.minecraftforge.fml.loading.FMLConfig/CORE]: Incorrect key [earlyWindowSkipGLVersions] was corrected from null to []
+[28Jun2025 20:01:31.560] [main/INFO] [net.minecraftforge.fml.loading.FMLConfig/CORE]: Incorrect key [earlyWindowSquir] was corrected from null to false
+[28Jun2025 20:01:31.567] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forge_userdev_data
+[28Jun2025 20:01:31.588] [main/DEBUG] [cpw.mods.modlauncher.TransformationServicesHandler/MODLAUNCHER]: Found transformer service: fml: /
+[28Jun2025 20:01:31.589] [main/DEBUG] [cpw.mods.modlauncher.TransformationServicesHandler/MODLAUNCHER]: Found transformer service: mixin: /
+[28Jun2025 20:01:31.589] [main/DEBUG] [cpw.mods.modlauncher.TransformationServicesHandler/MODLAUNCHER]: Transformation services loading
+[28Jun2025 20:01:31.590] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Loading service mixin
+[28Jun2025 20:01:31.590] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Loaded service mixin
+[28Jun2025 20:01:31.590] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Loading service fml
+[28Jun2025 20:01:31.597] [main/DEBUG] [net.minecraftforge.fml.loading.FMLLoader/CORE]: Detected version data : VersionInfo[forgeVersion=49.0.19, mcVersion=1.20.4, mcpVersion=20231207.112700, forgeGroup=net.minecraftforge]
+[28Jun2025 20:01:31.598] [main/DEBUG] [net.minecraftforge.fml.loading.LauncherVersion/CORE]: Found FMLLauncher version 49.0.19
+[28Jun2025 20:01:31.598] [main/DEBUG] [net.minecraftforge.fml.loading.FMLLoader/CORE]: FML 49.0.19 loading
+[28Jun2025 20:01:31.598] [main/DEBUG] [net.minecraftforge.fml.loading.FMLLoader/CORE]: Found ModLauncher version: 10.1.2
+[28Jun2025 20:01:31.598] [main/DEBUG] [net.minecraftforge.fml.loading.FMLLoader/CORE]: Found AccessTransformer version: 8.1.1
+[28Jun2025 20:01:31.598] [main/DEBUG] [net.minecraftforge.fml.loading.FMLLoader/CORE]: Found EventBus version: 6.2.0
+[28Jun2025 20:01:31.599] [main/DEBUG] [net.minecraftforge.fml.loading.FMLLoader/CORE]: Found RuntimeDistCleaner version: 49.0.19
+[28Jun2025 20:01:31.599] [main/DEBUG] [net.minecraftforge.fml.loading.FMLLoader/CORE]: FML found CoreMod version : 5.1.0
+[28Jun2025 20:01:31.599] [main/DEBUG] [net.minecraftforge.fml.loading.FMLLoader/CORE]: Found ForgeSPI version: 7.1.3
+[28Jun2025 20:01:31.600] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Loaded service fml
+[28Jun2025 20:01:31.600] [main/DEBUG] [cpw.mods.modlauncher.TransformationServicesHandler/MODLAUNCHER]: Configuring option handling for services
+[28Jun2025 20:01:31.603] [main/DEBUG] [cpw.mods.modlauncher.TransformationServicesHandler/MODLAUNCHER]: Transformation services initializing
+[28Jun2025 20:01:31.604] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Initializing transformation service mixin
+[28Jun2025 20:01:31.634] [main/DEBUG] [mixin/]: MixinService [ModLauncher] was successfully booted in SecureModuleClassLoader[SECURE-BOOTSTRAP]@2095303566
+[28Jun2025 20:01:31.643] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=jar:file:///C:/Users/js113/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar!/ Service=ModLauncher Env=UNKNOWN
+[28Jun2025 20:01:31.645] [main/DEBUG] [mixin/]: Initialising Mixin Platform Manager
+[28Jun2025 20:01:31.645] [main/DEBUG] [mixin/]: Adding mixin platform agents for container ModLauncher Root Container(ModLauncher:4f56a0a2)
+[28Jun2025 20:01:31.646] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for ModLauncher Root Container(ModLauncher:4f56a0a2)
+[28Jun2025 20:01:31.646] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container ModLauncher Root Container(ModLauncher:4f56a0a2)
+[28Jun2025 20:01:31.646] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for ModLauncher Root Container(ModLauncher:4f56a0a2)
+[28Jun2025 20:01:31.647] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container ModLauncher Root Container(ModLauncher:4f56a0a2)
+[28Jun2025 20:01:31.648] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Initialized transformation service mixin
+[28Jun2025 20:01:31.648] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Initializing transformation service fml
+[28Jun2025 20:01:31.649] [main/DEBUG] [net.minecraftforge.fml.loading.FMLServiceProvider/CORE]: Setting up basic FML game directories
+[28Jun2025 20:01:31.649] [main/DEBUG] [net.minecraftforge.fml.loading.FMLPaths/CORE]: Path GAMEDIR is C:\Users\js113\IdeaProjects\NeuroCraft\run-data
+[28Jun2025 20:01:31.649] [main/DEBUG] [net.minecraftforge.fml.loading.FMLPaths/CORE]: Path MODSDIR is C:\Users\js113\IdeaProjects\NeuroCraft\run-data\mods
+[28Jun2025 20:01:31.649] [main/DEBUG] [net.minecraftforge.fml.loading.FMLPaths/CORE]: Path CONFIGDIR is C:\Users\js113\IdeaProjects\NeuroCraft\run-data\config
+[28Jun2025 20:01:31.649] [main/DEBUG] [net.minecraftforge.fml.loading.FMLPaths/CORE]: Path FMLCONFIG is C:\Users\js113\IdeaProjects\NeuroCraft\run-data\config\fml.toml
+[28Jun2025 20:01:31.649] [main/DEBUG] [net.minecraftforge.fml.loading.FMLServiceProvider/CORE]: Loading configuration
+[28Jun2025 20:01:31.653] [main/DEBUG] [net.minecraftforge.fml.loading.FMLServiceProvider/CORE]: Preparing ModFile
+[28Jun2025 20:01:31.654] [main/DEBUG] [net.minecraftforge.fml.loading.FMLServiceProvider/CORE]: Preparing launch handler
+[28Jun2025 20:01:31.654] [main/DEBUG] [net.minecraftforge.fml.loading.FMLLoader/CORE]: Using forge_userdev_data as launch service
+[28Jun2025 20:01:31.657] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Initialized transformation service fml
+[28Jun2025 20:01:31.657] [main/DEBUG] [cpw.mods.modlauncher.NameMappingServiceHandler/MODLAUNCHER]: Current naming domain is 'mcp'
+[28Jun2025 20:01:31.657] [main/DEBUG] [cpw.mods.modlauncher.NameMappingServiceHandler/MODLAUNCHER]: Identified name mapping providers {srg=net.minecraftforge.fml.loading.MCPNamingService@4c5204af}
+[28Jun2025 20:01:31.658] [main/DEBUG] [cpw.mods.modlauncher.TransformationServicesHandler/MODLAUNCHER]: Transformation services begin scanning
+[28Jun2025 20:01:31.659] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Beginning scan trigger - transformation service mixin
+[28Jun2025 20:01:31.659] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: End scan trigger - transformation service mixin
+[28Jun2025 20:01:31.659] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Beginning scan trigger - transformation service fml
+[28Jun2025 20:01:31.659] [main/DEBUG] [net.minecraftforge.fml.loading.FMLServiceProvider/CORE]: Initiating mod scan
+[28Jun2025 20:01:31.665] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModDiscoverer/CORE]: Found Mod Locators : (mods folder:null),(minecraft:null),(classpath:null),(forge_dev_locator:null),(forge_userdev_locator:null)
+[28Jun2025 20:01:31.665] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModDiscoverer/CORE]: Found Dependency Locators : (JarInJar:null)
+[28Jun2025 20:01:32.007] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file  with {minecraft} mods - versions {1.20.4}
+[28Jun2025 20:01:32.129] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate C:\Users\js113\IdeaProjects\NeuroCraft\build\sourcesSets\main
+[28Jun2025 20:01:32.136] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file main with {neurocraft} mods - versions {2.5.5}
+[28Jun2025 20:01:32.197] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate /
+[28Jun2025 20:01:32.200] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file  with {forge} mods - versions {49.0.19}
+[28Jun2025 20:01:32.210] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from , it does not contain dependency information.
+[28Jun2025 20:01:32.210] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from main, it does not contain dependency information.
+[28Jun2025 20:01:32.210] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from , it does not contain dependency information.
+[28Jun2025 20:01:32.210] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from javafmllanguage-1.20.4-49.0.19.jar, it does not contain dependency information.
+[28Jun2025 20:01:32.211] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from lowcodelanguage-1.20.4-49.0.19.jar, it does not contain dependency information.
+[28Jun2025 20:01:32.211] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from mclanguage-1.20.4-49.0.19.jar, it does not contain dependency information.
+[28Jun2025 20:01:32.211] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from fmlcore-1.20.4-49.0.19.jar, it does not contain dependency information.
+[28Jun2025 20:01:32.231] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[28Jun2025 20:01:32.233] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file  with {minecraft} mods - versions {1.20.4}
+[28Jun2025 20:01:32.235] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Loading mod file / with languages [LanguageSpec[languageName=minecraft, acceptedVersions=1]]
+[28Jun2025 20:01:32.235] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate C:\Users\js113\IdeaProjects\NeuroCraft\build\sourcesSets\main
+[28Jun2025 20:01:32.237] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file main with {neurocraft} mods - versions {2.5.5}
+[28Jun2025 20:01:32.238] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Loading mod file C:\Users\js113\IdeaProjects\NeuroCraft\build\sourcesSets\main with languages [LanguageSpec[languageName=javafml, acceptedVersions=[0,)]]
+[28Jun2025 20:01:32.238] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate /
+[28Jun2025 20:01:32.238] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file  with {forge} mods - versions {49.0.19}
+[28Jun2025 20:01:32.238] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Loading mod file / with languages [LanguageSpec[languageName=javafml, acceptedVersions=[24,]]]
+[28Jun2025 20:01:32.241] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Found coremod field_to_method with Javascript path coremods/field_to_method.js
+[28Jun2025 20:01:32.241] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Found coremod field_to_instanceof with Javascript path coremods/field_to_instanceof.js
+[28Jun2025 20:01:32.241] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Found coremod add_bouncer_method with Javascript path coremods/add_bouncer_method.js
+[28Jun2025 20:01:32.241] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Found coremod method_redirector with Javascript path coremods/method_redirector.js
+[28Jun2025 20:01:32.241] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Found coremod /coremods/field_to_method.js
+[28Jun2025 20:01:32.241] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Found coremod /coremods/field_to_instanceof.js
+[28Jun2025 20:01:32.241] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Found coremod /coremods/add_bouncer_method.js
+[28Jun2025 20:01:32.242] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Found coremod /coremods/method_redirector.js
+[28Jun2025 20:01:32.242] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: End scan trigger - transformation service fml
+[28Jun2025 20:01:32.249] [main/DEBUG] [net.minecraftforge.fml.loading.LanguageLoadingProvider/CORE]: Found 3 language providers
+[28Jun2025 20:01:32.250] [main/DEBUG] [net.minecraftforge.fml.loading.LanguageLoadingProvider/CORE]: Found language provider minecraft, version 1.0
+[28Jun2025 20:01:32.250] [main/DEBUG] [net.minecraftforge.fml.loading.LanguageLoadingProvider/CORE]: Found language provider lowcodefml, version 49
+[28Jun2025 20:01:32.250] [main/DEBUG] [net.minecraftforge.fml.loading.LanguageLoadingProvider/CORE]: Found language provider javafml, version 49.0.19
+[28Jun2025 20:01:32.251] [main/DEBUG] [net.minecraftforge.fml.loading.ModSorter/]: Configured system mods: [minecraft, forge]
+[28Jun2025 20:01:32.251] [main/DEBUG] [net.minecraftforge.fml.loading.ModSorter/]: Found system mod: minecraft
+[28Jun2025 20:01:32.252] [main/DEBUG] [net.minecraftforge.fml.loading.ModSorter/]: Found system mod: forge
+[28Jun2025 20:01:32.254] [main/DEBUG] [net.minecraftforge.fml.loading.ModSorter/LOADING]: Found 2 mod requirements (2 mandatory, 0 optional)
+[28Jun2025 20:01:32.254] [main/DEBUG] [net.minecraftforge.fml.loading.ModSorter/LOADING]: Found 0 mod requirements missing (0 mandatory, 0 optional)
+[28Jun2025 20:01:32.562] [main/DEBUG] [net.minecraftforge.fml.loading.MCPNamingService/CORE]: Loaded 34990 method mappings from methods.csv
+[28Jun2025 20:01:32.585] [main/DEBUG] [net.minecraftforge.fml.loading.MCPNamingService/CORE]: Loaded 32991 field mappings from fields.csv
+[28Jun2025 20:01:32.621] [main/DEBUG] [cpw.mods.modlauncher.TransformationServicesHandler/MODLAUNCHER]: Transformation services loading transformers
+[28Jun2025 20:01:32.622] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Initializing transformers for transformation service mixin
+[28Jun2025 20:01:32.622] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Initialized transformers for transformation service mixin
+[28Jun2025 20:01:32.622] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Initializing transformers for transformation service fml
+[28Jun2025 20:01:32.622] [main/DEBUG] [net.minecraftforge.fml.loading.FMLServiceProvider/CORE]: Loading coremod transformers
+[28Jun2025 20:01:32.623] [main/DEBUG] [net.minecraftforge.coremod.CoreModEngine/COREMOD]: Loading CoreMod from /coremods/field_to_method.js
+[28Jun2025 20:01:32.798] [main/DEBUG] [net.minecraftforge.coremod.CoreModEngine/COREMOD]: CoreMod loaded successfully
+[28Jun2025 20:01:32.798] [main/DEBUG] [net.minecraftforge.coremod.CoreModEngine/COREMOD]: Loading CoreMod from /coremods/field_to_instanceof.js
+[28Jun2025 20:01:32.832] [main/DEBUG] [net.minecraftforge.coremod.CoreModEngine/COREMOD]: CoreMod loaded successfully
+[28Jun2025 20:01:32.832] [main/DEBUG] [net.minecraftforge.coremod.CoreModEngine/COREMOD]: Loading CoreMod from /coremods/add_bouncer_method.js
+[28Jun2025 20:01:32.854] [main/DEBUG] [net.minecraftforge.coremod.CoreModEngine/COREMOD]: CoreMod loaded successfully
+[28Jun2025 20:01:32.854] [main/DEBUG] [net.minecraftforge.coremod.CoreModEngine/COREMOD]: Loading CoreMod from /coremods/method_redirector.js
+[28Jun2025 20:01:32.897] [main/DEBUG] [net.minecraftforge.coremod.CoreModEngine/COREMOD]: CoreMod loaded successfully
+[28Jun2025 20:01:32.905] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@40729f01 to Target : CLASS {Lnet/minecraft/world/level/biome/Biome;} {} {V}
+[28Jun2025 20:01:32.906] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@345d053b to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/Structure;} {} {V}
+[28Jun2025 20:01:32.906] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@3d0cac1f to Target : CLASS {Lnet/minecraft/world/effect/MobEffectInstance;} {} {V}
+[28Jun2025 20:01:32.906] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@3e8b3b79 to Target : CLASS {Lnet/minecraft/world/level/block/LiquidBlock;} {} {V}
+[28Jun2025 20:01:32.906] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@d257579 to Target : CLASS {Lnet/minecraft/world/item/BucketItem;} {} {V}
+[28Jun2025 20:01:32.906] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@518ddd3b to Target : CLASS {Lnet/minecraft/world/level/block/FlowerPotBlock;} {} {V}
+[28Jun2025 20:01:32.906] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@939ff41 to Target : CLASS {Lnet/minecraft/world/item/ItemStack;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@6e0e5dec to Target : CLASS {Lnet/minecraft/world/level/Explosion;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@48a663e9 to Target : CLASS {Lnet/minecraft/world/level/Explosion;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/EntityType;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/ai/village/VillageSiege;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/animal/horse/SkeletonTrapGoal;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/level/levelgen/PatrolSpawner;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/level/levelgen/PhantomSpawner;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/server/commands/RaidCommand;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/structures/OceanMonumentPieces$OceanMonumentPiece;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/server/commands/SummonCommand;} {} {V}
+[28Jun2025 20:01:32.907] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/monster/ZombieVillager;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/animal/frog/Tadpole;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/monster/Zombie;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/structures/SwampHutPiece;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/raid/Raid;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/monster/Spider;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/monster/Strider;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/npc/CatSpawner;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/monster/Evoker$EvokerSummonSpellGoal;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/entity/npc/Villager;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/level/NaturalSpawner;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/structures/WoodlandMansionPieces$WoodlandMansionPiece;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@777d0bc3 to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/structures/OceanRuinPieces$OceanRuinPiece;} {} {V}
+[28Jun2025 20:01:32.908] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Initialized transformers for transformation service fml
+[28Jun2025 20:01:32.936] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:ModLauncher Root Container(ModLauncher:4f56a0a2)]
+[28Jun2025 20:01:32.936] [main/DEBUG] [mixin/]: Registering mixin config: neurocraft.mixins.client.json
+[28Jun2025 20:01:32.948] [main/ERROR] [mixin/]: Mixin config neurocraft.mixins.client.json does not specify "minVersion" property
+[28Jun2025 20:01:32.948] [main/DEBUG] [mixin/]: Registering mixin config: neurocraft.mixins.common.json
+[28Jun2025 20:01:32.949] [main/ERROR] [mixin/]: Mixin config neurocraft.mixins.common.json does not specify "minVersion" property
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: Processing launch tasks for PlatformAgent[MixinPlatformAgentDefault:ModLauncher Root Container(ModLauncher:4f56a0a2)]
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(minecraft)
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(minecraft)
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(minecraft)
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(minecraft)
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(minecraft)
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(minecraft)]
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(neurocraft)
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(neurocraft)
+[28Jun2025 20:01:32.951] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(neurocraft)
+[28Jun2025 20:01:32.957] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(neurocraft)
+[28Jun2025 20:01:32.959] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(neurocraft)
+[28Jun2025 20:01:32.959] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(neurocraft)]
+[28Jun2025 20:01:32.959] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(forge)
+[28Jun2025 20:01:32.959] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(forge)
+[28Jun2025 20:01:32.959] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(forge)
+[28Jun2025 20:01:32.959] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(forge)
+[28Jun2025 20:01:32.959] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(forge)
+[28Jun2025 20:01:32.959] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(forge)]
+[28Jun2025 20:01:32.959] [main/DEBUG] [mixin/]: inject() running with 4 agents
+[28Jun2025 20:01:32.960] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:ModLauncher Root Container(ModLauncher:4f56a0a2)]
+[28Jun2025 20:01:32.960] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(minecraft)]
+[28Jun2025 20:01:32.960] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(neurocraft)]
+[28Jun2025 20:01:32.960] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(forge)]
+[28Jun2025 20:01:32.960] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forge_userdev_data' with arguments [--gameDir, ., --assetsDir, C:\Users\js113\.gradle\caches\forge_gradle\assets, --assetIndex, 12, --mod, neurocraft, --all, --output, C:\Users\js113\IdeaProjects\NeuroCraft\src\generated\resources, --existing, C:\Users\js113\IdeaProjects\NeuroCraft\src\main\resources]
+[28Jun2025 20:01:33.028] [main/DEBUG] [mixin/]: Error cleaning class output directory: .mixin.out
+[28Jun2025 20:01:33.028] [main/DEBUG] [mixin/]: Preparing mixins for MixinEnvironment[DEFAULT]
+[28Jun2025 20:01:33.028] [main/DEBUG] [mixin/]: Selecting config neurocraft.mixins.client.json
+[28Jun2025 20:01:33.033] [main/WARN] [mixin/]: Reference map 'neurocraft.mixins.refmap.json' for neurocraft.mixins.client.json could not be read. If this is a development environment you can ignore this message
+[28Jun2025 20:01:33.033] [main/DEBUG] [mixin/]: Selecting config neurocraft.mixins.common.json
+[28Jun2025 20:01:33.036] [main/WARN] [mixin/]: Reference map 'neurocraft.mixins.refmap.json' for neurocraft.mixins.common.json could not be read. If this is a development environment you can ignore this message
+[28Jun2025 20:01:33.036] [main/DEBUG] [mixin/]: Preparing neurocraft.mixins.client.json (3)
+[28Jun2025 20:01:33.036] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
+[28Jun2025 20:01:33.036] [main/DEBUG] [mixin/]: Preparing neurocraft.mixins.common.json (4)
+[28Jun2025 20:01:33.061] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
+[28Jun2025 20:01:33.073] [main/DEBUG] [mixin/]: Registering new injector for @Inject with org.spongepowered.asm.mixin.injection.struct.CallbackInjectionInfo
+[28Jun2025 20:01:33.074] [main/DEBUG] [mixin/]: Registering new injector for @ModifyArg with org.spongepowered.asm.mixin.injection.struct.ModifyArgInjectionInfo
+[28Jun2025 20:01:33.075] [main/DEBUG] [mixin/]: Registering new injector for @ModifyArgs with org.spongepowered.asm.mixin.injection.struct.ModifyArgsInjectionInfo
+[28Jun2025 20:01:33.076] [main/DEBUG] [mixin/]: Registering new injector for @Redirect with org.spongepowered.asm.mixin.injection.struct.RedirectInjectionInfo
+[28Jun2025 20:01:33.077] [main/DEBUG] [mixin/]: Registering new injector for @ModifyVariable with org.spongepowered.asm.mixin.injection.struct.ModifyVariableInjectionInfo
+[28Jun2025 20:01:33.078] [main/DEBUG] [mixin/]: Registering new injector for @ModifyConstant with org.spongepowered.asm.mixin.injection.struct.ModifyConstantInjectionInfo
+[28Jun2025 20:01:33.280] [main/DEBUG] [io.netty.util.internal.logging.InternalLoggerFactory/]: Using SLF4J as the default logging framework
+[28Jun2025 20:01:33.285] [main/DEBUG] [io.netty.util.ResourceLeakDetector/]: -Dio.netty.leakDetection.level: simple
+[28Jun2025 20:01:33.285] [main/DEBUG] [io.netty.util.ResourceLeakDetector/]: -Dio.netty.leakDetection.targetRecords: 4
+[28Jun2025 20:01:33.605] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/EntityType
+[28Jun2025 20:01:34.027] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/block/LiquidBlock
+[28Jun2025 20:01:34.161] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/block/FlowerPotBlock
+[28Jun2025 20:01:34.498] [main/DEBUG] [mixin/]: Mixing FurnaceBlockEntityAccessor from neurocraft.mixins.common.json into net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity
+[28Jun2025 20:01:34.501] [main/DEBUG] [mixin/]: neurocraft.mixins.common.json:FurnaceBlockEntityAccessor: Class version 61 required is higher than the class version supported by the current version of Mixin (JAVA_16 supports class version 60)
+[28Jun2025 20:01:34.508] [main/DEBUG] [mixin/]: Mixing FurnaceSetItemMixin from neurocraft.mixins.common.json into net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity
+[28Jun2025 20:01:34.508] [main/DEBUG] [mixin/]: neurocraft.mixins.common.json:FurnaceSetItemMixin: Class version 61 required is higher than the class version supported by the current version of Mixin (JAVA_16 supports class version 60)
+[28Jun2025 20:01:34.511] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/item/ItemStack
+[28Jun2025 20:01:34.674] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/item/ItemStack
+[28Jun2025 20:01:34.688] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/biome/Biome
+[28Jun2025 20:01:35.078] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/animal/frog/Tadpole
+[28Jun2025 20:01:35.122] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/item/BucketItem
+[28Jun2025 20:01:35.733] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/Spider
+[28Jun2025 20:01:35.761] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/Zombie
+[28Jun2025 20:01:35.791] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/ZombieVillager
+[28Jun2025 20:01:35.844] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/Evoker$EvokerSummonSpellGoal
+[28Jun2025 20:01:35.941] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/animal/horse/SkeletonTrapGoal
+[28Jun2025 20:01:35.958] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/Strider
+[28Jun2025 20:01:36.033] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/npc/Villager
+[28Jun2025 20:01:36.097] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/effect/MobEffectInstance
+[28Jun2025 20:01:36.227] [main/DEBUG] [mixin/]: Mixing AbstractFurnaceMenuAccessor from neurocraft.mixins.common.json into net.minecraft.world.inventory.AbstractFurnaceMenu
+[28Jun2025 20:01:36.229] [main/DEBUG] [mixin/]: neurocraft.mixins.common.json:AbstractFurnaceMenuAccessor: Class version 61 required is higher than the class version supported by the current version of Mixin (JAVA_16 supports class version 60)
+[28Jun2025 20:01:36.273] [main/DEBUG] [mixin/]: Mixing SlotOnTakeMixin from neurocraft.mixins.common.json into net.minecraft.world.inventory.Slot
+[28Jun2025 20:01:36.273] [main/DEBUG] [mixin/]: neurocraft.mixins.common.json:SlotOnTakeMixin: Class version 61 required is higher than the class version supported by the current version of Mixin (JAVA_16 supports class version 60)
+[28Jun2025 20:01:36.634] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/Structure
+[28Jun2025 20:01:36.662] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/structures/OceanRuinPieces$OceanRuinPiece
+[28Jun2025 20:01:36.668] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/structures/SwampHutPiece
+[28Jun2025 20:01:36.673] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/structures/OceanMonumentPieces$OceanMonumentPiece
+[28Jun2025 20:01:36.683] [main/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/structures/WoodlandMansionPieces$WoodlandMansionPiece
+[28Jun2025 20:01:36.886] [main/DEBUG] [net.minecraftforge.registries.GameData/REGISTRIES]: Creating vanilla freeze snapshot
+[28Jun2025 20:01:36.888] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:block Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.898] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:fluid Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.898] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:item Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.903] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:mob_effect Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.903] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:sound_event Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.908] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:potion Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.909] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:enchantment Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.909] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:entity_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.909] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:block_entity_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.909] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:particle_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.910] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:menu Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.910] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:painting_variant Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.910] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:recipe_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.910] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:recipe_serializer Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.910] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:attribute Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.911] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:stat_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.911] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:command_argument_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.911] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:villager_profession Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.911] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:point_of_interest_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.912] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:memory_module_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.913] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:sensor_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.913] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:schedule Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.913] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:activity Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.913] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:worldgen/carver Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.913] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:worldgen/feature Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.914] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:chunk_status Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.914] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:worldgen/block_state_provider_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.914] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:worldgen/foliage_placer_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.914] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:worldgen/tree_decorator_type Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.914] [main/DEBUG] [net.minecraftforge.registries.ForgeRegistry/REGISTRIES]: Registry minecraft:worldgen/biome Sync: VANILLA -> ACTIVE
+[28Jun2025 20:01:36.917] [main/DEBUG] [net.minecraftforge.registries.GameData/REGISTRIES]: Vanilla freeze snapshot created
+[28Jun2025 20:01:36.950] [main/DEBUG] [net.minecraftforge.fml.ModWorkManager/LOADING]: Using 16 threads for parallel mod-loading
+[28Jun2025 20:01:36.959] [main/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLJavaModLanguageProvider/LOADING]: Loading FMLModContainer from classloader TransformingClassLoader[TRANSFORMER]@1112560756 - got SecureModuleClassLoader[LAYER PLUGIN]@1579584742
+[28Jun2025 20:01:36.959] [main/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: Creating FMLModContainer instance for com.dementia.neurocraft.Neurocraft
+[28Jun2025 20:01:36.965] [main/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLJavaModLanguageProvider/LOADING]: Loading FMLModContainer from classloader TransformingClassLoader[TRANSFORMER]@1112560756 - got SecureModuleClassLoader[LAYER PLUGIN]@1579584742
+[28Jun2025 20:01:36.966] [main/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: Creating FMLModContainer instance for net.minecraftforge.common.ForgeMod
+[28Jun2025 20:01:37.003] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.forge.ForgeVersion/CORE]: Forge Version package package net.minecraftforge.versions.forge, Forge, version 0.0 from TransformingClassLoader[TRANSFORMER]@1112560756
+[28Jun2025 20:01:37.003] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.forge.ForgeVersion/CORE]: Found Forge version 49.0.19
+[28Jun2025 20:01:37.003] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.forge.ForgeVersion/CORE]: Found Forge spec 0.0
+[28Jun2025 20:01:37.003] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.forge.ForgeVersion/CORE]: Found Forge group net.minecraftforge
+[28Jun2025 20:01:37.004] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.mcp.MCPVersion/CORE]: MCP Version package package net.minecraftforge.versions.mcp, Minecraft, version 1.20.4 from TransformingClassLoader[TRANSFORMER]@1112560756
+[28Jun2025 20:01:37.004] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.mcp.MCPVersion/CORE]: Found MC version information 1.20.4
+[28Jun2025 20:01:37.004] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.mcp.MCPVersion/CORE]: Found MCP version information 20231207.112700
+[28Jun2025 20:01:37.004] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 49.0.19, for MC 1.20.4 with MCP 20231207.112700
+[28Jun2025 20:01:37.004] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v49.0.19 Initialized
+[28Jun2025 20:01:37.034] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.config.ConfigTracker/CONFIG]: Config file neurocraft-client.toml for neurocraft tracking
+[28Jun2025 20:01:37.058] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.config.ConfigTracker/CONFIG]: Config file neurocraft-server.toml for neurocraft tracking
+[28Jun2025 20:01:37.059] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Attempting to inject @EventBusSubscriber classes into the eventbus for neurocraft
+[28Jun2025 20:01:37.061] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.client.features.ClientFeatureController to FORGE
+[28Jun2025 20:01:37.061] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: -Dio.netty.noUnsafe: false
+[28Jun2025 20:01:37.061] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: Java version: 17
+[28Jun2025 20:01:37.061] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: sun.misc.Unsafe.theUnsafe: available
+[28Jun2025 20:01:37.061] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: sun.misc.Unsafe.copyMemory: available
+[28Jun2025 20:01:37.062] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: sun.misc.Unsafe.storeFence: available
+[28Jun2025 20:01:37.062] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: java.nio.Buffer.address: available
+[28Jun2025 20:01:37.064] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.client.features.impl.EnemyHallucination to FORGE
+[28Jun2025 20:01:37.062] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: direct buffer constructor: unavailable
+java.lang.UnsupportedOperationException: Reflective setAccessible(true) disabled
+	at io.netty.util.internal.ReflectionUtil.trySetAccessible(ReflectionUtil.java:31) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.internal.PlatformDependent0$5.run(PlatformDependent0.java:289) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at java.security.AccessController.doPrivileged(AccessController.java:318) ~[?:?]
+	at io.netty.util.internal.PlatformDependent0.<clinit>(PlatformDependent0.java:282) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.internal.PlatformDependent.isAndroid(PlatformDependent.java:333) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.internal.PlatformDependent.<clinit>(PlatformDependent.java:88) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.ConstantPool.<init>(ConstantPool.java:34) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.AttributeKey$1.<init>(AttributeKey.java:27) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.AttributeKey.<clinit>(AttributeKey.java:27) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at net.minecraftforge.network.NetworkInitialization.<clinit>(NetworkInitialization.java:34) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at net.minecraftforge.common.ForgeMod.<init>(ForgeMod.java:400) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
+	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[?:?]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:481) ~[?:?]
+	at net.minecraftforge.fml.javafmlmod.FMLModContainer.constructMod(FMLModContainer.java:66) ~[javafmllanguage-1.20.4-49.0.19.jar!/:49.0.19]
+	at net.minecraftforge.fml.ModContainer.lambda$buildTransitionHandler$5(ModContainer.java:125) ~[fmlcore-1.20.4-49.0.19.jar!/:1.0]
+	at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?]
+	at java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1796) ~[?:?]
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:373) ~[?:?]
+	at java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1182) ~[?:?]
+	at java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655) ~[?:?]
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622) ~[?:?]
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165) ~[?:?]
+[28Jun2025 20:01:37.075] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.client.features.impl.Psychosis to FORGE
+[28Jun2025 20:01:37.075] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: java.nio.Bits.unaligned: available, true
+[28Jun2025 20:01:37.076] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable
+java.lang.IllegalAccessException: class io.netty.util.internal.PlatformDependent0$7 (in module io.netty.common) cannot access class jdk.internal.misc.Unsafe (in module java.base) because module java.base does not export jdk.internal.misc to module io.netty.common
+	at jdk.internal.reflect.Reflection.newIllegalAccessException(Reflection.java:392) ~[?:?]
+	at java.lang.reflect.AccessibleObject.checkAccess(AccessibleObject.java:674) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:561) ~[?:?]
+	at io.netty.util.internal.PlatformDependent0$7.run(PlatformDependent0.java:411) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at java.security.AccessController.doPrivileged(AccessController.java:318) ~[?:?]
+	at io.netty.util.internal.PlatformDependent0.<clinit>(PlatformDependent0.java:402) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.internal.PlatformDependent.isAndroid(PlatformDependent.java:333) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.internal.PlatformDependent.<clinit>(PlatformDependent.java:88) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.ConstantPool.<init>(ConstantPool.java:34) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.AttributeKey$1.<init>(AttributeKey.java:27) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at io.netty.util.AttributeKey.<clinit>(AttributeKey.java:27) ~[netty-common-4.1.97.Final.jar:4.1.97.Final]
+	at net.minecraftforge.network.NetworkInitialization.<clinit>(NetworkInitialization.java:34) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at net.minecraftforge.common.ForgeMod.<init>(ForgeMod.java:400) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
+	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[?:?]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:481) ~[?:?]
+	at net.minecraftforge.fml.javafmlmod.FMLModContainer.constructMod(FMLModContainer.java:66) ~[javafmllanguage-1.20.4-49.0.19.jar!/:49.0.19]
+	at net.minecraftforge.fml.ModContainer.lambda$buildTransitionHandler$5(ModContainer.java:125) ~[fmlcore-1.20.4-49.0.19.jar!/:1.0]
+	at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?]
+	at java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1796) ~[?:?]
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:373) ~[?:?]
+	at java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1182) ~[?:?]
+	at java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655) ~[?:?]
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622) ~[?:?]
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165) ~[?:?]
+[28Jun2025 20:01:37.078] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: java.nio.DirectByteBuffer.<init>(long, {int,long}): unavailable
+[28Jun2025 20:01:37.078] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent/]: sun.misc.Unsafe: available
+[28Jun2025 20:01:37.078] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent/]: maxDirectMemory: 8568963072 bytes (maybe)
+[28Jun2025 20:01:37.078] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent/]: -Dio.netty.tmpdir: C:\Users\js113\AppData\Local\Temp (java.io.tmpdir)
+[28Jun2025 20:01:37.079] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent/]: -Dio.netty.bitMode: 64 (sun.arch.data.model)
+[28Jun2025 20:01:37.079] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent/]: Platform: Windows
+[28Jun2025 20:01:37.079] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent/]: -Dio.netty.maxDirectMemory: -1 bytes
+[28Jun2025 20:01:37.079] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent/]: -Dio.netty.uninitializedArrayAllocationThreshold: -1
+[28Jun2025 20:01:37.081] [modloading-worker-0/DEBUG] [io.netty.util.internal.CleanerJava9/]: java.nio.ByteBuffer.cleaner(): available
+[28Jun2025 20:01:37.081] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent/]: -Dio.netty.noPreferDirect: false
+[28Jun2025 20:01:37.088] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.client.features.impl.RandomizeXP to FORGE
+[28Jun2025 20:01:37.088] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.client.hooks.ClientHooks to FORGE
+[28Jun2025 20:01:37.089] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.client.hooks.OptionsResetHook to FORGE
+[28Jun2025 20:01:37.090] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.client.internal.ClientBlockVerify to FORGE
+[28Jun2025 20:01:37.092] [modloading-worker-0/DEBUG] [net.minecraftforge.network.NetworkInitialization/FORGE_NETWORK]: Registering Network forge:login v0
+[28Jun2025 20:01:37.092] [modloading-worker-0/DEBUG] [net.minecraftforge.network.NetworkInitialization/FORGE_NETWORK]: Registering Network forge:handshake v0
+[28Jun2025 20:01:37.092] [modloading-worker-0/DEBUG] [net.minecraftforge.network.NetworkInitialization/FORGE_NETWORK]: Registering Network minecraft:register v0
+[28Jun2025 20:01:37.092] [modloading-worker-0/DEBUG] [net.minecraftforge.network.NetworkInitialization/FORGE_NETWORK]: Registering Network minecraft:unregister v0
+[28Jun2025 20:01:37.095] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.client.internal.PlayerHallucinations to FORGE
+[28Jun2025 20:01:37.097] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.commands.FeatureCommandDispatcher to FORGE
+[28Jun2025 20:01:37.100] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.config.ConfigEvents to MOD
+[28Jun2025 20:01:37.103] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.config.ConfigSyncHandler to MOD
+[28Jun2025 20:01:37.104] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.events.CommonModEvents to MOD
+[28Jun2025 20:01:37.107] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.gui.Overlays.RenderSanityHudInMenu to FORGE
+[28Jun2025 20:01:37.108] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.config.ConfigTracker/CONFIG]: Config file forge-client.toml for forge tracking
+[28Jun2025 20:01:37.108] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.config.ConfigTracker/CONFIG]: Config file forge-server.toml for forge tracking
+[28Jun2025 20:01:37.108] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.ModLoadingContext/]: Attempted to register an empty config for type COMMON on mod forge
+[28Jun2025 20:01:37.114] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.Neurocraft$ClientModEvents to MOD
+[28Jun2025 20:01:37.116] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.server.features.impl.FurnaceUncooking to FORGE
+[28Jun2025 20:01:37.118] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.server.features.ServerFeatureController to FORGE
+[28Jun2025 20:01:37.121] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.server.internal.EnemyHallucinationManager to FORGE
+[28Jun2025 20:01:37.127] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.server.internal.PlayerScalingManager to FORGE
+[28Jun2025 20:01:37.128] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Attempting to inject @EventBusSubscriber classes into the eventbus for forge
+[28Jun2025 20:01:37.129] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.util.ClientTimingHandler to FORGE
+[28Jun2025 20:01:37.129] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.minecraftforge.common.ForgeSpawnEggItem$CommonHandler to MOD
+[28Jun2025 20:01:37.129] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.dementia.neurocraft.util.ServerTimingHandler to FORGE
+[28Jun2025 20:01:37.131] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.minecraftforge.common.ForgeSpawnEggItem$ColorRegisterHandler to MOD
+[28Jun2025 20:01:37.134] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.minecraftforge.client.model.data.ModelDataManager to FORGE
+[28Jun2025 20:01:37.136] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.minecraftforge.client.ForgeHooksClient$ClientEvents to MOD
+[28Jun2025 20:01:37.144] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.minecraftforge.client.ClientForgeMod to MOD
+[28Jun2025 20:01:37.148] [main/DEBUG] [net.minecraftforge.fml.DeferredWorkQueue/LOADING]: Dispatching synchronous work for work queue CONSTRUCT: 2 jobs
+[28Jun2025 20:01:37.180] [main/ERROR] [net.minecraftforge.fml.DeferredWorkQueue/]: Mod 'neurocraft' encountered an error in a deferred task:
+java.lang.NullPointerException: Cannot read field "options" because "instance" is null
+	at com.dementia.neurocraft.Neurocraft$ClientModEvents.lambda$onClientSetup$0(Neurocraft.java:78) ~[main/:?]
+	at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?]
+	at net.minecraftforge.fml.DeferredWorkQueue.lambda$makeRunnable$2(DeferredWorkQueue.java:81) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.DeferredWorkQueue.makeRunnable(DeferredWorkQueue.java:76) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.DeferredWorkQueue.lambda$runTasks$0(DeferredWorkQueue.java:60) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at java.util.concurrent.ConcurrentLinkedDeque.forEach(ConcurrentLinkedDeque.java:1650) ~[?:?]
+	at net.minecraftforge.fml.DeferredWorkQueue.runTasks(DeferredWorkQueue.java:60) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.core.ParallelTransition.lambda$finalActivityGenerator$2(ParallelTransition.java:37) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646) ~[?:?]
+	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
+	at net.minecraftforge.fml.ModWorkManager$SyncExecutor.driveOne(ModWorkManager.java:43) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModWorkManager$DrivenExecutor.drive(ModWorkManager.java:28) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModLoader.waitForTransition(ModLoader.java:224) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModLoader.lambda$dispatchAndHandleError$20(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at java.util.Optional.ifPresent(Optional.java:178) ~[?:?]
+	at net.minecraftforge.fml.ModLoader.dispatchAndHandleError(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModLoader.lambda$gatherAndInitializeMods$13(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
+	at net.minecraftforge.fml.ModLoader.gatherAndInitializeMods(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.data.loading.DatagenModLoader.begin(DatagenModLoader.java:46) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at net.minecraft.data.Main.main(Main.java:103) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:91) ~[fmlloader-1.20.4-49.0.19.jar:?]
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.lambda$makeService$0(CommonLaunchHandler.java:75) ~[fmlloader-1.20.4-49.0.19.jar:?]
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:74) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:114) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:73) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.BootstrapEntry.main(BootstrapEntry.java:17) ~[modlauncher-10.1.2.jar:?]
+	at net.minecraftforge.bootstrap.Bootstrap.moduleMain(Bootstrap.java:97) ~[bootstrap-2.0.0.jar!/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.minecraftforge.bootstrap.Bootstrap.start(Bootstrap.java:48) ~[bootstrap-2.0.0.jar!/:?]
+	at net.minecraftforge.bootstrap.ForgeBootstrap.main(ForgeBootstrap.java:18) ~[bootstrap-2.0.0.jar!/:?]
+[28Jun2025 20:01:37.194] [main/FATAL] [net.minecraftforge.fml.DeferredWorkQueue/LOADING]: Synchronous work queue completed exceptionally in 44.85 ms, see suppressed exceptions for details:
+java.lang.RuntimeException: null
+	at net.minecraftforge.fml.DeferredWorkQueue.runTasks(DeferredWorkQueue.java:58) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.core.ParallelTransition.lambda$finalActivityGenerator$2(ParallelTransition.java:37) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646) ~[?:?]
+	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
+	at net.minecraftforge.fml.ModWorkManager$SyncExecutor.driveOne(ModWorkManager.java:43) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModWorkManager$DrivenExecutor.drive(ModWorkManager.java:28) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModLoader.waitForTransition(ModLoader.java:224) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModLoader.lambda$dispatchAndHandleError$20(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at java.util.Optional.ifPresent(Optional.java:178) ~[?:?]
+	at net.minecraftforge.fml.ModLoader.dispatchAndHandleError(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModLoader.lambda$gatherAndInitializeMods$13(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
+	at net.minecraftforge.fml.ModLoader.gatherAndInitializeMods(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.data.loading.DatagenModLoader.begin(DatagenModLoader.java:46) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at net.minecraft.data.Main.main(Main.java:103) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:91) ~[fmlloader-1.20.4-49.0.19.jar:?]
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.lambda$makeService$0(CommonLaunchHandler.java:75) ~[fmlloader-1.20.4-49.0.19.jar:?]
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:74) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:114) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:73) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.BootstrapEntry.main(BootstrapEntry.java:17) ~[modlauncher-10.1.2.jar:?]
+	at net.minecraftforge.bootstrap.Bootstrap.moduleMain(Bootstrap.java:97) ~[bootstrap-2.0.0.jar!/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.minecraftforge.bootstrap.Bootstrap.start(Bootstrap.java:48) ~[bootstrap-2.0.0.jar!/:?]
+	at net.minecraftforge.bootstrap.ForgeBootstrap.main(ForgeBootstrap.java:18) ~[bootstrap-2.0.0.jar!/:?]
+	Suppressed: java.lang.NullPointerException: Cannot read field "options" because "instance" is null
+		at com.dementia.neurocraft.Neurocraft$ClientModEvents.lambda$onClientSetup$0(Neurocraft.java:78) ~[main/:?]
+		at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?]
+		at net.minecraftforge.fml.DeferredWorkQueue.lambda$makeRunnable$2(DeferredWorkQueue.java:81) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.DeferredWorkQueue.makeRunnable(DeferredWorkQueue.java:76) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.DeferredWorkQueue.lambda$runTasks$0(DeferredWorkQueue.java:60) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at java.util.concurrent.ConcurrentLinkedDeque.forEach(ConcurrentLinkedDeque.java:1650) ~[?:?]
+		at net.minecraftforge.fml.DeferredWorkQueue.runTasks(DeferredWorkQueue.java:60) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.core.ParallelTransition.lambda$finalActivityGenerator$2(ParallelTransition.java:37) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+		at java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646) ~[?:?]
+		at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
+		at net.minecraftforge.fml.ModWorkManager$SyncExecutor.driveOne(ModWorkManager.java:43) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.ModWorkManager$DrivenExecutor.drive(ModWorkManager.java:28) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.ModLoader.waitForTransition(ModLoader.java:224) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.ModLoader.lambda$dispatchAndHandleError$20(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at java.util.Optional.ifPresent(Optional.java:178) ~[?:?]
+		at net.minecraftforge.fml.ModLoader.dispatchAndHandleError(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.ModLoader.lambda$gatherAndInitializeMods$13(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
+		at net.minecraftforge.fml.ModLoader.gatherAndInitializeMods(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.data.loading.DatagenModLoader.begin(DatagenModLoader.java:46) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+		at net.minecraft.data.Main.main(Main.java:103) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+		at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+		at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+		at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+		at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+		at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:91) ~[fmlloader-1.20.4-49.0.19.jar:?]
+		at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.lambda$makeService$0(CommonLaunchHandler.java:75) ~[fmlloader-1.20.4-49.0.19.jar:?]
+		at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54) ~[modlauncher-10.1.2.jar:?]
+		at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:74) ~[modlauncher-10.1.2.jar:?]
+		at cpw.mods.modlauncher.Launcher.run(Launcher.java:114) ~[modlauncher-10.1.2.jar:?]
+		at cpw.mods.modlauncher.Launcher.main(Launcher.java:73) ~[modlauncher-10.1.2.jar:?]
+		at cpw.mods.modlauncher.BootstrapEntry.main(BootstrapEntry.java:17) ~[modlauncher-10.1.2.jar:?]
+		at net.minecraftforge.bootstrap.Bootstrap.moduleMain(Bootstrap.java:97) ~[bootstrap-2.0.0.jar!/:?]
+		at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+		at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+		at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+		at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+		at net.minecraftforge.bootstrap.Bootstrap.start(Bootstrap.java:48) ~[bootstrap-2.0.0.jar!/:?]
+		at net.minecraftforge.bootstrap.ForgeBootstrap.main(ForgeBootstrap.java:18) ~[bootstrap-2.0.0.jar!/:?]
+[28Jun2025 20:01:37.196] [main/FATAL] [net.minecraftforge.fml.ModLoader/]: Encountered non-modloading exceptions!
+java.util.concurrent.CompletionException: java.lang.RuntimeException
+	at java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:315) ~[?:?]
+	at java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:320) ~[?:?]
+	at java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:649) ~[?:?]
+	at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
+	at net.minecraftforge.fml.ModWorkManager$SyncExecutor.driveOne(ModWorkManager.java:43) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModWorkManager$DrivenExecutor.drive(ModWorkManager.java:28) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModLoader.waitForTransition(ModLoader.java:224) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModLoader.lambda$dispatchAndHandleError$20(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at java.util.Optional.ifPresent(Optional.java:178) ~[?:?]
+	at net.minecraftforge.fml.ModLoader.dispatchAndHandleError(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.fml.ModLoader.lambda$gatherAndInitializeMods$13(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
+	at net.minecraftforge.fml.ModLoader.gatherAndInitializeMods(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+	at net.minecraftforge.data.loading.DatagenModLoader.begin(DatagenModLoader.java:46) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at net.minecraft.data.Main.main(Main.java:103) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:91) ~[fmlloader-1.20.4-49.0.19.jar:?]
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.lambda$makeService$0(CommonLaunchHandler.java:75) ~[fmlloader-1.20.4-49.0.19.jar:?]
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:74) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:114) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:73) ~[modlauncher-10.1.2.jar:?]
+	at cpw.mods.modlauncher.BootstrapEntry.main(BootstrapEntry.java:17) ~[modlauncher-10.1.2.jar:?]
+	at net.minecraftforge.bootstrap.Bootstrap.moduleMain(Bootstrap.java:97) ~[bootstrap-2.0.0.jar!/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.minecraftforge.bootstrap.Bootstrap.start(Bootstrap.java:48) ~[bootstrap-2.0.0.jar!/:?]
+	at net.minecraftforge.bootstrap.ForgeBootstrap.main(ForgeBootstrap.java:18) ~[bootstrap-2.0.0.jar!/:?]
+Caused by: java.lang.RuntimeException
+	at net.minecraftforge.fml.DeferredWorkQueue.runTasks(DeferredWorkQueue.java:58) ~[fmlcore-1.20.4-49.0.19.jar!/:1.0]
+	at net.minecraftforge.fml.core.ParallelTransition.lambda$finalActivityGenerator$2(ParallelTransition.java:37) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar%2317!/:?]
+	at java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646) ~[?:?]
+	... 30 more
+	Suppressed: java.lang.NullPointerException: Cannot read field "options" because "instance" is null
+		at com.dementia.neurocraft.Neurocraft$ClientModEvents.lambda$onClientSetup$0(Neurocraft.java:78) ~[main/:?]
+		at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?]
+		at net.minecraftforge.fml.DeferredWorkQueue.lambda$makeRunnable$2(DeferredWorkQueue.java:81) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.DeferredWorkQueue.makeRunnable(DeferredWorkQueue.java:76) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.DeferredWorkQueue.lambda$runTasks$0(DeferredWorkQueue.java:60) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at java.util.concurrent.ConcurrentLinkedDeque.forEach(ConcurrentLinkedDeque.java:1650) ~[?:?]
+		at net.minecraftforge.fml.DeferredWorkQueue.runTasks(DeferredWorkQueue.java:60) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.core.ParallelTransition.lambda$finalActivityGenerator$2(ParallelTransition.java:37) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+		at java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646) ~[?:?]
+		at java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482) ~[?:?]
+		at net.minecraftforge.fml.ModWorkManager$SyncExecutor.driveOne(ModWorkManager.java:43) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.ModWorkManager$DrivenExecutor.drive(ModWorkManager.java:28) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.ModLoader.waitForTransition(ModLoader.java:224) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.ModLoader.lambda$dispatchAndHandleError$20(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at java.util.Optional.ifPresent(Optional.java:178) ~[?:?]
+		at net.minecraftforge.fml.ModLoader.dispatchAndHandleError(ModLoader.java:210) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.fml.ModLoader.lambda$gatherAndInitializeMods$13(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
+		at net.minecraftforge.fml.ModLoader.gatherAndInitializeMods(ModLoader.java:183) ~[fmlcore-1.20.4-49.0.19.jar:1.0]
+		at net.minecraftforge.data.loading.DatagenModLoader.begin(DatagenModLoader.java:46) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+		at net.minecraft.data.Main.main(Main.java:103) ~[forge-1.20.4-49.0.19_mapped_official_1.20.4-recomp.jar:?]
+		at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+		at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+		at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+		at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+		at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:91) ~[fmlloader-1.20.4-49.0.19.jar:?]
+		at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.lambda$makeService$0(CommonLaunchHandler.java:75) ~[fmlloader-1.20.4-49.0.19.jar:?]
+		at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54) ~[modlauncher-10.1.2.jar:?]
+		at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:74) ~[modlauncher-10.1.2.jar:?]
+		at cpw.mods.modlauncher.Launcher.run(Launcher.java:114) ~[modlauncher-10.1.2.jar:?]
+		at cpw.mods.modlauncher.Launcher.main(Launcher.java:73) ~[modlauncher-10.1.2.jar:?]
+		at cpw.mods.modlauncher.BootstrapEntry.main(BootstrapEntry.java:17) ~[modlauncher-10.1.2.jar:?]
+		at net.minecraftforge.bootstrap.Bootstrap.moduleMain(Bootstrap.java:97) ~[bootstrap-2.0.0.jar!/:?]
+		at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+		at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+		at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+		at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+		at net.minecraftforge.bootstrap.Bootstrap.start(Bootstrap.java:48) ~[bootstrap-2.0.0.jar!/:?]
+		at net.minecraftforge.bootstrap.ForgeBootstrap.main(ForgeBootstrap.java:18) ~[bootstrap-2.0.0.jar!/:?]
